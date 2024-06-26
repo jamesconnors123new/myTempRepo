@@ -1,0 +1,292 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:  &SelectCustomerByClientName
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(StandardPortalUserName)
+      Password: ~(StandardPortalPassword)
+  People:
+    Person01: &AdditionalDriver01
+      DriverType: Frequent #Shilpa additional value
+      RelationshipToProposer: Spouse #Shilpa additional value
+      Title: Mr #Shilpa additional value
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: (None)
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+        Category: Employed #Shilpa additional value
+        Type: Bakery Assistant #Shilpa additional value
+        Industry: Bakery #Shilpa additional value
+      Licence: #Shilpa additional value
+        Type: Full UK Car Licence #Shilpa additional value
+        ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy #Shilpa additional value
+        AccessToOtherVehicles: Own another car   #Shilpa additional value
+      InsurancePreviouslyRefused: false
+    Person02: &Person02
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0001
+      ~Headline: Create a New Policy on Echelon
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                ClientGroupId: ~(ClientGroupId)
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+#                  InstanceValues:
+#                    Index: A
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+#                    PostCode: RG4 5LP
+#                    Password: ~(StandardPortalPassword)
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)A
+#                    JointPolicyHolderDetails: false
+#                  Everything below is from Shilpa
+                  InstanceValues:
+                    ClientNumberValue: IC0000000286
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    SalesChannel: Direct web
+                    Affinity: CCDW  #used
+                    CoverType: Comprehensive
+                    AdditionalDriverStatus: true
+                    LastnameVal: Testzxz
+                    Title: Lady
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MG
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskPostcode: B17 8TU
+                    PreviousNCDApplied: false
+                    ClaimYears: 5 # used
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-5|dd/MM/yyyy # used
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-3650|dd/MM/yyyy #10 years held  #used
+                    Scheme: Standard
+                    DrivingRestrictions: Insured And Named Drivers
+                    PreviousInsuranceStatus: true #used
+                    VehicleRegistrationNumber: KS51NFM #used
+                    PaymentType: Annually
+                    AnnualMileage: 7999 #used
+                    BusinessMileage: 5000
+                    Usage: Social, Domestic, Pleasure #used
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Accident
+                        Cause: Accident Damage
+                        OwnDamageCost: 679
+                        ThirdPartyDamageCost: 500
+                        NCDAffected: false
+                        PolicyholderCover: true
+                        PersonalInjury: false
+                    ConvictionHistoryAvailable: true
+                    InstanceConvictionHistory:
+                      - ConvictionType: Parking at a bus stop
+                        OffenceDate: 08/11/2023
+                        ConvictionDate: 08/11/2023
+                        Points: 1
+                        Disqualified: true
+                        MonthsSuspended: 2
+                        Fine: 100
+                    PaymentMethod: Cheque
+
+      ~Stages:
+        - ~Stage: #1 Create Quote on Echelon
+            ~Activities:
+              - ~Activity:
+                  ~Label: Create Quote On Echelon UI
+                  ~Role: >
+                    Create a new quote on Echelon UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+#                        Affinity: AHDW #ShortForm #Replaced with Shilpa's below
+#                        Brand: Ageas  #Replaced with Shilpa's below
+#                        Everything below is from Shilpa's
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy  #used
+                        Enquiry: Direct
+                        SalesChannel: ~(SalesChannel)
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Motor
+                      InsuranceDetails:
+                        Product: Private car
+                        LineOfBusiness: Personal Lines
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                        Scheme: ~(Scheme)
+                        CoverType: ~(CoverType)
+                        DrivingRestrictions: ~(DrivingRestrictions)
+                        NCDFlag: false
+                        ConcernFlag: false
+                        InsuranceHistory:
+                          PreviousInsuranceDetails:
+                            PreviousInsurance: ~(PreviousInsuranceStatus)
+                            DrivingExperienceInProposerName: true #used
+                            PreviousExperienceDetails:
+                              ClaimFreeYears: ~(ClaimYears)
+                              ExperienceType: Company car with SPD
+                            NCDDetails:
+                              NCDAppliedToAnyOtherVehicle: ~(PreviousNCDApplied) #used
+                              ~Gen(PreviousPolicyExpiryDate): DateRelToTodayAsStr|-1|dd/MM/yyyy #used
+                              InsuranceType: Private car #used
+                              NCDClaimYears: ~(ClaimYears)
+                              NCDCurrentlyProtected: true #used
+                              ProtectNCD: true #used
+                          AdditionalDrivers:
+                            DrivingRestrictions: Insured Only #newly added #used
+                        ClaimDetails:
+                          AnyClaims: false   #used
+                        PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                        Vehicle:
+                          CurrentMarketValue: 2445   #mapped - newly added to Shilpa's sheet #used
+                          VehicleOwner: Proposer #mapped - newly added to Shilpa's sheet #used
+                          ProposerRegisteredKeeper: Main User  #mapped - newly added to Shilpa's sheet #used
+                          RegistrationNumber: ~(VehicleRegistrationNumber)
+                          NumberOfOtherVehiclesInHousehold: 1 #used
+                          AccessToOtherVehicles: None #used
+                          VehicleFeatures:
+                            NumberOfSeats:  5 #mapped - newly added to Shilpa's sheet #used
+                            Alarm: Factory Fitted #used
+                            Immobiliser: Factory Fitted #used
+                            Tracker: No Tracker #used
+                            Dashcam: Front
+                            LeftHandDrive: false  #used
+                            VehicleImported: false
+                            CarModificationDetails:
+                              modification: false  #used
+                              modificationDetails: Adapted For Disability, Air Filter
+                          VehicleUse:
+                            MainUsage: ~(Usage)
+                            AnnualMileage: ~(AnnualMileage)
+                            BusinessMileage: ~(BusinessMileage)
+                            CarPurchaseDate: ~(CarPurchaseDate)
+                          ParkingDetails:
+                            ParkingDuringDay: Office/Factory car park
+                            ParkingDuringNight: Driveway #used
+                            OvernightLocation: Shed
+                            Postcode: ~(RiskPostcode)
+                        Licence:
+                          Type: Full Licence #used
+                          LicenceValidSince: ~(LicenceValidSince)
+                        # Number: HIETT708127PJ8LA
+                        RegisteredOwner:
+                          Owner: Proposer/Policyholder
+                          RegisteredOwnerDetails:
+                            ProposerRegisteredKeeper: false
+                            RegisteredKeeper: Parent
+                        ProposerPersonalDetails:
+                          UkResidentSince: ~(UkResidentSince)
+                          PrimaryEmploymentStatus:
+                            Employed: true
+                            Category: Employed
+                            Type: Accountant
+                            Industry: Accountancy
+                          SecondaryEmploymentStatus:
+                            Employed: false
+                            Category: Employed
+                            Type: Bakery Assistant
+                            Industry: Bakery
+                        DynamicUnderwriterQuestions:
+                          IamMember: false
+                          AdditionalCars: 1
+                          VehicleUseByProposer: Main
+                          PaymentType: ~(PaymentType)
+                          HomeOwner: true
+                          AffordabilityThresholdReached: false
+                          UWOnlyPremiumFinance: false
+                          AccessToOtherVehicles: Named driver on a car not owned by the driver
+                        ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                        ~Ref(ClaimHistory): InstanceClaimHistory
+                        ConvictionHistoryAvailable: ~(ConvictionHistoryAvailable)
+                        ~Ref(ConvictionHistory): InstanceConvictionHistory
+                        AdditionalDriverDetails: ~(AdditionalDriverStatus)
+                        AdditionalDriver: *AdditionalDriver01
+                        Excess:
+                          VoluntaryExcess: 100 #used
+                        # AccidentalDamage: 100
+                        ConsentToRenew: true
+                  ~Unconditionals:
+
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateNewPolicyOnEchelon
+                  ~Role: >
+                    Capture policy details from portal before MTA
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)
+                    QuoteDetails:
+                      QuoteReference: ~(QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

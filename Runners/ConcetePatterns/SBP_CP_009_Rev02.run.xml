@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SBP_CP_009_Rev02" type="Application" factoryName="Application" folderName="RunConcretePatterns">
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="TestSets/ConcretePatterns/SBP_CP_009_Rev02_MTA.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

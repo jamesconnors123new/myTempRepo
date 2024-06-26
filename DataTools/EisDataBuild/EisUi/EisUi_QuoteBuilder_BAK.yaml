@@ -1,0 +1,666 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &Person01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+
+  # Has Buildings And Contents Accidental Damge
+  # Has a Joint PolicyHolder
+  # Has Personal Belongings Away From Home
+  ComplexPolicyDetails: &ComplexPolicyDetails
+    QuotesDetails:
+#      Affinity: AHDW #ShortForm Echelon
+      Affinity: AHCC #ShortForm EIS
+      Brand: Ageas
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+      ProductType: Home #EisOnlyField?
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: true
+        ContentAccidentalDamage: true
+        ~Ref(OptionalExtras): InstanceOptionalExtras  #EisOnlyField?
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 100000
+        ContentSum: 70000
+      InsuranceHistory:
+        ContentClaimFreeYears: 2
+        BuildingClaimFreeYears: 2
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+        SpecifiedItemsAvailable: false #EisOnlyField?
+        ~Ref(SpecifiedItems): InstanceSpecifiedItems #EisOnlyField?
+        UnspecifiedItems: #EisOnlyField?
+          CoverStatus: false #EisOnlyField?
+          ItemAmount: 3333 #EisOnlyField?
+      BuildingDetails:
+        #        BuildingType: Detached #Not an option in EIS dropdown therefore set to House
+        BuildingType: House # EIS
+        #        StructureType: Standard
+        StructureType: Detached House  #EisOnlyField?
+        ConstructionType: Standard
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress:
+          HouseIdentifier: "1"
+          Postcode: NG173AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+        NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false #Strata just this field, EIS Below
+        BusinessUsage: #EisOnlyField?
+          BusinessUse: false
+          ClericalUse: false #EisOnlyField?
+          PropertyUse: meetings #EisOnlyField?
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+#    PreferredDeliveryMethod: Email # Not present in EIS
+    PreferredDeliveryMethod: Print # Alt for EIS
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+#      FirstName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+#      LastName: ~(Index)Testzxz
+#      DerivedName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) Testzxz
+#      DerivedName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        HouseIdentifier: "1"
+        Postcode: ~(Postcode)
+      MainTelephoneNumber: "07345345345"
+#      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+      EmailAddress: ~(Index)_~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: "1"
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      UnspentCriminalConviction: false #EisOnlyField?
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+#      PropertyOwned: Owned #Echelon
+      PropertyOwned: OwnedOutright #EIS
+#    JointPolicyHolderDetails: true
+#    JointPolicyHolderStatus: true #EIS unable to add joint policy holder details - from first name
+    JointPolicyHolderStatus: false
+    ConsentToRenew: false #EisOnlyField?
+    JointPolicyHolder: *Person01
+    JointPolicyHolderDetails: *Person01
+    Index: ~(Index)
+
+  StandardPolicyDetails: &StandardPolicyDetails
+    QuotesDetails:
+#      Affinity: AHDW #ShortForm Echelon
+      Affinity: AHCC #ShortForm EIS
+      Brand: Ageas
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+      ProductType: Home #EisOnlyField?
+
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: false
+        ContentAccidentalDamage: false
+        ~Ref(OptionalExtras): InstanceOptionalExtras  #EisOnlyField?
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 100000
+        ContentSum: 70000
+      InsuranceHistory:
+        ContentClaimFreeYears: 0
+        BuildingClaimFreeYears: 0
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+        SpecifiedItemsAvailable: false #EisOnlyField?
+        ~Ref(SpecifiedItems): InstanceSpecifiedItems #EisOnlyField?
+        UnspecifiedItems: #EisOnlyField?
+          CoverStatus: false #EisOnlyField?
+          ItemAmount: 3333 #EisOnlyField?
+      BuildingDetails:
+#        BuildingType: Detached #Not an option in EIS dropdown therefore set to House
+        BuildingType: House # EIS
+#        StructureType: Standard
+        StructureType: Detached House  #EisOnlyField?
+        ConstructionType: Standard
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress:
+          HouseIdentifier: "1"
+          Postcode: NG173AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+        NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false
+        BusinessUsage: #EisOnlyField?
+          BusinessUse: false
+          ClericalUse: false #EisOnlyField?
+          PropertyUse: meetings #EisOnlyField?
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+#    PreferredDeliveryMethod: Email # Not present in EIS
+    PreferredDeliveryMethod: Print # Alt for EIS
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+#      FirstName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+#      LastName: ~(Index)Testzxz
+#      DerivedName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(Index)Testzxz
+#      DerivedName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) Testzxz
+
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        HouseIdentifier: "1"
+        Postcode: ~(Postcode)
+      MainTelephoneNumber: "07345345345"
+#      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+      EmailAddress: ~(Index)_~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: "1"
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      UnspentCriminalConviction: false #EisOnlyField?
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+#      PropertyOwned: Owned #Echelon
+      PropertyOwned: OwnedOutright #EIS
+    JointPolicyHolderDetails: false
+    JointPolicyHolderStatus: false
+    ConsentToRenew: false #EisOnlyField
+    Index: ~(Index)
+
+#  ClientDetails: &ClientDetails
+#  Define: &DerivedName ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(LastnameVal)
+#  Define: &DerivedName ~(FirstName) ~(LastnameVal)
+  Define: &DerivedName  ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(LastnameVal)
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+
+  # URLs
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+  # Credentials
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+
+
+  # Component Fields for String Building etc.
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EmailSequenceNumber
+
+
+
+~CommonInitActivities:
+  - ~Activity:
+      ~Label: LoadStandardClientData
+      ~Role: >
+        Load client data to allow policy creation
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        RecSet: EisStandardClients
+        Sources:
+          - Data/Eis/Variant01/EisUi_Variant01_Standard_Clients(000).yml
+
+  - ~Activity:
+      ~Label: LoadComplexClientData
+      ~Role: >
+        Load client data to allow policy creation
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        RecSet: EisComplexClients
+        Sources:
+          - Data/Eis/Variant01/EisUi_Variant01_Complex_Clients(000).yml
+
+
+~CommonFinalActivities:
+
+
+  - ~Activity:
+#      ~Label: ExportStandardDataToFileQuoteAndPolicy
+      ~Label: ExportStandardDataToFileQuotes
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: EisUi_Variant01_Standard_Quotes
+        Exports:
+          - TestCases:
+              - EISUI_QUOTE_BUILDER_HOME_STANDARD
+            DataItems:
+              - //001/QuoteCreationInEis.QuotesDetails
+#              - //001/QuoteCreationInEis._ControlData.SalesDetails
+
+
+
+  - ~Activity:
+      ~Label: ExportComplexDataToFileQuotes
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: EisUi_Variant01_Complex_Quotes
+        Exports:
+          - TestCases:
+              - EISUI_QUOTE_BUILDER_HOME_COMPLEX
+            DataItems:
+              - //001/QuoteCreationInEis.QuotesDetails
+#              - //001/QuoteCreationInEis._ControlData.SalesDetails
+
+
+~TestCases:
+
+
+  - ~TestCase:
+      ~CaseId: &caseId EISUI_QUOTE_BUILDER_HOME_STANDARD
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+
+                Team: ~(Team)
+                LogicalPattern: ~(LogicalPattern)
+                AreaOfTesting: ~(AreaOfTesting)
+                AreaOfBusiness: ~(AreaOfBusiness)
+                TestingType: ~(TestingType)
+                TestingTeam: ~(TestingTeam)
+                EmailSequenceNumber: ~(EmailSequenceNumber)
+                DomainName: n0ie34cm.mailosaur.net
+#                ForenameVal: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+#                LastnameVal: Testzxz
+                Postcode: NG17 3AS
+
+#                JointPolicyHolderDetails: false
+
+              Instances:
+                - Identities:
+                    - TestID|EISUI_AGEAS-HOME-001-01
+                  InstanceValues:
+                    Index: A
+                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[0].Data.ClientNumber
+                - Identities:
+                    - TestID|EISUI_AGEAS-HOME-001-02
+                  InstanceValues:
+                    Index: B
+                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[1].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-03
+#                  InstanceValues:
+#                    Index: C
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[2].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-04
+#                  InstanceValues:
+#                    Index: D
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[3].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-05
+#                  InstanceValues:
+#                    Index: E
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[4].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-06
+#                  InstanceValues:
+#                    Index: F
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[5].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-07
+#                  InstanceValues:
+#                    Index: G
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[6].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-08
+#                  InstanceValues:
+#                    Index: H
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[7].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-09
+#                  InstanceValues:
+#                    Index: I
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[8].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-10
+#                  InstanceValues:
+#                    Index: J
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[9].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-11
+#                  InstanceValues:
+#                    Index: K
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[10].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-12
+#                  InstanceValues:
+#                    Index: L
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[11].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-13
+#                  InstanceValues:
+#                    Index: M
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[12].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-14
+#                  InstanceValues:
+#                    Index: N
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[13].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-15
+#                  InstanceValues:
+#                    Index: O
+#                    ~Ref(ClientNumber): //000/LoadStandardClientData.EisStandardClients[14].Data.ClientNumber
+#
+
+
+
+      ~Stages:
+
+        - ~Stage:
+            ~Activities:
+
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new home quote for Ageas on EIS
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(ClientNumber)
+                    SalesDetails: *StandardPolicyDetails
+                  ~Unconditionals:
+
+
+  - ~TestCase:
+      ~CaseId: &caseId EISUI_QUOTE_BUILDER_HOME_COMPLEX
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+
+                Team: ~(Team)
+                LogicalPattern: ~(LogicalPattern)
+                AreaOfTesting: ~(AreaOfTesting)
+                AreaOfBusiness: ~(AreaOfBusiness)
+                TestingType: ~(TestingType)
+                TestingTeam: ~(TestingTeam)
+                EmailSequenceNumber: ~(EmailSequenceNumber)
+                DomainName: n0ie34cm.mailosaur.net
+#                ForenameVal: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                LastnameVal: Testzxz
+                Postcode: NG17 3AS
+
+#                JointPolicyHolderDetails: false
+
+              Instances:
+
+                - Identities:
+                    - TestID|EISUI_AGEAS-HOME-001-16
+                  InstanceValues:
+                    Index: P
+                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[0].Data.ClientNumber
+                - Identities:
+                    - TestID|EISUI_AGEAS-HOME-001-17
+                  InstanceValues:
+                    Index: Q
+                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[1].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-18
+#                  InstanceValues:
+#                    Index: R
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[2].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-19
+#                  InstanceValues:
+#                    Index: S
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[3].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-20
+#                  InstanceValues:
+#                    Index: T
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[4].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-21
+#                  InstanceValues:
+#                    Index: U
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[5].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-22
+#                  InstanceValues:
+#                    Index: V
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[6].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-23
+#                  InstanceValues:
+#                    Index: W
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[7].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-24
+#                  InstanceValues:
+#                    Index: X
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[8].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-25
+#                  InstanceValues:
+#                    Index: Y
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[9].Data.ClientNumber
+#                - Identities:
+#                    - TestID|EISUI_AGEAS-HOME-001-26
+#                  InstanceValues:
+#                    Index: Z
+#                    ~Ref(ClientNumber): //000/LoadComplexClientData.EisComplexClients[10].Data.ClientNumber
+
+
+      ~Stages:
+
+        - ~Stage:
+            ~Activities:
+
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new home quote for Ageas on EIS
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(ClientNumber)
+                    SalesDetails: *ComplexPolicyDetails
+                  ~Unconditionals:

@@ -1,0 +1,637 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &Person01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+
+
+  StandardPolicyDetails: &StandardPolicyDetails
+    QuotesDetails:
+      #      Affinity: AHDW #ShortForm Echelon
+      Affinity: AHCC #ShortForm EIS
+      Brand: Ageas
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+      ProductType: Home #EisOnlyField?
+
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: false
+        ContentAccidentalDamage: false
+        ~Ref(OptionalExtras): InstanceOptionalExtras  #EisOnlyField?
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 100000
+        ContentSum: 70000
+      InsuranceHistory:
+        ContentClaimFreeYears: 0
+        BuildingClaimFreeYears: 0
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+        SpecifiedItemsAvailable: false #EisOnlyField?
+        ~Ref(SpecifiedItems): InstanceSpecifiedItems #EisOnlyField?
+        UnspecifiedItems: #EisOnlyField?
+          CoverStatus: false #EisOnlyField?
+          ItemAmount: 3333 #EisOnlyField?
+      BuildingDetails:
+        #        BuildingType: Detached #Not an option in EIS dropdown therefore set to House
+        BuildingType: House # EIS
+        #        StructureType: Standard
+        StructureType: Detached House  #EisOnlyField?
+        ConstructionType: Standard
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress:
+          HouseIdentifier: "1"
+          Postcode: NG173AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+        NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false
+        BusinessUsage: #EisOnlyField?
+          BusinessUse: false
+          ClericalUse: false #EisOnlyField?
+          PropertyUse: meetings #EisOnlyField?
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+    #    PreferredDeliveryMethod: Email # Not present in EIS
+    PreferredDeliveryMethod: Print # Alt for EIS
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+      #      FirstName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      #      LastName: ~(Index)Testzxz
+      #      DerivedName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(Index)Testzxz
+      DerivedName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) Testzxz
+
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        HouseIdentifier: "1"
+        Postcode: ~(Postcode)
+      MainTelephoneNumber: "07345345345"
+      #      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+      EmailAddress: ~(Index)_~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: "1"
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      UnspentCriminalConviction: false #EisOnlyField?
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+      #      PropertyOwned: Owned #Echelon
+      PropertyOwned: OwnedOutright #EIS
+    JointPolicyHolderStatus: false
+    ConsentToRenew: false #EisOnlyField?
+    JointPolicyHolder: *Person01
+    JointPolicyHolderDetails: *Person01
+    Index: ~(Index)
+
+
+
+  # Has Buildings And Contents Accidental Damge
+  # Has a Joint PolicyHolder
+  # Has Personal Belongings Away From Home
+  ComplexPolicyDetails: &ComplexPolicyDetails
+    QuotesDetails:
+      #      Affinity: AHDW #ShortForm Echelon
+      Affinity: AHCC #ShortForm EIS
+      Brand: Ageas
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+      ProductType: Home #EisOnlyField?
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: true
+        ContentAccidentalDamage: true
+        ~Ref(OptionalExtras): InstanceOptionalExtras  #EisOnlyField?
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 100000
+        ContentSum: 70000
+      InsuranceHistory:
+        ContentClaimFreeYears: 0
+        BuildingClaimFreeYears: 0
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+        SpecifiedItemsAvailable: false #EisOnlyField?
+        ~Ref(SpecifiedItems): InstanceSpecifiedItems #EisOnlyField?
+        UnspecifiedItems: #EisOnlyField?
+          CoverStatus: false #EisOnlyField?
+          ItemAmount: 3333 #EisOnlyField?
+      BuildingDetails:
+        #        BuildingType: Detached #Not an option in EIS dropdown therefore set to House
+        BuildingType: House # EIS
+        #        StructureType: Standard
+        StructureType: Detached House  #EisOnlyField?
+        ConstructionType: Standard
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress:
+          HouseIdentifier: "1"
+          Postcode: NG173AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+        NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false #Strata just this field, EIS Below
+        BusinessUsage: #EisOnlyField?
+          BusinessUse: false
+          ClericalUse: false #EisOnlyField?
+          PropertyUse: meetings #EisOnlyField?
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+    #    PreferredDeliveryMethod: Email # Not present in EIS
+    PreferredDeliveryMethod: Print # Alt for EIS
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+      #      FirstName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      #      LastName: ~(Index)Testzxz
+      #      DerivedName: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(Index)Testzxz
+      DerivedName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        HouseIdentifier: "1"
+        Postcode: ~(Postcode)
+      MainTelephoneNumber: "07345345345"
+      #      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+      EmailAddress: ~(Index)_~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: "1"
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      UnspentCriminalConviction: false #EisOnlyField?
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+      #      PropertyOwned: Owned #Echelon
+      PropertyOwned: OwnedOutright #EIS
+    #    JointPolicyHolderDetails: true
+    #    JointPolicyHolderStatus: true #EIS unable to add joint policy holder details - from first name
+    JointPolicyHolderStatus: false
+    ConsentToRenew: false #EisOnlyField?
+    JointPolicyHolder: *Person01
+    JointPolicyHolderDetails: *Person01
+    Index: ~(Index)
+
+  #  ClientDetails: &ClientDetails
+  #  Define: &DerivedName ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(LastnameVal)
+  #  Define: &DerivedName ~(FirstName) ~(LastnameVal)
+  Define: &DerivedName  ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(LastnameVal)
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+
+  # URLs
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+  # Credentials
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+
+
+  # Component Fields for String Building etc.
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EmailSequenceNumber
+
+
+
+~CommonInitActivities:
+
+
+~CommonFinalActivities:
+
+  - ~Activity:
+      ~Label: ExportDataToFileStandardClients
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Eis_Variant01_OutputData_Standard_Clients
+        Exports:
+          - TestCases:
+              - EIS_STANDARD_CLIENT_BUILDER
+            DataItems:
+              - //001/CreateStandardClientsOnEis.EisClientDetails
+
+  - ~Activity:
+      ~Label: ExportDataToFileStandardSales
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Eis_Variant01_OutputData_Standard_Sales
+        Exports:
+          - TestCases:
+              - EIS_STANDARD_CLIENT_BUILDER
+            DataItems:
+              - //001/CreateStandardClientsOnEis._ControlData.SalesDetails
+
+
+  - ~Activity:
+      ~Label: ExportDataToFileComplexClients
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Eis_Variant01_OutputData_Complex_Clients
+        Exports:
+          - TestCases:
+              - EIS_COMPLEX_CLIENT_BUILDER
+            DataItems:
+              - //001/CreateComplexClientsOnEis.EisClientDetails
+
+  - ~Activity:
+      ~Label: ExportDataToFileComplexSales
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Eis_Variant01_OutputData_Complex_Sales
+        Exports:
+          - TestCases:
+              - EIS_COMPLEX_CLIENT_BUILDER
+            DataItems:
+              - //001/CreateComplexClientsOnEis._ControlData.SalesDetails
+
+
+~TestCases:
+
+
+  - ~TestCase:
+      ~CaseId: EIS_STANDARD_CLIENT_BUILDER
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+
+                Team: ~(Team)
+                LogicalPattern: ~(LogicalPattern)
+                AreaOfTesting: ~(AreaOfTesting)
+                AreaOfBusiness: ~(AreaOfBusiness)
+                TestingType: ~(TestingType)
+                TestingTeam: ~(TestingTeam)
+                EmailSequenceNumber: ~(EmailSequenceNumber)
+                DomainName: n0ie34cm.mailosaur.net
+                #                ForenameVal: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                #                LastnameVal: Testzxz
+                Postcode: NG17 3AS
+
+              #                JointPolicyHolderDetails: false
+
+              Instances:
+                - Identities:
+                    - TestID|EIS-AGEAS-HOME-001-01
+                  InstanceValues:
+                    Index: A
+                - Identities:
+                    - TestID|EIS-AGEAS-HOME-001-02
+                  InstanceValues:
+                    Index: B
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-03
+      #                  InstanceValues:
+      #                    Index: C
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-04
+      #                  InstanceValues:
+      #                    Index: D
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-05
+      #                  InstanceValues:
+      #                    Index: E
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-06
+      #                  InstanceValues:
+      #                    Index: F
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-07
+      #                  InstanceValues:
+      #                    Index: G
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-08
+      #                  InstanceValues:
+      #                    Index: H
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-09
+      #                  InstanceValues:
+      #                    Index: I
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-10
+      #                  InstanceValues:
+      #                    Index: J
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-11
+      #                  InstanceValues:
+      #                    Index: K
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-12
+      #                  InstanceValues:
+      #                    Index: L
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-13
+      #                  InstanceValues:
+      #                    Index: M
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-14
+      #                  InstanceValues:
+      #                    Index: N
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-15
+      #                  InstanceValues:
+      #                    Index: O
+
+
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateStandardClientsOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails: *StandardPolicyDetails
+
+
+                  ~Unconditionals:
+
+
+
+  - ~TestCase:
+      ~CaseId: EIS_COMPLEX_CLIENT_BUILDER
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+
+                Team: ~(Team)
+                LogicalPattern: ~(LogicalPattern)
+                AreaOfTesting: ~(AreaOfTesting)
+                AreaOfBusiness: ~(AreaOfBusiness)
+                TestingType: ~(TestingType)
+                TestingTeam: ~(TestingTeam)
+                EmailSequenceNumber: ~(EmailSequenceNumber)
+                DomainName: n0ie34cm.mailosaur.net
+                #                ForenameVal: ~(Index)~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                #                LastnameVal: Testzxz
+                Postcode: NG17 3AS
+
+              #                JointPolicyHolderDetails: false
+
+              Instances:
+                - Identities:
+                    - TestID|EIS-AGEAS-HOME-001-16
+                  InstanceValues:
+                    Index: P
+                - Identities:
+                    - TestID|EIS-AGEAS-HOME-001-17
+                  InstanceValues:
+                    Index: Q
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-18
+      #                  InstanceValues:
+      #                    Index: R
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-19
+      #                  InstanceValues:
+      #                    Index: S
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-20
+      #                  InstanceValues:
+      #                    Index: T
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-21
+      #                  InstanceValues:
+      #                    Index: U
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-22
+      #                  InstanceValues:
+      #                    Index: V
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-23
+      #                  InstanceValues:
+      #                    Index: W
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-24
+      #                  InstanceValues:
+      #                    Index: X
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-25
+      #                  InstanceValues:
+      #                    Index: Y
+      #                - Identities:
+      #                    - TestID|EIS-AGEAS-HOME-001-26
+      #                  InstanceValues:
+      #                    Index: Z
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateComplexClientsOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails: *ComplexPolicyDetails
+
+                  ~Unconditionals:
+

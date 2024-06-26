@@ -1,0 +1,431 @@
+~Templates:
+  MtaPatternControlSet01: &MtaPatternControlSet01
+    RequiredPolicyState:
+      JointPolicyHolderState:
+        MustHaveJointPolicyHolder: false
+        MustNotHaveJointPolicyHolder: false
+    FutureDateTheMta: false
+    MtaChanges:
+      Home:
+        PolicyHolderDetails: false
+        RiskAddress: false
+        CoverDetails: false
+      Motor:
+    FinancialImpact:
+      TestMustCauseCharge: false
+      TestMustCauseRefund: false
+      TestMustNotCauseChargeOrRefund: false
+    Dates:
+      FarInTheFutureDate: 31/12/2099
+      ~Gen(Today): DateRelToTodayAsStr|0|dd/MM/yyyy
+      ~Gen(Tomorrow): DateRelToTodayAsStr|1|dd/MM/yyyy
+    BusinessProcessParams:
+      DurationOfRenewalWindow: 28
+
+  PolicySelectionCriteria:
+    ByPolicyNumber: &SelectPolicyByPolicyNumber
+      PolicyNumber: ~(PolicyNumber)
+
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+    CustomerPortalCredentials: &CustomerPortalCredentials
+      Email: ~(PolicyNumber)@ageas.co.uk
+      Password: ~(StandardPortalPassword)
+
+  People:
+    Person01: &Person01
+      Title: Mr
+      FirstName: Joint
+      LastName: PolicyHolder
+      MaritalStatus: Single
+      DateOfBirth: 11/10/1996
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: true
+        Category: Self Employed
+        Type: CoachBuilder
+        Industry: CoachHirer
+
+  Mtas:
+    AddPerson01AsJphAsSibling01: &AddPerson01AsJphAsSibling01
+      MTAType: JointPolicyholder
+      JointPolicyHolder:
+        Action: Add
+        PersonalDetails: *Person01
+        Relationship: Sibling
+    DeleteJph: &DeleteJph
+      MTAType: JointPolicyholder
+      JointPolicyHolder:
+        Action: Delete
+
+
+~ConcretePatterns:
+  ConcretePatternForMta01: &ConcretePatternForMta01
+    ~Stages:
+      - ~Stage: # 001 Get policy details from the policy admin system and validate state. Also set target date for the MTA
+          ~Activities:
+            - ~Activity: # Get the policy state at the latest MTA date associated with the policy
+                ~Label: GetPolicyDetailsForFurthestOutMtaFromSourceBeforeMTA
+                ~Role: >
+                  Capture the policy details from the PAS at the point of the latest dated taken up MTA
+                  Allows validation of whether a 'today' mta is possible
+                  Allows selection of a date for a future dated mta
+                ~Type: Act
+                ~Action: GetPolicyDetailsEchelonUI
+                ~ControlData:
+                  UserCredentials: *StandardEchelonUserCredentialsSet
+                  SearchCriteria: *SelectPolicyByPolicyNumber
+                  AsOfDate: ~(MtaPatternControlSet.Dates.FarInTheFutureDate)
+                ~Judgements:
+                  ## Validate that the policy state is compatible with the requirements of the test case instance
+                  # Check that the policy is not in its renewal period
+                  - ~(CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView.PolicyExpiresIn)<=~(MtaPatternControlSet.BusinessProcessParams.DurationOfRenewalWindow)|HardRunFault("Policy ~(PolicyNumber) is in renewal period")
+                  #  Check that if the MTA is to be applied today, not future dated then that the earliest date we can do the MTA is today and is not being forced later by an existing MTA.
+                  - (MtaPatternControlSet.FutureDateTheMta==FALSE)&&(~(CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].AdditionalInfo.EarliestAllowedMtaDate)!=~(MtaPatternControlSet.Dates.Today))|HardRunFault("Aim to do an MTA today but the policy ~(PolicyNumber) state does not allow that")
+                  # Check that there is a zero balance on the policy
+                  - (~(CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].AdditionalInfo.PolicyBalance)!=0)|HardRunFault("Policy ~(PolicyNumber) has a non-Zero balance")
+                  # Check the Joint Policyholder state is acceptable
+                  - (MtaPatternControlSet.RequiredPolicyState.JointPolicyHolderState.MustHaveJointPolicyHolder==TRUE)&&(~(CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView.JointPolicyHolderActive)==FALSE)|HardRunFault("Test case instance required the presence of a JPH")
+                  - (MtaPatternControlSet.RequiredPolicyState.JointPolicyHolderState.MustNotHaveJointPolicyHolder==TRUE)&&(~(CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView.JointPolicyHolderActive)==TRUE)|HardRunFault("Test case instance required no JPH")
+
+            - ~Activity:
+                ~Label: SetTheDate2bUsedForMTA
+                ~Role: >
+                  Based on whether the MTA is set to be Future Dated set to either:
+                  (a) Today, or
+                  (b) The day after the lastest completed MTA on the policy
+                ~Type: Act
+                ~Action: ConditionalDataSelection
+                ~ControlData:
+                  Expression: MtaPatternControlSet.FutureDateTheMta==TRUE
+                  IfTrue:
+                    ~Gen(DateToUseForMta): DateRelToDateAsStr|1|~(//001/GetPolicyDetailsForFurthestOutMtaFromSourceBeforeMTA.CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].AdditionalInfo.EarliestAllowedMtaDate)|dd/MM/yyyy
+                  IfFalse:
+                    DateToUseForMta: ~(MtaPatternControlSet.Dates.Today)
+            - ~Activity: # Get the policy state for the target MTA date
+                ~Label: GetPolicyDetailsForMtaDateFromSourceBeforeMTA
+                ~Role: >
+                  Capture the policy details from the PAS for the specific date that the MTA will be applied, ahead fo the change
+                ~Type: Act
+                ~Action: GetPolicyDetailsEchelonUI
+                ~ControlData:
+                  UserCredentials: *StandardEchelonUserCredentialsSet
+                  SearchCriteria: *SelectPolicyByPolicyNumber
+                  AsOfDate: ~(//001/SetTheDate2bUsedForMTA.DateToUseForMta)
+            - ~Activity: # Get the policy state for today
+                ~Label: GetPolicyDetailsForTodayFromSourceBeforeMTA
+                ~Role: >
+                  Capture the policy details from the PAS for today, ahead fo the change
+                ~Type: Act
+                ~Action: GetPolicyDetailsEchelonUI
+                ~ControlData:
+                  UserCredentials: *StandardEchelonUserCredentialsSet
+                  SearchCriteria: *SelectPolicyByPolicyNumber
+                  AsOfDate: ~(MtaPatternControlSet.Dates.Today)
+#      - ~Stage: # 002 Retrieve policy details from portal before MTA and verify that they match the policy admin systems state for today
+#          ~Activities:
+#            - ~Activity:
+#                ~Label: GetPolicyDetailsPortalBeforeMTA
+#                ~Role: >
+#                  Capture policy details from portal before MTA
+#                ~Type: Act
+#                ~Action: GetPolicyInformationPortal
+#                ~ControlData:
+#                  CustomerCredentials: *CustomerPortalCredentials
+#                  SearchCriteria: *SelectPolicyByPolicyNumber
+#      - ~Stage: #003
+#          ~Activities:
+#            - ~Activity:
+#                ~Label: ComparePolicyInfoOfPortalAndPolicyAdminSystemBeforeMta
+#                ~Role: >
+#                  Comparing the policy details (UniversalView) fetched from Portal and Policy Admin System
+#                  They should be identical
+#                ~Type: Act
+#                ~Action: CompareData
+#                ~ControlData:
+#                  InputA: //001/GetPolicyDetailsForTodayFromSourceBeforeMTA.CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView
+#                  InputB: //002/GetPolicyDetailsPortalBeforeMTA.CustomerPolicyDetailOnPortal.NormalizedData.HomeInsurance[0].UniversalView
+#                ~Judgements:
+#                  - //003/ComparePolicyInfoOfPortalAndPolicyAdminSystemBeforeMta.NumDiffs!=0|Fail(UnexpectedPolicyDifference, "Before MTA - Difference in polivy data reported by PAS and Portal")
+      - ~Stage: # 004 Check MTA that we want to do are enabled on the policy that is being targeted
+          ~Activities:
+            - ~Activity:
+                ~Label: CheckMTAIsAllowed
+                ~Role: >
+                  Validate particular type of MTA is available on the portal.
+                ~Type: Act
+                ~Action: CheckMTAIsAllowed
+                ~ControlData:
+                  CustomerCredentials: *CustomerPortalCredentials
+                  PolicyNumber: ~(PolicyNumber)
+                  MTAEffectiveDate: ~(//001/SetTheDate2bUsedForMTA.DateToUseForMta)
+                ~Judgements:
+                  - Home.PolicyHolderDetails==FALSE|Fail(PolicyHolderDetailsMtaNotEnabled, "Home policyholder details MTA is not enabled")
+                  - Home.RiskAddress==FALSE|Fail(RiskAddressAddressNotEnabled, "Home risk address MTA is not enabled")
+                  - Home.CoverDetails==FALSE|Fail(CoverDetailedNotEnabled, "Home cover details MTA is not enabled")
+                  # Need to add FailAndFault option
+                  - MtaPatternControlSet.MtaChanges.Home.PolicyHolderDetails&&(Home.PolicyHolderDetails==FALSE)|HardRunFault("Home policyholder details MTA is not enabled")
+                  - MtaPatternControlSet.MtaChanges.Home.RiskAddress&&(Home.RiskAddress==FALSE)|HardRunFault("Home risk address MTA is not enabled")
+                  - MtaPatternControlSet.MtaChanges.Home.CoverDetails&&(Home.CoverDetails==FALSE)|HardRunFault("Home cover details MTA is not enabled")
+                ~Unconditionals:
+      - ~Stage: # 005 Perform the MTA and pay for it, if necessary, unless payment is not expected.
+          ~Activities:
+            - ~Activity:
+                ~Label: PerformTheMta
+                ~Role: >
+                  Perform MTA on a policy
+                ~Type: Act
+                ~Action: PerformMTAOnPolicy
+                ~ControlData:
+                  CustomerCredentials: *CustomerPortalCredentials
+                  SearchCriteria: *SelectPolicyByPolicyNumber
+                  MTAEffectiveDate: ~(//001/SetTheDate2bUsedForMTA.DateToUseForMta)
+                  ~Ref(MTASpec): InstanceMTASpec
+                ~Judgements:
+                  # This pattern does not attempt to determine whether the financial effect is directionally correct.
+                  - MtaPatternControlSet.FinancialImpact.TestMustCauseCharge&&(//005/PerformTheMta.FinanicalImpact.Charge=0)|HardFault("Test has requirement for the payment of a charge no charge was triggered")
+                  - MtaPatternControlSet.FinancialImpact.TestMustCauseRefund&&(//005/PerformTheMta.FinanicalImpact.Refund==FALSE)|HardFault("Test has requirement for the creation of refund but no refund was triggered")
+                  - MtaPatternControlSet.FinancialImpact.TestMustNotCauseChargeOrRefund&&(//005/PerformTheMta.FinanicalImpact.Charge!=0)|HardFault("Test has requirement that no charge is triggered, one was")
+                  - MtaPatternControlSet.FinancialImpact.TestMustNotCauseChargeOrRefund&&(//005/PerformTheMta.FinanicalImpact.Refund==TRUE)|HardFault("Test has requirement that no refund is triggered, one was")
+                  - //005/PerformTheMta.FinancialImpact.Charge=0|StageCompleted("Halt stage as no payment to be made")
+            - ~Activity:
+                ~Label: PaymentForRatableHomeInsuranceOnPortal
+                ~Role: >
+                  portal.
+                ~Type: Check
+                ~Action: PaymentOnPortal
+                ~ControlData:
+                  CustomerCredentials: CustomerPortalCredentials
+                  InsuranceType: Home
+                  CardDetails:
+                    PaymentInsuranceType: Home
+                    CardNumber: 4444333322221111
+                    CardHolderName: George Byrd
+                    CVVNumber: 555
+                ~Judgements:
+                ~Unconditionals:
+
+
+
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: EchelonLoginURL
+      ~Val: https://injector-uat.ageas.co.uk/strata/ageas/household/login
+  - ~Setting: #Portal Login
+      ~Src: Local
+      ~Id: PortalLoginURL
+      ~Val: https://portaltest.ageascloud.co.uk/login
+  - ~Setting:
+      ~Src: Local
+      ~Id: StandardEchelonUserName
+      ~Val: a50_vdeshpande_uat
+  - ~Setting:
+      ~Src: Local
+      ~Id: StandardEchelonUserPassword
+      ~Val: Password02
+  - ~Setting:
+      ~Src: Local
+      ~Id: StandardPortalPassword
+      ~Val: Password123
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId Portal-MTA-Add-JPH
+      ~Headline: Add joint point policy holder cases (a) current date and (b) future dated
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                # Define the default pattern characteristics for instances of this test case
+                MtaPatternControlSet:
+                  <<: *MtaPatternControlSet01
+                  RequiredPolicyState:
+                    JointPolicyHolderState:
+                      MustHaveJointPolicyHolder: false
+                      MustNotHaveJointPolicyHolder: true
+                # Define the specification of the default MTA to be performed for this test case
+                InstanceMTASpec: *AddPerson01AsJphAsSibling01
+              Instances:
+              - Identities:
+                  - TestID|AddToday
+                InstanceValues:
+                  MtaPatternControlSet:
+                    FutureDateTheMta: false
+                    MtaChanges:
+                      Home:
+                        PolicyHolderDetails: true
+                  PolicyNumber: HE22757069280
+                  PortalLoginURL: ~(PortalLoginURL)
+                  EchelonLoginURL: ~(EchelonLoginURL)
+      <<: *ConcretePatternForMta01
+
+  - ~TestCase:
+      ~CaseId: &caseId Portal-MTA-Del-JPH
+      ~Headline: Delete joint point policy holder cases (a) current date and (b) future dated
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                # Define the default pattern characteristics for instances of this test case
+                MtaPatternControlSet:
+                  <<: *MtaPatternControlSet01
+                  RequiredPolicyState:
+                    JointPolicyHolderState:
+                      MustHaveJointPolicyHolder: true
+                      MustNotHaveJointPolicyHolder: false
+                # Define the specification of the default MTA to be performed for this test case
+                InstanceMTASpec: *DeleteJph
+              Instances:
+                - Identities:
+                    - TestID|DeleteToday
+                  InstanceValues:
+                    MtaPatternControlSet:
+                      FutureDateTheMta: false
+                      MtaChanges:
+                        Home:
+                          PolicyHolderDetails: true
+                    PolicyNumber: HE22757069280
+                    PortalLoginURL: ~(PortalLoginURL)
+                    EchelonLoginURL: ~(EchelonLoginURL)
+      <<: *ConcretePatternForMta01
+
+
+#        - ~Stage: # Retrieve policy details from Echleon and portal before MTA and verify that they are same
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: GetPolicyDetailsPortalBeforeMTA
+#                  ~Role: >
+#                    Capture policy details from portal before MTA
+#                  ~Type: Act
+#                  ~Action: GetPolicyInformationPortal
+#                  ~ControlData:
+#                    CustomerCredentials: *CustomerCred #tag credentials for use later in the test
+#                    SearchCriteria: &SearchCriteria
+#                      PolicyNumber: ~(PolicyNumber) # pass only one selection strategy
+#                  ~Judgements:
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: GetPolicyDetailsSourceBeforeMTA
+#                  ~Role: >
+#                    Capture the policy details from Echelon before the MTA
+#                  ~Type: Act
+#                  ~Action: GetPolicyDetailsEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: &UserCred # change to user credentials here and in code (Kehinde*)
+#                      Email: a50_vdeshpande_uat
+#                      Password: Password02
+#                    SearchCriteria: *SearchCriteria #Can pass multiple selection strategy
+#                  ~Judgements:
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: ComparePolicyInfoOfPortalAndSourceSystem
+#                  ~Role: >
+#                    Comparing the policy details fetch from Portal and Source(Echelon/EIS)
+#                  ~Type: Act
+#                  ~Action: CompareData
+#                  ~ControlData:
+#                    InputA: //002/GetPolicyDetailsPortalBeforeMTA.CustomerPolicyDetailOnPortal.NormalizedData #Sending Map to compare
+#                    InputB: //002/GetPolicyDetailsSourceBeforeMTA.CustomerPolicyDetailOnEchelon.NormalizedData #Sending Map to compare
+#                  ~Judgements:
+#                    - //002/ComparePolicyInfoOfPortalAndSourceSystem.NumDiffs=0|Fail(UnexpectedPolicyDifference, "Before MTA - Difference in Customer data reported by Echleon and Portal")
+#                  ~Unconditionals:
+#        - ~Stage:
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: PerformRatableMTAOnHomePolicy
+#                  ~Role: >
+#                    Perform MTA on a policy
+#                  ~Type: Act
+#                  ~Action: PerformMTAOnPolicy
+#                  ~ControlData:
+#                    CustomerCredentials: *CustomerCred
+#                    PolicyNumber: ~(PolicyNumber)
+#                    MTAEffectiveDate: ~(MtaEffectiveDate)
+#                    ~Ref(MTASpec): InstanceMTASpec
+#                  ~Judgements:
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: PaymentForRatableHomeInsuranceOnPortal
+#                  ~Role: >
+#                    portal.
+#                  ~Type: Check
+#                  ~Action: PaymentOnPortal
+#                  ~ControlData:
+#                    CustomerCredentials: *CustomerCred
+#                    InsuranceType: Home
+#                    CardDetails:
+#                      PaymentInsuranceType: Home
+#                      CardNumber: 4444333322221111
+#                      CardHolderName: George Byrd
+#                      CVVNumber: 555
+#                  ~Judgements:
+#                  ~Unconditionals:
+#        - ~Stage: #4. Retrieve policy details from Portal Before and After MTA and ensure that policy is updated
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: GetPolicyDetailsPortalAfterMTA
+#                  ~Role: >
+#                    Capture policy details from portal before MTA
+#                  ~Type: Act
+#                  ~Action: GetPolicyInformationPortal
+#                  ~ControlData:
+#                    CustomerCredentials: *CustomerCred #tag credentials for use later in the test
+#                    SearchCriteria: &SearchCriteria
+#                      PolicyNumber: ~(PolicyNumber) # pass only one selection strategy
+#                  ~Judgements:
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: ComparePolicyOfPortalBeforeAndAfterMTA
+#                  ~Role: >
+#                    Comparing the policy details fetch from Portal before and after MTA
+#                  ~Type: Act
+#                  ~Action: CompareData
+#                  ~ControlData:
+#                    InputA: //002/GetPolicyDetailsPortalBeforeMTA.CustomerPolicyDetailOnPortal.NormalizedData #Sending Map to compare
+#                    InputB: //004/GetPolicyDetailsPortalAfterMTA.CustomerPolicyDetailOnPortal.NormalizedData #Sending Map to compare
+#                  ~Judgements:
+#                    - //004/ComparePolicyOfPortalBeforeAndAfterMTA.NumDiffs==0|Fail(MissingPolicyDifference, "After MTA - Customer Policy has not changed")
+#                  ~Unconditionals:
+#        - ~Stage: #5.
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: GetPolicyDetailsSourceAfterMTA
+#                  ~Role: >
+#                    Capture the policy details from Echelon after the MTA
+#                  ~Type: Act
+#                  ~Action: GetPolicyDetailsEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *UserCred # change to user credentials here and in code (Kehinde*)
+#                    SearchCriteria: *SearchCriteria #Can pass multiple selection strategy
+#                  ~Judgements:
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: ComparePolicyInfoOfPortalAndSourceSystem
+#                  ~Role: >
+#                    Comparing the policy details fetch from Portal and Source(Echelon/EIS)
+#                  ~Type: Act
+#                  ~Action: CompareData
+#                  ~ControlData:
+#                    InputA: //004/GetPolicyDetailsPortalAfterMTA.CustomerPolicyDetailOnPortal.NormalizedData #Sending Map to compare
+#                    InputB: //005/GetPolicyDetailsSourceAfterMTA.CustomerPolicyDetailOnEchelon.NormalizedData #Sending Map to compare
+#                  ~Judgements:
+#                    - //005/ComparePolicyInfoOfPortalAndSourceSystem.NumDiffs!=0|Fail(UnexpectedPolicyDifference, "After MTA - Difference in Customer data reported by Echleon and Portal")
+#                  ~Unconditionals:

@@ -1,0 +1,23 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CQP_MTA_Van_Ageas_Set2_SIT" type="Application" factoryName="Application" folderName="DB_Van_Set2Execution_SIT">
+    <envs>
+      <env name="AreaOfBusiness" value="Bau" />
+      <env name="AreaOfTesting" value="Por" />
+      <env name="ClientGroupId" value="SITSETAA" />
+      <env name="CoreEisPassword" value="qa" />
+      <env name="CoreEisUserName" value="qa" />
+      <env name="EISLoginURL" value="https://cssr-app-agea-sit.dev.az05.agea.cloud/login" />
+      <env name="LogicalPattern" value="Mta" />
+      <env name="StandardEisPassword" value="qa" />
+      <env name="StandardEisUserName" value="qa" />
+      <env name="Team" value="T3" />
+      <env name="TestingTeam" value="Auto" />
+      <env name="TestingType" value="f" />
+    </envs>
+    <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="&quot;C:\Idea Project\E2E-TestBuild\E2E-BC-Test-Databuild\EisDataBuild\Set2Execution\Van\CQP_MTA_Van_Ageas.yaml&quot;" />
+    <method v="2" />
+  </configuration>
+</component>

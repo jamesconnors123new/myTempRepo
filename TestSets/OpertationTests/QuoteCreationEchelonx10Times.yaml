@@ -1,0 +1,187 @@
+~Templates:
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+
+~ConcretePatterns:
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    Index: A
+                - Identities:
+                    - TestID|EX-DB-0001-02
+                  InstanceValues:
+                    Index: B
+                - Identities:
+                    - TestID|EX-DB-0001-03
+                  InstanceValues:
+                    Index: C
+                - Identities:
+                    - TestID|EX-DB-0001-04
+                  InstanceValues:
+                    Index: D
+                - Identities:
+                    - TestID|EX-DB-0001-05
+                  InstanceValues:
+                    Index: E
+                - Identities:
+                    - TestID|EX-DB-0001-06
+                  InstanceValues:
+                    Index: F
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateNewQuoteOnEchelon
+                  ~Role: >
+                    Create a new quote on Echelon UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: AHDW #ShortForm
+                        Brand: Ageas
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: true
+                          Contents: true
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: false
+                        InsuredAmount: #Rebuilding Cost
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100
+                          RebuildingCost: 100000
+                          ContentSum: 70000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                        BuildingDetails:
+                          BuildingType: Detached  #
+                          ConstructionType: Standard  #Creation of code for options
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          RiskAddress:
+                            HouseIdentifier: 1
+                            Postcode: RG45LP
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+                          LetWithSublet: false
+                          BusinessUse: false
+                          HolidayHomeStatus: false #Boolean for now
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned #Leased/Rented/Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: Email
+                      ProposerPersonalDetails:
+                        Title: Mr
+                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                        LastName: Testzxz
+                        MaritalStatus: Single
+                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+                        Gender: Male
+                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: BakeryAssistant
+                          Industry: FastFood
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      ProposerContactDetails:
+                        CorrespondenceAddress:
+                          HouseIdentifier: 1
+                          Postcode: RG45LP
+                        MainTelephoneNumber: "07345345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: true
+                        Email: false
+                        Telephone: true
+                        SMS: false
+                      OtherDetails: #Policy User Fields
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        NumberOfBathroom: 1
+                        WallConstructionType: Brick
+                        RoofConstructionType: Concrete
+                        NumberOfDaysPropertyLeftUnoccupied: 0
+                        PercentageOfFlatRoof: 35
+                        PaymentType: Annual
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: false
+                            Other: false #if first two options are true thne other should not be true. condition
+                        PropertyOwned: Owned
+                      JointPolicyHolder:
+                        Title: Mr
+                        FirstName: JPHFirstName
+                        LastName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                        MaritalStatus: Single
+                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+                        Gender: Male
+                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+                        RelationshipWithPolicyholder: (None)
+                  ~Unconditionals:

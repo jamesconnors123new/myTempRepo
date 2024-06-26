@@ -1,0 +1,1408 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: EIS-HOME-MTA03S2B-Policies-Data
+        Exports:
+          - TestCases:
+              - EIS_HOME_POLICIES_MTA03S2B
+            DataItems:
+              - //002/QuoteCreationInEis.EisClientDetails
+              - //002/PolicyCreationOnEis.PolicyDetails
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EIS_HOME_POLICIES_MTA03S2B
+      ~Headline: Add Ageas customer home quotes and policies with cheque payment for General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                LastnameVal: Testzxz
+              Instances:
+                - Identities:
+                    - TestID|MTA03_013
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AA
+                    MaritalStatus: Widowed
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 141
+                    CorrespondencePostcode: CH44 6ND
+                    RiskAddressHouseIdentifier: 141
+                    RiskPostcode: CH44 6ND
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-8800|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-650|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 24568
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 16
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: ADHXSP
+                    ClaimHistoryAvailable: false
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_015
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AB
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 2
+                    CorrespondencePostcode: BN2 9NB
+                    RiskAddressHouseIdentifier: 21
+                    RiskPostcode: HA3 7SY
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-4600|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: PrivateLandlord
+                    BuildingType: Other Flat
+                    StructureType: Basement Flat
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 22
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: ADHXSP, ADHXSPS
+                    ClaimHistoryAvailable: false
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_016
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AC
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 1
+                    CorrespondencePostcode: HA3 0LP
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: HA3 0LP
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-16482|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-16482|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Other Flat
+                    StructureType: First Floor Flat
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 12345
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 26
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_018
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AD
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 1
+                    CorrespondencePostcode: HA3 0LP
+                    RiskAddressHouseIdentifier: 10
+                    RiskPostcode: B34 6ES
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-16400|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-16400|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Other Flat
+                    StructureType: First Floor Flat
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 12345
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 2
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_027
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AE
+                    MaritalStatus: CivilPartnership
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 462
+                    CorrespondencePostcode: IG1 1NH
+                    RiskAddressHouseIdentifier: 462
+                    RiskPostcode: IG1 1NH
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-10987|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-4365|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Detached Bungalow
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 29
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                    InstanceOptionalExtras: RATLEGH, HOMPROT
+                - Identities:
+                    - TestID|MTA03_028
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AF
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 5
+                    CorrespondencePostcode: BD17 5AT
+                    RiskAddressHouseIdentifier: 5
+                    RiskPostcode: BD17 5AT
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-17423|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12645|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Rented
+                    BuildingType: Semi Detached Bungalow
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 3
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                    InstanceOptionalExtras: HOMPROT
+                - Identities:
+                    - TestID|MTA03_030
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mx
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AG
+                    MaritalStatus: Single
+                    Gender: NotSpecified
+                    CorrespondenceHouseIdentifier: 3
+                    CorrespondencePostcode: PA1 2LS
+                    RiskAddressHouseIdentifier: 3
+                    RiskPostcode: PA1 2LS
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14400|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12400|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Leased
+                    BuildingType: Townhouse
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 78499
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 12
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                    InstanceOptionalExtras: RHKP
+                - Identities:
+                    - TestID|MTA03_044
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mx
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AH
+                    MaritalStatus: Single
+                    Gender: NotSpecified
+                    CorrespondenceHouseIdentifier: Wallingham
+                    CorrespondencePostcode: TN28 8TP
+                    RiskAddressHouseIdentifier: Wallingham
+                    RiskPostcode: TN28 8TP
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13234|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13234|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 78499
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 18
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+#                - Identities:
+#                    - TestID|MTA03_045
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    Affinity: AHCC
+#                    Title: Mr
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AI
+#                    MaritalStatus: Single
+#                    Gender: Male
+#                    CorrespondenceHouseIdentifier: 66
+#                    CorrespondencePostcode: EH5 3JB
+#                    RiskAddressHouseIdentifier: 66
+#                    RiskPostcode: EH5 3JB
+#                    BuildingsCover: true
+#                    ContentsCover: true
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-9870|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-9870|dd/MM/yyyy
+#                    JointPolicyHolderStatus: false
+#                    PropertyOwned: OwnedOutright
+#                    BuildingType: Bungalow
+#                    StructureType: Detached Bungalow
+#                    ClaimHistoryAvailable: false
+#                    SpecifiedItemsAvailable: true
+#                    InstanceSpecifiedItems:
+#                      InHome:
+#                        - Item: Valuables
+#                          Description: Jewellery
+#                          Value: 5000
+#                        - Item: Pictures
+#                          Description: Portraits
+#                          Value: 4000
+#                      AwayHome:
+#                        - Item: Camcorders
+#                          Description: Camcorders
+#                          Value: 3700
+#                        - Item: Bicycle
+#                          Description: MountBicycle
+#                          Value: 2500
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 78499
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 22
+#                    PaymentType: Monthly
+#                    ContentAccidentalDamage: false
+#                - Identities:
+#                    - TestID|MTA03_048
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    Affinity: AHCC
+#                    Title: Mr
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AJ
+#                    MaritalStatus: CivilPartnership
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: The Rise
+#                    CorrespondencePostcode: BH10 4AB
+#                    RiskAddressHouseIdentifier: 3, Bluebells
+#                    RiskPostcode: CO10 7JT
+#                    BuildingsCover: false
+#                    ContentsCover: true
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13234|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13234|dd/MM/yyyy
+#                    JointPolicyHolderStatus: false
+#                    PropertyOwned: OwnedOutright
+#                    BuildingType: House
+#                    StructureType: Detached House
+#                    ClaimHistoryAvailable: false
+#                    SpecifiedItemsAvailable: true
+#                    InstanceSpecifiedItems:
+#                      InHome:
+#                        - Item: Valuables
+#                          Description: Jewellery
+#                          Value: 2000
+#                        - Item: Pictures
+#                          Description: Portraits
+#                          Value: 500
+#                      AwayHome:
+#                        - Item: Camcorders
+#                          Description: Camcorders
+#                          Value: 1000
+#                        - Item: Bicycle
+#                          Description: MountBicycle
+#                          Value: 1500
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 78499
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 2
+#                    PaymentType: Monthly
+#                    ContentAccidentalDamage: true #Newfield
+                - Identities:
+                    - TestID|MTA03_055
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AK
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 13
+                    CorrespondencePostcode: NE2 4BT
+                    RiskAddressHouseIdentifier: 13
+                    RiskPostcode: NE2 4BT
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-11655|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11655|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Rented
+                    BuildingType: Semi Detached Bungalow
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 30
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_056
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AL
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 15
+                    CorrespondencePostcode: CT13 0LE
+                    RiskAddressHouseIdentifier: 15
+                    RiskPostcode: CT13 0LE
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-11655|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11655|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Park Home
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 31
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_059
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AM
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 1
+                    CorrespondencePostcode: NR23 1DN
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: NR23 1DN
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-11655|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11655|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Rented
+                    BuildingType: Semi Detached Bungalow
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 6
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_060
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AN
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 3
+                    CorrespondencePostcode: SY1 4UF
+                    RiskAddressHouseIdentifier: 3
+                    RiskPostcode: SY1 4UF
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13200|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13200|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Park Home
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 12
+                    PaymentType: Monthly
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_064
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AO
+                    MaritalStatus: Widowed
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 3
+                    CorrespondencePostcode: SY1 4UF
+                    RiskAddressHouseIdentifier: 3
+                    RiskPostcode: SY1 4UF
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-8800|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-650|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 24568
+                    PaymentType: Annual
+                    InstanceOptionalExtras: ADHXSP
+                    ClaimHistoryAvailable: false
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_080
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AP
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 3
+                    CorrespondencePostcode: SY1 4UF
+                    RiskAddressHouseIdentifier: 3
+                    RiskPostcode: SY1 4UF
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-8800|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-650|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: Other Flat
+                    StructureType: Second Floor Flat & Above
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    InstanceOptionalExtras: ADHXSP
+                    ClaimHistoryAvailable: false
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_081
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AQ
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 43
+                    CorrespondencePostcode: OX9 2FQ
+                    RiskAddressHouseIdentifier: 43
+                    RiskPostcode: OX9 2FQ
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14333|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2500|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: Other Flat
+                    StructureType: Ground Floor Flat
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ClaimHistoryAvailable: false
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_083
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AR
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 58
+                    CorrespondencePostcode: G73 3LL
+                    RiskAddressHouseIdentifier: 58
+                    RiskPostcode: G73 3LL
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-11980|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11980|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ClaimHistoryAvailable: false
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_084
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AS
+                    MaritalStatus: CivilPartnership
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 20
+                    CorrespondencePostcode: EX11 1JF
+                    RiskAddressHouseIdentifier: 20
+                    RiskPostcode: EX11 1JF
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12561|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12561|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ClaimHistoryAvailable: false
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_091
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AT
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 46A
+                    CorrespondencePostcode: KT22 9ER
+                    RiskAddressHouseIdentifier: 46A
+                    RiskPostcode: KT22 9ER
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12750|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12750|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_094
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AU
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 24
+                    CorrespondencePostcode: OX33 1UP
+                    RiskAddressHouseIdentifier: 24
+                    RiskPostcode: OX33 1UP
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_095
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AV
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 24
+                    CorrespondencePostcode: OX33 1UP
+                    RiskAddressHouseIdentifier: 24
+                    RiskPostcode: OX33 1UP
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_109
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AW
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 54
+                    CorrespondencePostcode: IP31 2UH
+                    RiskAddressHouseIdentifier: 54
+                    RiskPostcode: IP31 2UH
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    InstanceEndorsement: Endorsement Test5 #Students Excluded, Lodgers and Paying Guests, HOMPROT
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_110
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AX
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 44
+                    CorrespondencePostcode: UB6 9FH
+                    RiskAddressHouseIdentifier: 44
+                    RiskPostcode: UB6 9FH
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    InstanceEndorsement: Endorsement Test5 #Students Excluded, Lodgers and Paying Guests, HOMPROT
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12889|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12889|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Maisonette
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_112
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AY
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 53
+                    CorrespondencePostcode: SO23 9BD
+                    RiskAddressHouseIdentifier: 53
+                    RiskPostcode: SO23 9BD
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    InstanceEndorsement: Endorsement Test5 #Students Excluded, Lodgers and Paying Guests, HOMPROT
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12889|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12889|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Townhouse
+                    StructureType: Detached Town House # -Fixed
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+#                - Identities:
+#                    - TestID|MTA03_123
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    Affinity: RHCC
+#                    Title: Mr
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AZ
+#                    MaritalStatus: Married
+#                    Gender: Male
+#                    CorrespondenceHouseIdentifier: 53 #Fixed
+#                    CorrespondencePostcode: SO23 9BD
+#                    RiskAddressHouseIdentifier: 53
+#                    RiskPostcode: SO23 9BD
+#                    BuildingsCover: true
+#                    ContentsCover: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13278|dd/MM/yyyy
+#                    JointPolicyHolderStatus: true
+#                    PropertyOwned: Owned
+#                    BuildingType: Self contained flat
+#                    StructureType: NotRequired
+#                    ClaimHistoryAvailable: false
+#                    SpecifiedItemsAvailable: true
+#                    InstanceSpecifiedItems:
+#                      InHome:
+#                        - Item: Valuables
+#                          Description: Jewellery
+#                          Value: 4000
+#                      AwayHome:
+#                        - Item: Camcorders
+#                          Description: Camcorders
+#                          Value: 6500
+#                    PaymentMethod: CreditCard
+#                    PaymentType: Annual
+#                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_125
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BA
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 53 #Fixed
+                    CorrespondencePostcode: SO23 9BD
+                    RiskAddressHouseIdentifier: 53
+                    RiskPostcode: SO23 9BD
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13654|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13654|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_126
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BB
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 53 #Fixed
+                    CorrespondencePostcode: SO23 9BD
+                    RiskAddressHouseIdentifier: 60
+                    RiskPostcode: FK16 6DJ
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14115|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-14115|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Owned
+                    BuildingType: Semi-Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_130
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BC
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 19
+                    CorrespondencePostcode: LE5 0AY
+                    RiskAddressHouseIdentifier: 19
+                    RiskPostcode: LE5 0AY
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    InstanceEndorsement: Endorsement Test5 #Students Excluded, Lodgers and Paying Guests, HOMPROT
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14162|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7650|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Self-contained Flat
+                    StructureType: Basement Flat
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_142
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BD
+                    MaritalStatus: CivilPartnership
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 23
+                    CorrespondencePostcode: HA3 7SY
+                    RiskAddressHouseIdentifier: Inver Wreigh, Thropton
+                    RiskPostcode: NE65 7JD
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    InstanceEndorsement: Endorsement Test5 #Students Excluded, Lodgers and Paying Guests, HOMPROT
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14162|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7650|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Self-contained Flat
+                    StructureType: Basement Flat
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_148
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BE
+                    MaritalStatus: CivilPartnership
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 23
+                    CorrespondencePostcode: HA3 7SY
+                    RiskAddressHouseIdentifier: Inver Wreigh, Thropton
+                    RiskPostcode: NE65 7JD
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    InstanceEndorsement: Endorsement Test5 #Students Excluded, Lodgers and Paying Guests, HOMPROT
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14162|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7650|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Self-contained Flat
+                    StructureType: Basement Flat
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    InstanceOptionalExtras: ADHXSP, ADHXSPS, AHHLEGAL, AHOMEEM
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_153
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BF
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 53 #Fixed
+                    CorrespondencePostcode: SO23 9BD
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: CM5 9FJ
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13654|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13654|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Rented
+                    BuildingType: Room/Bedsit
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_159
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BG
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: Flat 5
+                    CorrespondencePostcode: WD19 4JA
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: TD2 6SA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14512|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-14000|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Owned
+                    BuildingType: Quasi Semi #Building type issue- Fixed
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 12
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: RATLEGH, HOMPROT, RHKP
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_161
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BH
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 53 #Fixed
+                    CorrespondencePostcode: SO23 9BD
+                    RiskAddressHouseIdentifier: 60
+                    RiskPostcode: FK16 6DJ
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12667|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12345|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Rented
+                    BuildingType: Room/Bedsit
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+                    ContentAccidentalDamage: false
+                - Identities:
+                    - TestID|MTA03_165
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BI
+                    MaritalStatus: Widowed
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 53 #Fixed
+                    CorrespondencePostcode: SO23 9BD
+                    RiskAddressHouseIdentifier: 60
+                    RiskPostcode: FK16 6DJ
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13980|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13980|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Owned
+                    BuildingType: Terraced
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 12
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: RATLEGH
+                    ContentAccidentalDamage: false
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateClientOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: ~(CustomerBrand)
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new home quote for Ageas on EIS
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Home
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: ~(BuildingsCover)
+                          Contents: ~(ContentsCover)
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: ~(ContentAccidentalDamage)
+                          ~Ref(OptionalExtras): InstanceOptionalExtras
+                        InsuredAmount:
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100
+                          RebuildingCost: 100000
+                          ContentSum: 70000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                          SpecifiedItemsAvailable: ~(SpecifiedItemsAvailable)
+                          ~Ref(SpecifiedItems): InstanceSpecifiedItems
+                          UnspecifiedItems:
+                            CoverStatus: true
+                            ItemAmount: 3333
+                        BuildingDetails:
+                          BuildingType: ~(BuildingType)
+                          StructureType: ~(StructureType)
+                          ConstructionType: Standard
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          BuildingAddress:
+                            HouseIdentifier: ~(RiskAddressHouseIdentifier)
+                            Postcode: ~(RiskPostcode)
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false
+                          LetWithSublet: false
+                          BusinessUsage:
+                            BusinessUse: false
+                            ClericalUse: false
+                            PropertyUse: meetings
+                          HolidayHomeStatus: false
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                      ProposerPersonalDetails:
+                        CorrespondenceAddress: *ProposerContactDetails1
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: Bakery Assistant
+                          Industry: Fast Food
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      OtherDetails:
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        WallConstructionType: Brick
+                        RoofConstructionType: Concrete
+                        NumberOfDaysPropertyLeftUnoccupied: 0
+                        PercentageOfFlatRoof: 35
+                        PaymentType: ~(PaymentType)
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfBathroom: 1
+                        UnspentCriminalConviction: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: true
+                            Other: false
+                        PropertyOwned: ~(PropertyOwned)
+                      JointPolicyHolderStatus: ~(JointPolicyHolderStatus)
+                      JointPolicyHolderDetails: *JphPerson01
+                      ConsentToRenew: true
+                      ~Ref(Endorsement): InstanceEndorsement
+                  ~Judgements:
+                    - EisClientDetails.Declines=TRUE|HardRunFault("Quote was declined, cannot create policy")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: AddCCForExistingClient
+                  ~Role: >
+                    Adding Credit Card for existing customer
+                  ~Type: Act
+                  ~Action: AddCCForExistingClient
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    PaymentData:
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a policy with given payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                    QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

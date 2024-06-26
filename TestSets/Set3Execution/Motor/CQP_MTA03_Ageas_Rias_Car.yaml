@@ -1,0 +1,1676 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientNumber: &SelectCustomerByClientNumber
+      ClientNumber: ~(ClientNumberValue)
+#    SelectCustomerByClientName: &SelectCustomerByClientName
+#      Forename: ~(ForenameVal)
+#      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &AdditionalDriver01
+      DriverType: Frequent
+      RelationshipToProposer: Spouse
+      Title: Mr
+      FirstName: Tony
+      LastName: Testzxz
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      Gender: Female
+      MaritalStatus: Married
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+      SecondaryEmploymentStatus:
+        Employed: false
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+      Licence:
+        Type: Full UK Car Licence
+        ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+        AccessToOtherVehicles: Own another car
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Eis-Motor-MTA03-Standard-Data
+        Exports:
+          - TestCases:
+              - EIS_MOTOR_POLICIES_MTA03
+            DataItems:
+              - //002/QuoteCreationInEis.EisClientDetails
+              - //002/PolicyCreationOnEis.PolicyDetails
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId  EIS_MOTOR_POLICIES_MTA03
+      ~Headline: QuoteCreationInEisUi
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                LastnameVal: Testzxz
+              Instances:
+#                - Identities:
+#                    - TestID|MTA03_001
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EA
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 1
+#                    CorrespondencePostcode: PO40 9SD
+#                    RiskPostcode: PO40 9SD
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-665|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: BL04YGY
+#                    PaymentType: Annually
+#                    AnnualMileage: 5000
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 02
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_003
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EB
+#                    MaritalStatus: Single
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 38
+#                    CorrespondencePostcode: CF99 1SN
+#                    RiskPostcode: CF99 1SN
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 4
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14530|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-14530|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1965|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-2000|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: YF67XGM
+#                    PaymentType: Annually
+#                    AnnualMileage: 4000
+#                    BusinessMileage: 500
+#                    Usage: SDP excluding commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 23
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_005
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 12780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EC
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 31
+#                    CorrespondencePostcode: LS10 4UN
+#                    RiskPostcode: LS10 4UN
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-2695|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: RJ21WYC
+#                    PaymentType: Annually
+#                    AnnualMileage: 9090
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 02
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_032
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Miss
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)ED
+#                    MaritalStatus: Single
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: Flat 4
+#                    CorrespondencePostcode: RG41 1AF
+#                    RiskPostcode: RG41 1AF
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 4
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14530|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-14530|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-3165|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-2000|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: SA13ZZG
+#                    PaymentType: Annually
+#                    AnnualMileage: 2000
+#                    BusinessMileage: 1000
+#                    Usage: SDP excluding commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 23
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_021
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 2780
+#                    Title: Lady
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EE
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: London Road
+#                    CorrespondencePostcode: RG41 1AG
+#                    RiskPostcode: SO14 2BY
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 5
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: BL04YGY
+#                    PaymentType: Annually
+#                    AnnualMileage: 1000
+#                    BusinessMileage: 500
+#                    Usage: SDP excluding commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 20
+#                    AccessToOtherVehicles: Own/have use of motorcycle
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_023
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 13780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EF
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 21
+#                    CorrespondencePostcode: HA3 7SY
+#                    RiskPostcode: HA3 7SY
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 6
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: EF71ULR
+#                    PaymentType: Annually
+#                    AnnualMileage: 10000
+#                    BusinessMileage: 5000
+#                    Usage: Proposers Business
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 16
+#                    AccessToOtherVehicles: Use of company car (excluding personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_024
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EG
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 55
+#                    CorrespondencePostcode: PA1 2NQ
+#                    RiskPostcode: PA1 2NQ
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 7
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1265|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: KN57FLW
+#                    PaymentType: Annually
+#                    AnnualMileage: 3100
+#                    BusinessMileage: 1000
+#                    Usage: SDP including commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 20
+#                    AccessToOtherVehicles: Use of company car (including personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_034
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EH
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: Stubbing Cottages, Greetland
+#                    CorrespondencePostcode: HX4 8NR
+#                    RiskPostcode: SO14 2BY
+#                    ClaimYears: 2
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-765|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured And Spouse
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: PJ06JGU
+#                    PaymentType: Annually
+#                    AnnualMileage: 1000
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 3
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_051
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: true
+#                    MarketValue: 3780
+#                    Title: Lady
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EI
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: London Road
+#                    CorrespondencePostcode: RG41 1AG
+#                    RiskPostcode: SO14 2BY
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 8
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-10900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-2365|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured And Spouse
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: SA13ZZG
+#                    PaymentType: Annually
+#                    AnnualMileage: 1000
+#                    BusinessMileage: 800
+#                    Usage: SDP excluding commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 20
+#                    AccessToOtherVehicles: Own/have use of motorcycle
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_052
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EJ
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 8
+#                    CorrespondencePostcode: NE61 3UW
+#                    RiskPostcode: NE61 3UW
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 7
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11100|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1965|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: PJ06JGU
+#                    PaymentType: Annually
+#                    AnnualMileage: 4322
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 20
+#                    AccessToOtherVehicles: Use of company car (including personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_053
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 18780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EK
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 70
+#                    CorrespondencePostcode: TW16 7LN
+#                    RiskPostcode: TW16 7LN
+#                    PreviousNCDApplied: true
+#                    ClaimYears: 9
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-13900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-900|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-8500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: DG61LXE
+#                    PaymentType: Annually
+#                    AnnualMileage: 10000
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 20
+#                    AccessToOtherVehicles: Use of company car (including personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_062
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EL
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 27
+#                    CorrespondencePostcode: EN1 3TX
+#                    RiskPostcode: EN1 3TX
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-615|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: RJ21WYC
+#                    PaymentType: Annually
+#                    AnnualMileage: 1000
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_068
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Ms
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EM
+#                    MaritalStatus: Divorced
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 81
+#                    CorrespondencePostcode: KW10 6SP
+#                    RiskPostcode: KW10 6SP
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-605|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: RJ21WYC
+#                    PaymentType: Annually
+#                    AnnualMileage: 3456
+#                    BusinessMileage: 508
+#                    Usage: SDP including commuting
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_069
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Miss
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EN
+#                    MaritalStatus: CivilPartnership
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 186
+#                    CorrespondencePostcode: B8 2SX
+#                    RiskPostcode: B8 2SX
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-651|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: RJ21WYC
+#                    PaymentType: Annually
+#                    AnnualMileage: 3211
+#                    BusinessMileage: 789
+#                    Usage: SDP including commuting
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_072
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EO
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 70
+#                    CorrespondencePostcode: PA46 7RD
+#                    RiskPostcode: PA46 7RD
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-865|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: SH08CVZ
+#                    PaymentType: Annually
+#                    AnnualMileage: 2590
+#                    BusinessMileage: 600
+#                    Usage: SDP including commuting
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+                - Identities:
+                    - TestID|MTA03_087
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    SalesChannel: Direct web
+                    Affinity: RMDW
+                    CoverType: Comprehensive
+                    AdditionalDriverStatus: false
+                    MarketValue: 12780
+                    Title: Reverend
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EP
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 67
+                    CorrespondencePostcode: KY5 9QQ
+                    RiskPostcode: KY5 9QQ
+                    PreviousNCDApplied: false
+                    ClaimYears: 8
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7500|dd/MM/yyyy
+                    Scheme: Standard
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: DG61LXE
+                    PaymentType: Annually
+                    AnnualMileage: 10000
+                    BusinessMileage: 5000
+                    Usage: SDP excluding commuting
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 14352
+                    AccessToOtherVehicles: Own/have use of motorcycle
+                    DrivingLicenseType: Full UK Car Licence
+                    ConsentToRenew: true
+                - Identities:
+                    - TestID|MTA03_089
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    SalesChannel: Direct web
+                    Affinity: RMDW
+                    CoverType: Comprehensive
+                    AdditionalDriverStatus: false
+                    MarketValue: 15231
+                    Title: Doctor
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EQ
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 18
+                    CorrespondencePostcode: LA2 6GZ
+                    RiskPostcode: LA2 6GZ
+                    PreviousNCDApplied: false
+                    ClaimYears: 7
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-165|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+                    Scheme: Standard
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: EF71ULR
+                    PaymentType: Annually
+                    AnnualMileage: 10000
+                    BusinessMileage: 5000
+                    Usage: SDP including commuting
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                    PaymentMethod: CreditCard
+                    InstancePaymentData:
+                    AccessToOtherVehicles: Use of company car (including personal use)
+                    DrivingLicenseType: Full UK Car Licence
+                    ConsentToRenew: true
+                - Identities:
+                    - TestID|MTA03_099
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    SalesChannel: Direct web
+                    Affinity: AMDW
+                    CoverType: Comprehensive
+                    AdditionalDriverStatus: false
+                    MarketValue: 3780
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)ER
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 1
+                    CorrespondencePostcode: NR31 8JL
+                    RiskPostcode: NR31 8JL
+                    ClaimYears: 1
+                    PreviousNCDApplied: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-8900|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-965|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+                    Scheme: Standard
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: false
+                    VehicleRegistrationNumber: LH16APZ
+                    PaymentType: Annually
+                    AnnualMileage: 4328
+                    BusinessMileage: 500
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    AccessToOtherVehicles: No access to any other vehicles
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                    DrivingLicenseType: Full UK Car Licence
+                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_100
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Miss
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)ES
+#                    MaritalStatus: Single
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 54A
+#                    CorrespondencePostcode: LA13 9AL
+#                    RiskPostcode: LA13 9AL
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 4
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14530|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-14530|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1165|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-2000|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: KD68DTU
+#                    PaymentType: Annually
+#                    AnnualMileage: 7600
+#                    BusinessMileage: 5000
+#                    Usage: SDP excluding commuting
+#                    PaymentMethod: Cheque
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_102
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 11780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)ET
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 7
+#                    CorrespondencePostcode: WD24 4GT
+#                    RiskPostcode: WD24 4GT
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-10900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-965|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: RE18UOH
+#                    PaymentType: Annually
+#                    AnnualMileage: 6100
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_115
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Lady
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EU
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 86
+#                    CorrespondencePostcode: G9 2HL
+#                    RiskPostcode: SO14 2BY
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 6
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-14900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: LH16APZ
+#                    PaymentType: Annually
+#                    AnnualMileage: 10000
+#                    BusinessMileage: 5000
+#                    Usage: SDP excluding commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: Own/have use of motorcycle
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_116
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Ms
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EV
+#                    MaritalStatus: CivilPartnership
+#                    Gender: NotSpecified
+#                    CorrespondenceHouseIdentifier: 60
+#                    CorrespondencePostcode: G20 0SF
+#                    RiskPostcode: G20 0SF
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 7
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: EF71ULR
+#                    PaymentType: Annually
+#                    AnnualMileage: 10000
+#                    BusinessMileage: 5000
+#                    Usage: Proposers Business
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: Use of company car (excluding personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_118
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 13780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EW
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 55
+#                    CorrespondencePostcode: PA1 2NQ
+#                    RiskPostcode: PA1 2NQ
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 8
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14300|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-165|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: KD68DTU
+#                    PaymentType: Annually
+#                    AnnualMileage: 8000
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: Use of company car (including personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_120
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: true
+#                    MarketValue: 3780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EX
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 5
+#                    CorrespondencePostcode: EH4 4UU
+#                    RiskPostcode: EH4 4UU
+#                    PreviousNCDApplied: true
+#                    ClaimYears: 8
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-10900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-165|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured And Spouse
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: DG61LXE
+#                    PaymentType: Annually
+#                    AnnualMileage: 10000
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: Cheque
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                    AccessToOtherVehicles: Use of company car (including personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_131
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 13780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EY
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 5
+#                    CorrespondencePostcode: PR3 0YF
+#                    RiskPostcode: PR3 0YF
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-565|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: KD68DTU
+#                    PaymentType: Annually
+#                    AnnualMileage: 8000
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 20
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_134
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)EZ
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 20
+#                    CorrespondencePostcode: NW11 7XN
+#                    RiskPostcode: NW11 7XN
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-2265|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: CE12BWO
+#                    PaymentType: Annually
+#                    AnnualMileage: 2109
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: true
+#                    InstanceClaimHistory:
+#                      - IncidentDate: 08/11/2023
+#                        Status: Open
+#                        ClaimType: Multiple vehicle collision
+#                        Cause: Flood
+#                        OwnDamageCost: 1500
+#                        ThirdPartyDamageCost: 500
+#                        NCDAffected: false
+#                        PolicyholderCover: true
+#                        PersonalInjury: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_137
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 13780
+#                    Title: Mr
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)FA
+#                    MaritalStatus: Single
+#                    Gender: Male
+#                    CorrespondenceHouseIdentifier: 5
+#                    CorrespondencePostcode: PR3 0YF
+#                    RiskPostcode: PR3 0YF
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-2865|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: RE18UOH
+#                    PaymentType: Annually
+#                    AnnualMileage: 9580
+#                    BusinessMileage: 900
+#                    Usage: SDP including commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 20
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_143
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)FB
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 22
+#                    CorrespondencePostcode: IP4 2TR
+#                    RiskPostcode: IP4 2TR
+#                    ClaimYears: 2
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-695|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: RJ21WYC
+#                    PaymentType: Annually
+#                    AnnualMileage: 6000
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    PaymentMethod: DirectDebit
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+#                      PreferredPaymentDate: 3
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                  - TestID|MTA03_146
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mr
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)FC
+#                    MaritalStatus: CivilPartnership
+#                    Gender: Male
+#                    CorrespondenceHouseIdentifier: 7
+#                    CorrespondencePostcode: CA10 1AW
+#                    RiskPostcode: CA10 1AW
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-605|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: CE12BWO
+#                    PaymentType: Annually
+#                    AnnualMileage: 2500
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    PaymentMethod: Cheque
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                    InstanceOptionalExtras: RACAMFP, ADMKP
+#                - Identities:
+#                    - TestID|MTA03_149
+#                  InstanceValues:
+#                    CustomerBrand: Ageas
+#                    PolicyBrand: Ageas
+#                    SalesChannel: Direct web
+#                    Affinity: AMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Mrs
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)FD
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 5
+#                    CorrespondencePostcode: RM19 1TJ
+#                    RiskPostcode: RM19 1TJ
+#                    ClaimYears: 1
+#                    PreviousNCDApplied: false
+#                    DocumentDeliveryMethod: Print
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13256|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-765|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: false
+#                    VehicleRegistrationNumber: CE12BWO
+#                    PaymentType: Annually
+#                    AnnualMileage: 5000
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: No access to any other vehicles
+#                    ClaimHistoryAvailable: true
+#                    InstanceClaimHistory:
+#                      - IncidentDate: 8/1/2024
+#                        Status: Open
+#                        ClaimType: Accident
+#                        Cause: Fire
+#                        OwnDamageCost: 400
+#                        ThirdPartyDamageCost: 250
+#                        NCDAffected: false
+#                        PolicyholderCover: true
+#                        PersonalInjury: false
+#                    ConvictionHistoryAvailable: false
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                    InstanceOptionalExtras: RACAMRO, AGATLGM
+#                - Identities:
+#                    - TestID|MTA03_154
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 18770
+#                    Title: Lady
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)FE
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 47
+#                    CorrespondencePostcode: AB11 6EN
+#                    RiskPostcode: AB11 6EN
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 8
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: DG61LXE
+#                    PaymentType: Annually
+#                    AnnualMileage: 10000
+#                    BusinessMileage: 5000
+#                    Usage: SDP excluding commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: Cheque
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                    AccessToOtherVehicles: Own/have use of motorcycle
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_158
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 8780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)FF
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 12
+#                    CorrespondencePostcode: CT1 3EZ
+#                    RiskPostcode: CT1 3EZ
+#                    PreviousNCDApplied: false
+#                    ClaimYears: 6
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14340|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-10900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-165|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: KD68DTU
+#                    PaymentType: Annually
+#                    AnnualMileage: 10000
+#                    BusinessMileage: 5000
+#                    Usage: SDP including commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: Cheque
+#                    InstancePaymentData:
+#                      ChequeNumber: 14352
+#                    AccessToOtherVehicles: Use of company car (including personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                - Identities:
+#                    - TestID|MTA03_164
+#                  InstanceValues:
+#                    CustomerBrand: Rias
+#                    PolicyBrand: Rias
+#                    SalesChannel: Direct web
+#                    Affinity: RMDW
+#                    CoverType: Comprehensive
+#                    AdditionalDriverStatus: false
+#                    MarketValue: 3780
+#                    Title: Doctor
+#                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)FG
+#                    MaritalStatus: Married
+#                    Gender: Female
+#                    CorrespondenceHouseIdentifier: 31
+#                    CorrespondencePostcode: HP6 6LD
+#                    RiskPostcode: HP6 6LD
+#                    PreviousNCDApplied: true
+#                    ClaimYears: 6
+#                    DocumentDeliveryMethod: Download
+#                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12900|dd/MM/yyyy
+#                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1065|dd/MM/yyyy
+#                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+#                    Scheme: Standard
+#                    DrivingRestrictions: Insured Only
+#                    PreviousInsuranceStatus: true
+#                    VehicleRegistrationNumber: CE12BWO
+#                    PaymentType: Annually
+#                    AnnualMileage: 2800
+#                    BusinessMileage: 500
+#                    Usage: SDP including commuting
+#                    ClaimHistoryAvailable: false
+#                    ConvictionHistoryAvailable: false
+#                    PaymentMethod: CreditCard
+#                    AccessToOtherVehicles: Use of company car (including personal use)
+#                    DrivingLicenseType: Full UK Car Licence
+#                    ConsentToRenew: true
+#                    InstanceOptionalExtras : RACRSRA
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateClientOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: ~(CustomerBrand)
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: SearchMotorForAGivenVRN
+                  ~Role: >
+                    Search Vehicle details for a given VRN on EIS UI
+                  ~Type: Act
+                  ~Action: SearchMotorForAGivenVRN
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      ProductType: Motor
+                      RegistrationNumber: ~(VehicleRegistrationNumber)
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new quote on EIS UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    #                    SearchCriteria: *SelectCustomerByClientNumber
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      QuotesDetails:
+                        Enquiry: Direct
+                        SalesChannel: ~(SalesChannel)
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Motor
+                      InsuranceDetails:
+                        Product: Private car
+                        LineOfBusiness: Personal Lines
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                        Scheme: ~(Scheme)
+                        CoverType: ~(CoverType)
+                        DrivingRestrictions: ~(DrivingRestrictions)
+                        NCDFlag: false
+                        ConcernFlag: false
+                        InsuranceHistory:
+                          PreviousInsuranceDetails:
+                            PreviousInsurance: ~(PreviousInsuranceStatus)
+                            DrivingExperienceInProposerName: true
+                            PreviousExperienceDetails:
+                              ClaimFreeYears: ~(ClaimYears)
+                              ExperienceType: Company car with SPD
+                            NCDDetails:
+                              NCDAppliedToAnyOtherVehicle: ~(PreviousNCDApplied)
+                              ~Gen(PreviousPolicyExpiryDate): DateRelToTodayAsStr|-1|dd/MM/yyyy
+                              InsuranceType: Private car
+                              NCDClaimYears: ~(ClaimYears)
+                              ProtectNCD: false
+                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                      Vehicle:
+                        RegistrationNumber: ~(VehicleRegistrationNumber)
+                        VehicleDetails: ~(//002/SearchMotorForAGivenVRN.EisVehicleDetails)
+                        MarketValue: ~(MarketValue)
+                        NumberOfSeats: 5
+                        NumberOfDoors: 5
+                        VehicleFeatures:
+                          Alarm: Factory Fitted
+                          Immobiliser: Unknown Electromechanical or Electronic Immobiliser
+                          Tracker: Tracker
+                          Dashcam: Front
+                          LeftHandDrive: false
+                          VehicleImported: false
+                          CarModificationDetails:
+                            modification: false
+                            modificationDetails: Adapted For Disability
+                        VehicleUse:
+                          MainUsage: ~(Usage)
+                          AnnualMileage: ~(AnnualMileage)
+                          BusinessMileage: ~(BusinessMileage)
+                          CarPurchaseDate: ~(CarPurchaseDate)
+                        ParkingDetails:
+                          ParkingDuringDay: Office/Factory car park
+                          ParkingDuringNight: Roadside
+                          OvernightLocation: Shed
+                          Postcode: ~(RiskPostcode)
+                      Licence:
+                        Type: Full UK Car Licence
+                        LicenceValidSince: ~(LicenceValidSince)
+                        Number: HIETT708127PJ8LA
+                      RegisteredOwner:
+                        Owner: Proposer/Policyholder
+                        RegisteredOwnerDetails:
+                          ProposerRegisteredKeeper: true
+                          RegisteredKeeper: Parent
+                      ProposerPersonalDetails:
+                        UkResidentSince: ~(UkResidentSince)
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employed
+                          Type: Computer Analyst
+                          Industry: Computer Services
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                          Category: Employed
+                          Type: Bakery Assistant
+                          Industry: Bakery
+                      DynamicUnderwriterQuestions:
+                        IamMember: false
+                        AdditionalCars: 1
+                        VehicleUseByProposer: Main
+                        PaymentType: ~(PaymentType)
+                        HomeOwner: true
+                        AffordabilityThresholdReached: false
+                        UWOnlyPremiumFinance: false
+                        AccessToOtherVehicles: Named driver on a car not owned by the driver
+                        PreviousInsuranceRefused: false
+                        nonRTAConvictions: false
+                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      ConvictionHistoryAvailable: ~(ConvictionHistoryAvailable)
+                      ~Ref(ConvictionHistory): InstanceConvictionHistory
+                      AdditionalDriverDetails: ~(AdditionalDriverStatus)
+                      AdditionalDriver:
+                        - *AdditionalDriver01
+                      Excess:
+                        VoluntaryExcess: 100
+                      #                       AccidentalDamage: 100
+                      ConsentToRenew: ~(ConsentToRenew)
+                      ~Ref(OptionalExtras): InstanceOptionalExtras
+                  ~Judgements:
+                    - EisClientDetails.Declines=TRUE|HardRunFault("Quote was declined, cannot create policy")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: AddCCForExistingClient
+                  ~Role: >
+                    Adding Credit Card for existing customer
+                  ~Type: Act
+                  ~Action: AddCCForExistingClient
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    PaymentData:
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a policy with given payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                    QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

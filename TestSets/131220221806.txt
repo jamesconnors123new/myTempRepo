@@ -1,0 +1,160 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-001
+      ~Headline: Register Policy - Registered
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-001
+      ~Stages:
+        - ~Stage:
+            - ~Activity:
+                ~Label: CheckPolicyNumberExists
+                ~Role: >
+                  Prior to checking policy has not been digitally claimed, validate Policy Number exists
+                ~Type: Act
+                ~Action: ValidPolicyCheck
+                ~ControlData:
+                  PolicyNumber: GDCCA06498343
+                ~Judgements:
+                  - validPolicyNumber!=TRUE|Fail(InvalidPolicyNumber,"Policy Number is not valid")
+                  - internalServerError=TRUE|HardRunFault("Server error calling API")
+                ~Unconditionals:
+            - ~Activity:
+                ~Label: CheckNoRegistration
+                ~Role: >
+                  Prior to enacting registration check this customer has no policies registered
+                ~Type: Act
+                ~Action: ActiveWebUserCheckVersion
+                ~ControlData:
+                  Email: bstofportalreg26@ageas.co.uk
+                ~Judgements:
+                  - activeWebUserFound=TRUE|Fail(ActiveWebUserFound,"Active Web User found")
+                  - policyCount>0|Fail(ExistingRegisteredPolicy,"Policy found on existing Web User prior to registration process")
+                  - internalServerError=TRUE|HardRunFault("Server error calling API")
+                ~Unconditionals:
+            - ~Activity:
+                ~Label: RegisterPolicy
+                ~Role: >
+                  Register policy on customer Portal
+                ~Type: Act
+                ~Action: RegisterPolicy
+                ~ControlData:
+                  PolNum: GDCCA06498343
+                  Username: bstofportalreg26@ageas.co.uk
+                  Password: ~(DefaultPassword)
+                  Postcode: NN48TQ
+                  Dob: 18/05/1948
+                ~Judgements:
+                  - registered!=TRUE|Fail(SuccessIndicatorMissing,"Registration Successful indicator not found on UI")
+                  - alreadyRegistered=TRUE|Fail(AlreadyRegisteredIndicatorFound,"Already registered indicator found on UI")
+                  - invalidPolicyRecord=TRUE|Fail(ErrorContentIndicatorFound,"Invalid Policy Ref indicator found on UI")
+                ~Unconditionals:
+            - ~Activity:
+                ~Label: ActiveWebUserCheck
+                ~Role: >
+                  Post registration check customer has portal account and associated policy
+                ~Type: Act
+                ~Action: ActiveWebUserCheck
+                ~ControlData:
+                  Email: bstofportalreg26@ageas.co.uk
+                ~Judgements:
+                  - activeWebUserFound!=TRUE|Fail(ActiveWebUserNotFound,"Active Web User not found")
+                  - policyCount<1|Fail(NoPoliciesFound,"No policies found for Web User")
+                  - internalServerError=TRUE|HardRunFault("Server error calling API")
+                ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-002
+      ~Headline: Register Policy - Duplicate registration of policy
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-002
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              -  ~Activity:
+                  ~Label: CheckExistingRegistration
+                  ~Role: >
+                    Prior to enacting duplicate registration check this customer has policies already registered
+                  ~Type: Act
+                  ~Action: ActiveWebUserCheck
+                  ~ControlData:
+                    Email: bstofportalreg4@ageas.co.uk
+                  ~Judgements:
+                    - activeWebUserFound!=TRUE|Fail(ActiveWebUserFound,"Active Web User found")
+                    - policyCount<1|Fail(ExistingRegisteredPolicy,"Policy found on existing Web User prior to registration process")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal
+                  ~Type: Act
+                  ~Action: RegisterPolicy
+                  ~ControlData:
+                    PolNum: GDCCA06498321
+                    Username: bstofportalreg4@ageas.co.uk
+                    Password: Mypwd123!
+                    Postcode: NN48TQ
+                    Dob: 26/04/1948
+                  ~Judgements:
+                    - registered=TRUE|Fail(SuccessIndicatorFound,"Registration Successful indicator found")
+                    - alreadyRegistered!=TRUE|Fail(AlreadyRegisteredIndicatorMissing,"Already registered indicator not found")
+                    - invalidPolicyRecord=TRUE|Fail(ErrorContentIndicatorFound,"Invalid Policy Ref indicator found")
+                  ~Unconditionals:
+
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-003
+      ~Headline: Register Policy - Invalid Customer Record
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-003
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal
+                  ~Type: Act
+                  ~Action: RegisterPolicy
+                  ~ControlData:
+                    PolNum: DDCCA16498321
+                    Username: bstofportalreg4@ageas.co.uk
+                    Password: Mypwd123!
+                    Postcode: NN48TQ
+                    Dob: 01/01/1950
+                  ~Judgements:
+                    - registered=TRUE|Fail(SuccessIndicatorFound,"Registration Successful indicator found")
+                    - alreadyRegistered=TRUE|Fail(AlreadyRegisteredIndicatorFound,"Already registered indicator found")
+                    - invalidPolicyRecord!=TRUE|Fail(ErrorContentIndicatorMissing,"Invalid Policy Ref indicator not found")
+                  ~Unconditionals:

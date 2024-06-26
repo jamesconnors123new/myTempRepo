@@ -1,0 +1,331 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientNumber: &SelectCustomerByClientNumber
+      ClientNumber: ~(ClientNumberValue)
+
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: QuoteCreationInEisUi
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                SequenceNumber: "000"
+                BulkId: "000"
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    Index: A
+                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)A
+                    PostCode: WD17 2PJ
+                    ClientNumberValue: IC0000000018
+                    ClaimHistoryAvailable: false
+                    InstanceClaimHistory:
+                        - IncidentSource: Customer #CUE
+                          IncidentDate: 08/11/2023 # dd/MM/yyyy
+                          Status: Open #Closed #Open
+                          ClaimType: Buildings & Contents #Buildings #Contents #Buildings & Contents
+                          Cause: Flood #EscapeOfWater #Flood # LegalExpenses #StormDamage #Travel - Cancellation
+                          Cost: 679
+                          ClaimNumber: 123
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+#                    InstancePreferredPaymentDate: 15
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PaymentMethod: DirectDebit
+                      PreferredPaymentDate: 24
+                    InstanceSpecifiedItems:
+                      InHome:
+                        - Item: Valuables
+                          Description: Other Items
+                          Value: 44
+                      AwayHome:
+                        - Item: ComputerEquipment
+                          Description: Laptop
+                          Value: 300
+                        - Item: MoneyandCreditCards
+                          Description: Credit Card
+                          Value: 300
+                        - Item: MusicalInstruments(forAmateuruse)
+                          Description: Guitar
+                          Value: 345
+                        - Item: Stamp,CoinandMedalCollections
+                          Description: Stamps
+                          Value: 87
+                        - Item: Jewellery/Watches
+                          Description: Watch
+                          Value: 98
+                        - Item: Hifi/TVandVideoEquipment
+                          Description: TV
+                          Value: 234
+                        - Item: PhotographicEquipment-Amateur
+                          Description: Camera
+                          Value: 250
+
+#                - Identities:
+#                    - TestID|EX-DB-0001-02
+#                  InstanceValues:
+#                    Index: B
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)B
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000034
+#                    ClaimHistoryAvailable: false
+#                - Identities:
+#                    - TestID|EX-DB-0001-03
+#                  InstanceValues:
+#                    Index: C
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)C
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000033
+#                    ClaimHistoryAvailable: false
+#                - Identities:
+#                    - TestID|EX-DB-0001-04
+#                  InstanceValues:
+#                    Index: D
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)D
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000032
+#                    ClaimHistoryAvailable: true
+#                - Identities:
+#                    - TestID|EX-DB-0001-05
+#                  InstanceValues:
+#                    Index: E
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)E
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000031
+#                    ClaimHistoryAvailable: false
+#                - Identities:
+#                    - TestID|EX-DB-0001-06
+#                  InstanceValues:
+#                    Index: F
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)F
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000030
+#                - Identities:
+#                    - TestID|EX-DB-0001-07
+#                  InstanceValues:
+#                    Index: G
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)G
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000029
+#                - Identities:
+#                    - TestID|EX-DB-0001-08
+#                  InstanceValues:
+#                    Index: H
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)H
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000028
+#                - Identities:
+#                    - TestID|EX-DB-0001-09
+#                  InstanceValues:
+#                    Index: I
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)I
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000027
+#                - Identities:
+#                    - TestID|EX-DB-0001-10
+#                  InstanceValues:
+#                    Index: J
+#                    LastnameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)J
+#                    PostCode: WD17 2PJ
+#                    ClientNumberValue: IC0000000026
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+#              - ~Activity:
+#                  ~Label: QuoteCreationInEis
+#                  ~Role: >
+#                    Create a new quote on EIS UI
+#                  ~Type: Act
+#                  ~Action: QuoteCreationInEis
+#                  ~ControlData:
+#                    UserCredentials: *StandardEisUserCredentialsSet
+#                    SearchCriteria: *SelectCustomerByClientNumber
+#                    SalesDetails:
+#                      QuotesDetails:
+#                        Affinity: AHCC #ShortForm
+#                        Brand: Ageas
+#                        ProductType: Home
+#                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+#                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+#                      ~Ref(ClaimHistory): InstanceClaimHistory
+#                      InsuranceDetails:
+#                        TypeOfHouseHoldCover:
+#                          Buildings: true
+#                          Contents: true
+#                          BuildingAccidentalDamage: false
+#                          ContentAccidentalDamage: false
+#                          OptionalExtras: ADHXSP, AHHLEGAL
+#                        InsuredAmount: #Rebuilding Cost
+#                          BuildingVoluntaryExcess: 100
+#                          ContentVoluntaryExcess: 100
+#                          RebuildingCost: 100000
+#                          ContentSum: 70000
+#                        InsuranceHistory:
+#                          ContentClaimFreeYears: 0
+#                          BuildingClaimFreeYears: 0
+#                          InsurancePreviouslyRefused: false
+#                          PreviousInsurance: false
+#                        ContentDetails:
+#                          Safe: true
+#                          SpecifiedItemsAvailable: ~(SpecifiedItemsAvailable)
+#                          ~Ref(SpecifiedItems): InstanceSpecifiedItems
+#                        BuildingDetails:
+#                          BuildingType: House
+#                          StructureType: End Terraced House
+#                          ConstructionType: Standard  #Creation of code for options
+#                          YearBuilt: 2010
+#                          NumberOfBedrooms: 2
+#                          BuildingAddress: # Risk Address
+#                            HouseIdentifier: 1
+#                            Postcode: ~(PostCode)
+#                          AdditionalInformation:
+#                            ListingStatus: ScottishGradeA
+#                            BuildingWorkStatus: false
+#                            GoodRepairStatus: true
+#                            GeologicalThreats: false
+#                            FreeFromFloodingThreats: true
+#                        Usage:
+#                          #NonFamilyLodger: false
+#                          NumberOfStudentLodgers: 1
+#                          NumberOfNonStudentLodgers: 1
+#                          LetWithSublet: false
+#                          BusinessUse: false
+#                          HolidayHomeStatus: false #Boolean for now
+#                          Occupancy: Occupied
+#                        Security:
+#                          Locks: true
+#                          Alarms: Basic DIY Alarm
+#                          NeighbourhoodWatch: true
+#                        ProposerRelationshipToRisk:
+#                          LegalRelationship: Owned #Leased/Rented/Owned
+#                          FirstTimeBuyers: false
+#                      PreferredDeliveryMethod: Download
+#                      ProposerPersonalDetails:
+#                        CorrespondenceAddress: ## Ned to update in EIS, Echleon
+#                          HouseIdentifier: 1
+#                          Postcode: ~(PostCode)
+#                        PrimaryEmploymentStatus:
+#                          Employed: true
+#                          Category: Employee
+#                          Type: BakeryAssistant
+#                          Industry: FastFood
+#                        SecondaryEmploymentStatus:
+#                          Employed: false
+#                      OtherDetails: #Policy User Fields
+#                        SufferedLossNotResultedInClaim: false
+#                      DynamicUnderwriterQuestions:
+#                        LodgersType: Lodgers
+#                        WallConstructionType: Brick
+#                        RoofConstructionType: Concrete
+#                        NumberOfDaysPropertyLeftUnoccupied: 0
+#                        PercentageOfFlatRoof: 35
+#                        PaymentType: Annual
+#                        UnsatisfiedCountyCourtJudgements: false
+#                        ResidentDeclaredBankrupt: false
+#                        ExtendedHouse: false
+#                        NumberOfBathroom: 1
+#                        UnspentCriminalConviction: false
+#                        NumberOfPeopleLive:
+#                          Children: 2
+#                          Adult: 2
+#                          Pet:
+#                            Cat: false
+#                            Dog: false
+#                            Other: false
+#                        PropertyOwned: OwnedOutright
+#                      JointPolicyHolderStatus: true
+#                      JointPolicyHolderDetails: *JphPerson01
+#                      ConsentToRenew: true
+#                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a home policy with cheque payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+#                      ~Ref(PreferredPaymentDate): InstancePreferredPaymentDate
+#                      ~Ref(ChequeNumber): ChequeNumber
+#                      AccountNumber: 24782346
+#                      SortCode: 774814
+                    SearchCriteria:
+                      ClientNumber: IC0000000272 #~(//002/QuoteCreationInEis.EisClientDetails.ClientNumber)
+                    QuoteReference: HH0000000000538 #~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

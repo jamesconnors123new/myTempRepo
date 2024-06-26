@@ -1,0 +1,77 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+  - ~Setting:
+      ~Src: Local
+      ~Id: localPostcode
+      ~Val: BH242FD
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-001
+      ~Headline: Register Policy - Register Successfully
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-001
+              CustomerCredentials: &creds
+                CustomerIdentifier: 7100852
+                PolicyIdentifier: GDCCA06498360
+                #Email: stofportalreg43@ageas.co.uk
+                Email: ~(DefaultRegisteredEmail)
+                Postcode: NN4 8TQ
+                Dob: 1948/06/04
+                Password: ~(DefaultPassword)
+                Address:
+                  25,Livingston Road,
+                  Bournemouth,
+                  Dorset
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckNoRegistration
+                  ~Role: >
+                    Prior to enacting registration check the CRM that the customer has no existing policies registered
+                  ~Type: Act
+                  ~Action: ActiveWebUserCheck
+                  ~ControlData:
+                    CustomerCredentials: *creds
+                  ~Judgements:
+                  - strEq(CRM.Customer.Dob, "1948/04/26")=FALSE|HardRunFault("Dob ~(CRM.Customer.Dob) didn't match ~(_ControlData.CustomerCredentials.Dob)")
+                  #- CRM.Customer.Match=TRUE|HardRunFault("An account was identified on the CRM matching customer")
+                  #- strEq(CRM.Customer.CustomerIdentifier,~(_ControlData.CustomerCredentials.CustomerIdentifier))=FALSE|HardRunFault("CRM postcode was ~(CRM.Customer.CustomerIdentifier) but expected ~(_ControlData.CustomerCredentials.CustomerIdentifier)")
+                  #- CRM.Customer.CustomerIdentifier=ControlData.CustomerCredentials.CustomerIdentifier|HardRunFault("CustomerIdentifier in CRM did NOT match Control Data")
+                  #- CRM.Customer.Email=ControlData.CustomerCredentials.Email|HardRunFault("Email address in CRM did NOT match Control Data")
+                  #- CRM.Customer.Dob=ControlData.CustomerCredentials.Dob|HardRunFault("Dob in CRM did NOT match Control Data")
+                  ~Unconditionals:
