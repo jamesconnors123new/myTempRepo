@@ -1,0 +1,295 @@
+~Templates:
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: Add Ageas customer home quotes and policies with Direct Debit payment for Quote And Buy General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    Index: A
+                - Identities:
+                    - TestID|EX-DB-0001-02
+                  InstanceValues:
+                    Index: B
+                - Identities:
+                    - TestID|EX-DB-0001-03
+                  InstanceValues:
+                    Index: C
+                - Identities:
+                    - TestID|EX-DB-0001-04
+                  InstanceValues:
+                    Index: D
+                - Identities:
+                    - TestID|EX-DB-0001-05
+                  InstanceValues:
+                    Index: E
+                - Identities:
+                    - TestID|EX-DB-0001-06
+                  InstanceValues:
+                    Index: F
+                - Identities:
+                    - TestID|EX-DB-0001-07
+                  InstanceValues:
+                    Index: G
+                - Identities:
+                    - TestID|EX-DB-0001-08
+                  InstanceValues:
+                    Index: H
+                - Identities:
+                    - TestID|EX-DB-0001-09
+                  InstanceValues:
+                    Index: I
+                - Identities:
+                    - TestID|EX-DB-0001-10
+                  InstanceValues:
+                    Index: J
+                - Identities:
+                    - TestID|EX-DB-0001-11
+                  InstanceValues:
+                    Index: K
+                - Identities:
+                    - TestID|EX-DB-0001-12
+                  InstanceValues:
+                    Index: L
+                - Identities:
+                    - TestID|EX-DB-0001-13
+                  InstanceValues:
+                    Index: M
+                - Identities:
+                    - TestID|EX-DB-0001-14
+                  InstanceValues:
+                    Index: N
+                - Identities:
+                    - TestID|EX-DB-0001-15
+                  InstanceValues:
+                    Index: O
+                - Identities:
+                    - TestID|EX-DB-0001-16
+                  InstanceValues:
+                    Index: P
+                - Identities:
+                    - TestID|EX-DB-0001-17
+                  InstanceValues:
+                    Index: Q
+                - Identities:
+                    - TestID|EX-DB-0001-18
+                  InstanceValues:
+                    Index: R
+                - Identities:
+                    - TestID|EX-DB-0001-19
+                  InstanceValues:
+                    Index: S
+                - Identities:
+                    - TestID|EX-DB-0001-20
+                  InstanceValues:
+                    Index: T
+                - Identities:
+                    - TestID|EX-DB-0001-21
+                  InstanceValues:
+                    Index: U
+                - Identities:
+                    - TestID|EX-DB-0001-22
+                  InstanceValues:
+                    Index: V
+                - Identities:
+                    - TestID|EX-DB-0001-23
+                  InstanceValues:
+                    Index: W
+                - Identities:
+                    - TestID|EX-DB-0001-24
+                  InstanceValues:
+                    Index: X
+                - Identities:
+                    - TestID|EX-DB-0001-25
+                  InstanceValues:
+                    Index: Y
+                - Identities:
+                    - TestID|EX-DB-0001-26
+                  InstanceValues:
+                    Index: Z
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationOnQnBuyPortal
+                  ~Role: >
+                    Create a new home quote for Ageas on Quote And Buy Portal
+                  ~Type: Act
+                  ~Action: QuoteCreationOnQnBuyPortal
+                  ~ControlData:
+                    SalesDetails:
+                      QuotesDetails:
+                        ProductType: Home
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      ClaimHistoryAvailable: false
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: true
+                          Contents: true
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: false
+                          ~Ref(OptionalExtras): InstanceOptionalExtras
+                        InsuredAmount:
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100 #How much cover would you like for personal belongings away from the home?
+                          RebuildingCost: 100000
+                          ContentSum: 75000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0  #Have you held Contents Insurance within the last 2 years?No
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                          SpecifiedItemsAvailable: false
+#                          SpecifiedItems:   #If SpecifiedItemsAvailable is true please pass the SpecifiedItems
+#                            InHome: #Do you have any valuables over £2,000 that you don’t take outside of the home?
+#                                - Item: Valuables
+#                                  Description: Phone and Watches
+#                                  Value: 3000
+#                            AwayHome:
+#                              - Item: Camcorders
+#                                Description: Camcorders
+#                                Value: 300
+                        BuildingDetails:
+                          BuildingType: House
+                          StructureType: Detached
+                          ConstructionType: Standard
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          BuildingAddress:
+                            HouseIdentifier: 127
+                            Postcode: NE41 8EZ
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false
+                          LetWithSublet: false
+                          BusinessUse: false
+                          HolidayHomeStatus: false
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          #Alarms: No alarm  #For sphomedev url
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: Print
+                      ProposerPersonalDetails:
+                        Title: Miss
+                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                        LastName: Testzxz
+                        MaritalStatus: Single
+                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+                        Gender: Male
+                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+                      ProposerContactDetails:
+                        CorrespondenceAddress:
+                          HouseIdentifier: 127
+                          Postcode: NE41 8EZ
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Retired
+                          Type: Bakery Assistant
+                          Industry: Fast Food
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      OtherDetails:
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        TypeOfLodgers: No Guest
+                        WallConstructionType: Brick
+                        RoofConstructionType: Concrete
+                        NumberOfDaysPropertyLeftUnoccupied: 0
+                        PercentageOfFlatRoof: 35
+                        PaymentType: Annually
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfBathroom: 1
+                        UnspentCriminalConviction: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: false
+                            Other: false
+                        PropertyOwned: OwnedOutright
+                      JointPolicyHolderStatus: false
+                      JointPolicyHolderDetails: *JphPerson01
+                      ConsentToRenew: true
+                      ~Ref(Endorsement): InstanceEndorsement
+                      OptionalExtras:
+                        ExcessProtection: false
+                        HomeEmergency: false
+                        LegalExpenses: false
+                  ~Unconditionals:

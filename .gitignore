@@ -1,0 +1,9 @@
+settings.xml
+*.iml
+#**/.idea/
+#**/target
+**/Master.yaml
+.run/Debug.run.xml
+**/WIP.yaml
+dependency-reduced-pom.xml
+*.log

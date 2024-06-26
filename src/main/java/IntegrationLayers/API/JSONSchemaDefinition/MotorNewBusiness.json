@@ -1,0 +1,153 @@
+{
+  "formData": {
+    "userfieldSOEHH": "WEBS-userfield-SOEHH-Policy",
+    "risk_proposer_name_title": "Mr",
+    "risk_proposer_name_forenames": "Test",
+    "risk_proposer_name_surname": "Testzxz",
+    "risk_proposer_maritalStatus": "S",
+    "risk_proposer_address_postCodeHidden": "lookupResultSelect_success",
+    "risk_proposer_dateOfBirth": "01/01/1950",
+    "risk_proposer_dateOfBirthday": "01",
+    "risk_proposer_dateOfBirthmonth": "01",
+    "risk_proposer_dateOfBirthyear": "1950",
+    "residentSinceBirth": "true",
+    "childrenUnderSixteen": "0",
+    "eyeTestFrequency": "ANNUAL",
+    "risk_proposer_fullTimeOccupation_type": "Employee",
+    "hasPartTimeOccupation": "false",
+    "duq544": "N-duq-544",
+    "risk_proposer_address_houseNameOrNumberHidden": "true",
+    "risk_proposer_fullTimeOccupation_occCode": "S04",
+    "risk_proposer_fullTimeOccupation_empCode": "117",
+    "drivingLicenceType": "Full Licence",
+    "numberOfYearsSelected": "18",
+    "risk_proposer_motoringOrg": "BLANK",
+    "risk_proposer_accessToOtherVehicles": "BLANK",
+    "risk_previousInsurance_ncb_years": "18",
+    "risk_previousInsurance_ncb_protectedBonus": "false",
+    "risk_startDate": "2022-11-29",
+    "duq595": "M-duq-595",
+    "risk_classOfUse": "SDPexC",
+    "duq591": "N-duq-591",
+    "hasAdditionalDrivers": "false",
+    "risk_proposer_email": "test123@ageas.co.uk",
+    "risk_proposer_telephoneNumbers_telephone_phoneNumber": "01202123456",
+    "risk_proposer_address_houseNameOrNumber": "1",
+    "risk_proposer_address_addressLine1": "Townsend Drive",
+    "risk_proposer_address_addressLine2": "ST. ALBANS",
+    "risk_proposer_address_addressLine3": "",
+    "risk_proposer_address_addressLine4": "",
+    "risk_proposer_address_postCode": "AL3 5RL",
+    "risk_proposer_address_countryCode": "GB",
+    "risk_proposer_address_abodeType": "",
+    "risk_vehicle_regNumber": "A1",
+    "risk_vehicle_regNumberHidden": "true",
+    "risk_vehicle_abiCode": "33801702",
+    "risk_vehicle_abiProductionYears": "2006 - 2014",
+    "risk_vehicle_alarm": "FACT",
+    "risk_vehicle_cc": "1598",
+    "risk_vehicle_fuel": "FuelPetrol",
+    "risk_vehicle_immob": "NONE",
+    "risk_vehicle_manufacturer": "MINI",
+    "risk_vehicle_modelDescription": "COOPER S(3 DOOR -3--), 1598cc, 2006 - 2014",
+    "risk_vehicle_yearOfManufacture": "2007",
+    "risk_vehicle_abs": false,
+    "risk_vehicle_bodyStyle": "-3--",
+    "risk_vehicle_lhd": false,
+    "risk_vehicle_doors": "3",
+    "risk_vehicle_transmissionDescription": "Automatic",
+    "risk_vehicle_transmission": "TransAuto",
+    "risk_vehicle_value": "1745",
+    "risk_vehicle_purchased": "01/05/2007",
+    "risk_vehicle_purchasedmonth": "05",
+    "risk_vehicle_purchasedyear": "2007",
+    "risk_vehicle_seats": "4",
+    "duq896": "N-duq-896",
+    "carOwnerAndKeeper": "true",
+    "hasVehicleModifications": "false",
+    "risk_vehicle_tracker": "NONE",
+    "risk_proposer_numberOfOtherVehicles": "0",
+    "risk_totalMileage": "4000",
+    "risk_vehicle_whereKept": "Driveway",
+    "vehicleKeptOvernightHomeAdd": "true",
+    "duq40": "HOME-duq-40",
+    "medical_condition_restrictions": "N",
+    "hasClaims": "false",
+    "hasMotorConvictions": "false",
+    "risk_proposer_nonRTAConviction": "false",
+    "risk_proposer_insuranceRefused": "false",
+    "userfieldMRKEMAIL": "Y-userfield-MRKEMAIL-Client",
+    "userfieldMRKPOST": "Y-userfield-MRKPOST-Client",
+    "userfieldMRKSMS": "Y-userfield-MRKSMS-Client",
+    "userfieldMRKTELE": "Y-userfield-MRKTELE-Client",
+    "userfieldHHREN": "",
+    "disableCheckFlag": "risk_proposer_nonRTAConviction",
+    "residentDateUK": "",
+    "residentDateUKmonth": "",
+    "residentDateUKyear": ""
+  },
+  "duqs": [
+    {
+      "questionNumber": "544",
+      "response": "N",
+      "shortResponse": "N"
+    },
+    {
+      "questionNumber": "595",
+      "response": "M",
+      "shortResponse": "M"
+    },
+    {
+      "questionNumber": "591",
+      "response": "N",
+      "shortResponse": "N"
+    },
+    {
+      "questionNumber": "896",
+      "response": "N",
+      "shortResponse": "N"
+    },
+    {
+      "questionNumber": "40",
+      "response": "HOME",
+      "shortResponse": "HOME"
+    }
+  ],
+  "userfields": [
+    {
+      "code": "SOEHH",
+      "shortResponse": "WEBS",
+      "screenPrompt": "",
+      "isList": true,
+      "type": "Policy"
+    },
+    {
+      "code": "MRKEMAIL",
+      "shortResponse": "Y",
+      "screenPrompt": "",
+      "isList": true,
+      "type": "Client"
+    },
+    {
+      "code": "MRKPOST",
+      "shortResponse": "Y",
+      "screenPrompt": "",
+      "isList": true,
+      "type": "Client"
+    },
+    {
+      "code": "MRKSMS",
+      "shortResponse": "Y",
+      "screenPrompt": "",
+      "isList": true,
+      "type": "Client"
+    },
+    {
+      "code": "MRKTELE",
+      "shortResponse": "Y",
+      "screenPrompt": "",
+      "isList": true,
+      "type": "Client"
+    }
+  ]
+}

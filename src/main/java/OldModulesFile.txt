@@ -1,0 +1,18 @@
+open module sqc.bstof.sample01 {
+    requires sqc.bstof.controller;
+	requires org.apache.logging.log4j;
+	requires sqc.bstof.skeleton;
+    requires org.seleniumhq.selenium.chrome_driver;
+    requires org.seleniumhq.selenium.support;
+    requires org.seleniumhq.selenium.firefox_driver;
+    requires org.seleniumhq.selenium.edge_driver;
+    requires rest.assured;
+    requires org.apache.commons.io;
+    requires xml.path;
+    requires com.fasterxml.jackson.databind;
+    requires rest.assured.common;
+    requires json.path;
+    requires com.fasterxml.jackson.dataformat.yaml;
+    requires io.github.bonigarcia.webdrivermanager;
+    //exports sqc.bstof.sample01;
+}

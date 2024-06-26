@@ -1,0 +1,60 @@
+[2024-06-26T21:57:20.685942Z] - Start - Invocation of //000/ExportDataToFileStandardClients
+[2024-06-26T21:57:20.686117Z] - Start - Bind Control Data
+[2024-06-26T21:57:20.686536Z] - End - Bind Control Data
+[2024-06-26T21:57:20.686740Z] - Start - sqc.bstof.builtinops.datatools.DataExporter
+[2024-06-26T21:57:20.686791Z] - Start - Export data to file
+[2024-06-26T21:57:20.687246Z] - Count of valid export definition criteria is 1 
+[2024-06-26T21:57:20.691155Z] - End - Export data to file
+[2024-06-26T21:57:20.691264Z] - End - sqc.bstof.builtinops.datatools.DataExporter
+          _ControlData:
+            ExportDestination: {Filename: Eis_Variant01_OutputData_Standard_Clients}
+            Exports:
+            - TestCases: [EIS_STANDARD_CLIENT_BUILDER]
+              DataItems: [//001/CreateStandardClientsOnEis.EisClientDetails]
+[2024-06-26T21:57:20.691595Z] - Store output from activity, tagged as //000/ExportDataToFileStandardClients
+[2024-06-26T21:57:20.691647Z] - End - Invocation of //000/ExportDataToFileStandardClients
+[2024-06-26T21:57:20.691698Z] - Start - Invocation of //000/ExportDataToFileStandardSales
+[2024-06-26T21:57:20.691744Z] - Start - Bind Control Data
+[2024-06-26T21:57:20.692096Z] - End - Bind Control Data
+[2024-06-26T21:57:20.692160Z] - Start - sqc.bstof.builtinops.datatools.DataExporter
+[2024-06-26T21:57:20.692211Z] - Start - Export data to file
+[2024-06-26T21:57:20.692328Z] - Count of valid export definition criteria is 1 
+[2024-06-26T21:57:20.692939Z] - End - Export data to file
+[2024-06-26T21:57:20.693011Z] - End - sqc.bstof.builtinops.datatools.DataExporter
+          _ControlData:
+            ExportDestination: {Filename: Eis_Variant01_OutputData_Standard_Sales}
+            Exports:
+            - TestCases: [EIS_STANDARD_CLIENT_BUILDER]
+              DataItems: [//001/CreateStandardClientsOnEis._ControlData.SalesDetails]
+[2024-06-26T21:57:20.693244Z] - Store output from activity, tagged as //000/ExportDataToFileStandardSales
+[2024-06-26T21:57:20.693310Z] - End - Invocation of //000/ExportDataToFileStandardSales
+[2024-06-26T21:57:20.693371Z] - Start - Invocation of //000/ExportDataToFileComplexClients
+[2024-06-26T21:57:20.693425Z] - Start - Bind Control Data
+[2024-06-26T21:57:20.693685Z] - End - Bind Control Data
+[2024-06-26T21:57:20.693865Z] - Start - sqc.bstof.builtinops.datatools.DataExporter
+[2024-06-26T21:57:20.693947Z] - Start - Export data to file
+[2024-06-26T21:57:20.694054Z] - Count of valid export definition criteria is 1 
+[2024-06-26T21:57:20.694584Z] - End - Export data to file
+[2024-06-26T21:57:20.694630Z] - End - sqc.bstof.builtinops.datatools.DataExporter
+          _ControlData:
+            ExportDestination: {Filename: Eis_Variant01_OutputData_Complex_Clients}
+            Exports:
+            - TestCases: [EIS_COMPLEX_CLIENT_BUILDER]
+              DataItems: [//001/CreateComplexClientsOnEis.EisClientDetails]
+[2024-06-26T21:57:20.694909Z] - Store output from activity, tagged as //000/ExportDataToFileComplexClients
+[2024-06-26T21:57:20.694961Z] - End - Invocation of //000/ExportDataToFileComplexClients
+[2024-06-26T21:57:20.695026Z] - Start - Invocation of //000/ExportDataToFileComplexSales
+[2024-06-26T21:57:20.695069Z] - Start - Bind Control Data
+[2024-06-26T21:57:20.695384Z] - End - Bind Control Data
+[2024-06-26T21:57:20.695463Z] - Start - sqc.bstof.builtinops.datatools.DataExporter
+[2024-06-26T21:57:20.695503Z] - Start - Export data to file
+[2024-06-26T21:57:20.695587Z] - Count of valid export definition criteria is 1 
+[2024-06-26T21:57:20.696047Z] - End - Export data to file
+[2024-06-26T21:57:20.696109Z] - End - sqc.bstof.builtinops.datatools.DataExporter
+          _ControlData:
+            ExportDestination: {Filename: Eis_Variant01_OutputData_Complex_Sales}
+            Exports:
+            - TestCases: [EIS_COMPLEX_CLIENT_BUILDER]
+              DataItems: [//001/CreateComplexClientsOnEis._ControlData.SalesDetails]
+[2024-06-26T21:57:20.696315Z] - Store output from activity, tagged as //000/ExportDataToFileComplexSales
+[2024-06-26T21:57:20.696356Z] - End - Invocation of //000/ExportDataToFileComplexSales

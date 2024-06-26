@@ -1,0 +1,537 @@
+~Templates:
+
+  CustomerSelectionCriteria:
+    SelectCustomerByClientNumber: &SelectCustomerByClientNumber
+      ClientNumber: ~(ClientNumberValue)
+    SelectCustomerByPolicyNumber: &SelectCustomerByPolicyNumber
+      PolicyNumber: ~(PolicyNumber)
+    SelectCustomerByClientName: &SelectCustomerByClientName
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+
+  People:
+    AdditionalDriver01: &AdditionalDriver01
+      DriverType: Frequent
+      RelationshipToProposer: Spouse
+      Title: Mr
+      FirstName: Philip
+      LastName: Smith
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      Gender: Male
+      MaritalStatus: Married
+      DrivingRestrictions: Insured And Named Drivers
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Accountant
+        Industry: Accountancy
+      SecondaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+      Licence:
+        Type: Full UK Car Licence
+        ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+        AccessToOtherVehicles: Own another car
+    JointPolicyHolder01: &JointPolicyHolder01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+
+
+  AMDW_SalesDetailsTemplate_01: &AMDW_SalesDetailsTemplate_01
+
+    QuotesDetails:
+      Enquiry: Direct
+      SalesChannel: Direct web
+      Brand: Ageas
+      ProductType: Motor
+      Affinity: AMDW
+      CoverType: Comprehensive #van - newly added
+    InsuranceDetails:
+
+      # Product: Private car # AMDW
+      # Product: Van
+      Product: Private car
+
+      LineOfBusiness: Personal Lines
+
+      # ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+      ~Gen(InceptionDate): DateRelToTodayAsStr|1|dd/MM/yyyy
+
+      Scheme: Standard
+      CoverType: Comprehensive
+      DrivingRestrictions: Insured And Named Drivers
+      NCDFlag: false
+      ConcernFlag: false
+      InsuranceHistory:
+        PreviousInsuranceDetails:
+          PreviousInsurance: true
+          DrivingExperienceInProposerName: true
+          PreviousExperienceDetails:
+            ClaimFreeYears: 2
+            ExperienceType: Company car with SPD
+          NCDDetails:
+            NCDAppliedToAnyOtherVehicle: false
+            ~Gen(PreviousPolicyExpiryDate): DateRelToTodayAsStr|-1|dd/MM/yyyy
+
+            # InsuranceType: Goods vehicle #van
+            # InsuranceType: Private car
+            InsuranceType: Private car
+
+            NCDClaimYears: 2
+            ProtectNCD: true
+            NCDHowManyYearsOnOtherVehicle: 2   #van - newly added
+            WhatTypeOfPolicyIsTheNCDBeingMirroredFrom: Van  #van - newly added
+    PreferredDeliveryMethod: Download
+    Vehicle:
+
+      RegistrationNumber: DG61LXE
+      #      RegistrationNumber: LY15CNX # Van
+
+      MarketValue: 2911
+      #                        VehicleDetails: ~(//001/SearchMotorForAGivenVRN.EisVehicleDetails.vehicleDetails)
+      #                        VehicleDetails: ~(//002/SearchMotorForAGivenVRN.EisVehicleDetails)
+      VehicleDetails:
+        ~Gen(PurchaseDate): DateRelToTodayAsStr|-5|dd/MM/yyyy
+        CurrentMarketValue: 2445
+        VehicleOwner: Proposer
+        ProposerRegisteredKeeper: true
+        WhereKeptOvernight: Driveway
+        WhereKeptPostcode: B17 8TU
+        Modifications: false
+      VehicleFeatures:
+        Alarm: Factory Fitted
+        Immobiliser: Unknown Electromechanical or Electronic Immobiliser
+        Tracker: Tracker
+        Dashcam: Front
+        LeftHandDrive: false
+        VehicleFittedWithRacking: false  #van - newly added
+        DoesVehicleCarrySignage: false  #van - newly added
+        NumberOfSeats: 2 #van - newly added
+        VehicleImported: false
+        CarModificationDetails:
+          modification: false
+          modificationDetails: Adapted For Disability, Air Filter
+      VehicleUse:
+
+        # MainUsage: SDP including commuting
+        # MainUsage: SDP excluding commuting
+        # MainUsage: Own Goods  #van
+        # MainUsage: Local Haulage  #van
+        # MainUsage: Personal Business Use
+        MainUsage: SDP including commuting
+
+        ForSocialAndPleasureUse: false  #van - newly added
+        AnnualMileage: 10000
+        BusinessMileage: 5000
+        ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-5|dd/MM/yyyy
+      VehicleAdditionalInformation: #van - newly added
+        ~Gen(WhenDidYouBuyYourCar): DateRelToTodayAsStr|-5|dd/MM/yyyy   #van - newly added
+        PublicLiabilityInForce: false   #van - newly added
+        WillVehicleCarryHazardousGoods: false  #van - newly added
+      ParkingDetails:
+        ParkingDuringDay: Office/Factory car park
+        ParkingDuringNight: Roadside
+        OvernightLocation: Garaged
+        #        OvernightLocation: Shed
+        Postcode: B17 8TU
+    Licence:
+      Type: Full UK Car Licence
+      ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6500|dd/MM/yyyy
+      Number: HIETT708127PJ8LA
+    RegisteredOwner:
+      Owner: Proposer/Policyholder
+      RegisteredOwnerDetails:
+        ProposerRegisteredKeeper: true
+        RegisteredKeeper: Parent
+    ProposerPersonalDetails:
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Accountant
+        Industry: Accountancy
+      SecondaryEmploymentStatus:
+        Employed: false
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+    DynamicUnderwriterQuestions:
+      IamMember: false
+      AdditionalCars: 1
+      VehicleUseByProposer: Main
+      PaymentType: Annually
+      HomeOwner: true
+      AffordabilityThresholdReached: false
+      UWOnlyPremiumFinance: false
+      AccessToOtherVehicles: Named driver on a car not owned by the driver
+      PreviousInsuranceRefused: false
+      nonRTAConvictions: false
+    ClaimHistoryAvailable: false
+    ClaimHistory:
+      - IncidentDate: 08/11/2023
+        Status: Open
+        ClaimType: Accident
+        Cause: Accident Damage
+        OwnDamageCost: 679
+        ThirdPartyDamageCost: 500
+        NCDAffected: false
+        PolicyholderCover: true
+        PersonalInjury: false
+    ConvictionHistoryAvailable: false
+    ConvictionHistory:
+      - ConvictionType: Parking at a bus stop
+        OffenceDate: 08/11/2023
+        ConvictionDate: 08/11/2023
+        Points: 1
+        Disqualified: true
+        MonthsSuspended: 2
+        Fine: 100
+
+    AdditionalDriverDetails: true
+    # AdditionalDrivers:
+    AdditionalDriver:
+      - *AdditionalDriver01
+      # - *AdditionalDriver01
+
+    Excess:
+      VoluntaryExcess: 100
+      # AccidentalDamage: 100
+    ConsentToRenew: true
+
+    OptionalExtras: RACAMRO, AGATLGM
+
+    Index: ~(Index)
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunIdNew
+
+~CommonInitActivities:
+  - ~Activity:
+      ~Label: LoadClientDataStandard
+      ~Role: >
+        Load client data to allow policy creation
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        #        RecSet: EisClientsComplex
+        RecSet: EisUi_Variant01_Clients_Standard
+        Sources:
+          #          - Data\Eis\RunId(~(RunIdNew))_Variant01_EisUi_Ageas_ClientsData_Standard(000).yml
+          - Data/Eis/RunId(~(RunIdNew))_Variant01_EisUi_Ageas_ClientsData_Standard(000).yml
+
+  - ~Activity:
+      ~Label: LoadClientDataComplex
+      ~Role: >
+        Load client data to allow policy creation
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        #        RecSet: EisClientsComplex
+        RecSet: EisUi_Variant01_Clients_Complex
+        Sources:
+          - Data/Eis/RunId(~(RunIdNew))_Variant01_EisUi_Ageas_ClientsData_Complex(000).yml
+
+
+
+~CommonFinalActivities:
+
+  # Output to framework_output folder
+  - ~Activity:
+      ~Label: ExportMotorQuoteDetails
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: RunId(~(RunIdNew))_EisUi_RiasAndAgeasMotor_QuoteData
+        Exports:
+          - TestCases:
+              - EX_DB_0001
+            DataItems:
+              - //002/MotorQuoteCreationInEis.QuotesDetails
+  - ~Activity:
+      ~Label: ExportMotorQuoteControlData
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: RunId(~(RunIdNew))_EisUi_RiasAndAgeasMotor_QuoteControlData
+        Exports:
+          - TestCases:
+              - EX_DB_0001
+            DataItems:
+              - //002/MotorQuoteCreationInEis._ControlData
+
+
+  # Output to framework_output folder
+  - ~Activity:
+      ~Label: ExportMotorQuoteControlData
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: RunId(~(RunIdNew))_EisUi_RiasAndAgeasMotor_CompositeData
+        Exports:
+          - TestCases:
+              - EX_DB_0001
+            DataItems:
+              - //001/CreateClientOnEis.EisClientDetails
+              - //002/MotorQuoteCreationInEis.QuotesDetails
+              - //002/PolicyCreationOnEis.PolicyDetails
+              - //003/PortalRegisterNewUser._ControlData.NewRegistrationDetails
+
+
+~TestCases:
+  - ~TestCase:
+#      ~CaseId: &caseId EX-DB-0001
+#      ~CaseId: &caseId EX_DB_0001
+      ~CaseId: &caseId AMDW_0001
+      ~Headline: QuoteCreationInEisUi
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+
+              Instances:
+
+                - Identities:
+                    - TestID|EISUI_AGEAS-HOME-001-16
+                  InstanceValues:
+                    Index: P
+#                    ~Ref(ClientNumber): //000/LoadClientDataComplex.EisUi_Variant01_Clients_Complex[0].Data.ClientNumber
+                    ~Ref(ClientNumber): //000/LoadClientDataComplex.EisUi_Variant01_Clients_Complex[1].Data.ClientNumber
+#                    ClientNumber: IC0000009179
+                    ClientNumber: IC0000009169
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+#              - ~Activity:
+#                  ~Label: CreateClientOnEis
+#                  ~Role: >
+#                    Create a customer on EIS
+#                  ~Type: Act
+#                  ~Action: CreateClientOnEis
+#                  ~ControlData:
+#                    UserCredentials: *StandardEisUserCredentialsSet
+#                    SalesDetails:
+#                      QuotesDetails:
+#                        Brand: ~(CustomerBrand)
+#                      ProposerPersonalDetails:
+#                        Title: ~(Title)
+#                        FirstName: ~(ForenameVal)
+#                        LastName: ~(LastnameVal)
+#                        MaritalStatus: ~(MaritalStatus)
+#                        DateOfBirth: ~(DateOfBirth)
+#                        Gender: ~(Gender)
+#                        UkResidentSince: ~(UkResidentSince)
+#                      ProposerContactDetails:
+#                        CorrespondenceAddress: &ProposerContactDetails1
+#                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+#                          Postcode: ~(CorrespondencePostcode)
+#                        MainTelephoneNumber: "07445345345"
+#                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+#                      MarketingChoice:
+#                        Postal: false
+#                        Email: true
+#                        Telephone: false
+#                        SMS: true
+#                  ~Unconditionals:
+
+
+              - ~Activity:
+                  ~Label: MotorQuoteCreationInEis
+                  ~Role: >
+                    Create a new motor quote on EIS UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+#                    SearchCriteria: *SelectCustomerByClientNumber
+                    SearchCriteria:
+#                      ClientNumber: IC0000009179
+                      ClientNumber: ~(ClientNumber)
+#                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+
+#                      ClientNumber: IC0000009115
+
+                    SalesDetails: *AMDW_SalesDetailsTemplate_01
+                  ~Unconditionals:
+
+
+              - ~Activity:
+                  ~Label: AddCCForExistingClient
+                  ~Role: >
+                    Adding CC for existing customer
+                  ~Type: Act
+                  ~Action: AddCCForExistingClient
+
+
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentData:
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+
+                    SearchCriteria:
+                      QuoteReference: ~(//001/MotorQuoteCreationInEis.QuotesDetails.QuoteReference)
+#                      QuoteReference: CV0000000008399
+
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a policy with selected payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    Declines: ~(//001/MotorQuoteCreationInEis.QuotesDetails.Declines)
+                    Referrals: ~(//001/MotorQuoteCreationInEis.QuotesDetails.Referrals)
+
+                    SearchCriteria:
+#                      ClientNumber: ~(ClientNumber)
+                      QuoteReference: ~(//001/MotorQuoteCreationInEis.QuotesDetails.QuoteReference)
+#                      QuoteReference: CV0000000008399
+                    QuoteReference: ~(//001/MotorQuoteCreationInEis.QuotesDetails.QuoteReference)
+#                    QuoteReference: CV0000000008399
+                  ~Judgements:
+                  ~Unconditionals:
+
+
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  #                  ~Label: ComplexPortalRegisterUser
+                  ~Label: PortalRegisterNewUser
+                  ~Role: >
+                    Validate new policy can be registered on the portal
+                  ~Type: Act
+                  ~Action: RegisterNewUser
+                  #                  ~Action: PortalRegisterNewUser
+                  ~ControlData:
+                    NewRegistrationDetails:
+                      Email: X~(ClientNumber)@ageas.co.uk
+                      #                      Email: X~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)@ageas.co.uk
+                      Password: ~(StandardPortalPassword)
+                      #                      PolicyNumber: ~(PolicyNumber)
+                      PolicyNumber: ~(//001/PolicyCreationOnEis.PolicyDetails.PolicyNumber)
+                      DateOfBirth: ~(DateOfBirth)
+                      #                      Postcode: ~(RiskPostcode)
+                      Postcode: ~(CorrespondencePostcode)
+                  #                      Name: *DerivedName
+                  ~Judgements:
+                    - RegistrationStatus==false|HardRunFault("Home policy is not registered")
+
+
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetPolicyDetailsEis
+                  ~Role: >
+                    Capture the policy details from EIS
+                  ~Type: Act
+                  ~Action: GetPolicyDetailsEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    #                    SearchCriteria: *SelectCustomerByPolicyNumber
+                    SearchCriteria:
+                      #                      QuoteReference: ~(//001/MotorQuoteCreationInEis.QuotesDetails.QuoteReference)
+#                      QuoteReference: CV0000000008415
+                      PolicyNumber: ~(//001/PolicyCreationOnEis.PolicyDetails.PolicyNumber)
+#                      PolicyNumber: CV0000000008415
+                  ~Judgements:
+                  ~Unconditionals:
+

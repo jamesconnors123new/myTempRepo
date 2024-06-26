@@ -1,0 +1,119 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientNumber: &SelectCustomerByClientNumber
+      ClientNumber: ~(ClientNumberValue)
+  #    SelectCustomerByClientName: &SelectCustomerByClientName
+  #      Forename: ~(ForenameVal)
+  #      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &AdditionalDriver01
+      DriverType: Frequent
+      RelationshipToProposer: Spouse
+      Title: Mr
+      FirstName: Philip
+      LastName: Smith
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      Gender: Male
+      MaritalStatus: Married
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Accountant
+        Industry: Accountancy
+      SecondaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+      Licence:
+        Type: Full UK Car Licence
+        ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+        AccessToOtherVehicles: Own another car
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: QuoteCreationInEisUi
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                  - TestID|MTA01_TC009
+                  InstanceValues:
+                    ClientNumberValue: IC0000001158
+                    VehicleRegistrationNumber: DG61LXE
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: SearchMotorForAGivenVRN
+                  ~Role: >
+                    Search Vehicle details for a given VRN on EIS UI
+                  ~Type: Act
+                  ~Action: SearchMotorForAGivenVRN
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria: *SelectCustomerByClientNumber
+                    SalesDetails:
+                      ProductType: Motor
+                      RegistrationNumber: ~(VehicleRegistrationNumber)
+                  ~Unconditionals:

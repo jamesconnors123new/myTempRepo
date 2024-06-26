@@ -1,0 +1,46 @@
+~Templates:
+  CredentialsSets:
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(PolicyNumber)@ageas.co.uk
+      Password: ~(StandardPortalPassword)
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId PortalLogin
+      ~Headline: Logon to portal, no additional action
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+              Instances:
+              - Identities:
+                  - TestID|PL-001
+                InstanceValues:
+                  PolicyNumber: HE22757069915
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: LoginToPortal
+                  ~Role: >
+                    Execute portal login
+                  ~Type: Act
+                  ~Action: PortalLogon
+                  ~ControlData:
+                    CustomerCredentials: *StandardPortalUserCredentialsSet
+                  ~Judgements:
+                  ~Unconditionals:

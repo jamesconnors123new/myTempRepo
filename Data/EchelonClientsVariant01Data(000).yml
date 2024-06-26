@@ -1,0 +1,16 @@
+- Data: {QuoteReference: 8889110/001, WebReference: 15174-03085-01383, ClientNumber: '8889110',
+    QuoteValue: 505.05}
+  Id: ECHELON_CLIENTS_0001-212cfa7d-9d85-4c05-8cc7-5e097352ec53
+  IdTags: {TestID: '-03'}
+- Data: {QuoteReference: 8889109/001, WebReference: 88704-12711-34350, ClientNumber: '8889109',
+    QuoteValue: 505.05}
+  Id: ECHELON_CLIENTS_0001-29f9067a-6608-4dc2-9c13-ec6bad63f7da
+  IdTags: {TestID: '-04'}
+- Data: {QuoteReference: 8889108/001, WebReference: 32031-04557-11388, ClientNumber: '8889108',
+    QuoteValue: 505.05}
+  Id: ECHELON_CLIENTS_0001-299edd12-8a06-4337-9283-dd98c7a3150d
+  IdTags: {TestID: '-02'}
+- Data: {QuoteReference: 8889107/001, WebReference: 10174-08315-32382, ClientNumber: '8889107',
+    QuoteValue: 505.05}
+  Id: ECHELON_CLIENTS_0001-8662fffb-7cb1-4495-bb48-72df64222db9
+  IdTags: {TestID: '-01'}

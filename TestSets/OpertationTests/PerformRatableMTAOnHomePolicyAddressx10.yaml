@@ -1,0 +1,165 @@
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: EchelonLoginURL
+      ~Val: https://injector-uat.ageas.co.uk/strata/ageas/household/login
+  - ~Setting: #Portal Login
+      ~Src: Local
+      ~Id: PortalLoginURL
+      ~Val: https://portaltest.ageascloud.co.uk/login
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+              Instances:
+              - Identities:
+                  - TestID|EX-CP-0001
+                InstanceValues:
+                  PolicyNumber: HE22757069915
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: SP1 1JA
+                      MoveInDays: 12
+              - Identities:
+                  - TestID|EX-CP-0002
+                InstanceValues:
+                  PolicyNumber: HE22757069916
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: SP1 1JA
+                      MoveInDays: 15
+              - Identities:
+                  - TestID|EX-CP-0003
+                InstanceValues:
+                  PolicyNumber: HE22757069917
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: PR4 2DS
+                      MoveInDays: 61
+              - Identities:
+                  - TestID|EX-CP-0004
+                InstanceValues:
+                  PolicyNumber: HE22757069918
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: PR4 2DS
+                      MoveInDays: 14
+              - Identities:
+                  - TestID|EX-CP-0005
+                InstanceValues:
+                  PolicyNumber: HE22757069919
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: BS9 2AX
+                      MoveInDays: 20
+              - Identities:
+                  - TestID|EX-CP-0006
+                InstanceValues:
+                  PolicyNumber: HE22757069920
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: BS9 2AX
+                      MoveInDays: 12
+              - Identities:
+                  - TestID|EX-CP-0007
+                InstanceValues:
+                  PolicyNumber: HE22757069921
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: BH23 2EL
+                      MoveInDays: 15
+              - Identities:
+                  - TestID|EX-CP-0008
+                InstanceValues:
+                  PolicyNumber: HE22757069922
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: BH23 2EL
+                      MoveInDays: 61
+              - Identities:
+                  - TestID|EX-CP-0009
+                InstanceValues:
+                  PolicyNumber: HE22757069923
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: TW15 2RY
+                      MoveInDays: 14
+              - Identities:
+                  - TestID|EX-CP-0010
+                InstanceValues:
+                  PolicyNumber: HE22757069924
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: HomeAddress
+                    HomePolicyAddress:
+                      RiskAddress:
+                        HouseIdentifier: 1
+                        Postcode: TW15 2RY
+                      MoveInDays: 20
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: PerformRatableMTAOnHomePolicy
+                  ~Role: >
+                    Perform MTA on a policy
+                  ~Type: Act
+                  ~Action: PerformMTAOnPolicy
+                  ~ControlData:
+                    CustomerCredentials: &CustomerCred #tag credentials for use later in the test
+                      Email: ~(PolicyNumber)@ageas.co.uk
+                      Password: Password123
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                    MTAEffectiveDate: ~(MtaEffectiveDate)
+                    ~Ref(MTASpec): InstanceMTASpec
+                  ~Judgements:
+                  ~Unconditionals:

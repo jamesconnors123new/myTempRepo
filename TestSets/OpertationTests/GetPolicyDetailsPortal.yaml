@@ -1,0 +1,107 @@
+~Templates:
+  CustomerSelectionCriteria:
+    ByPolicyNumber: &SelectCustomerByPolicyNumber
+      PolicyNumber: ~(PolicyNumber)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonPassword)
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(StandardPortalUserName)
+      Password: ~(StandardPortalPassword)
+
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+~CommonInitActivities:
+
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Instances:
+#                - Identities:
+#                    - TestID|GetPolicyDetailsEchelonUI01
+#                  InstanceValues:
+#                    PolicyNumber: HE22757083075  #HE22757082801 #HE22757082797 #HE22757081767
+#                    InstanceCustomerCredentials:
+#                      Email: X8886744@ageas.co.uk #vdportallogin@ageas.co.uk #vishal.deshpande@ageas.co.uk #
+#                      Password: Password123 #Password@1234 #Mypw d@1234 #Password@1234
+                - Identities:
+                    - TestID|GetPolicyDetailsEchelonUI01
+                  InstanceValues:
+                    PolicyNumber: HE22757083485  #HE22757082801 #HE22757082797 #HE22757081767
+                    InstanceCustomerCredentials:
+                      Email: X8888604@ageas.co.uk #vdportallogin@ageas.co.uk #vishal.deshpande@ageas.co.uk #
+                      Password: Password123 #Password@1234 #Mypw d@1234 #Password@1234
+#                - Identities:
+#                    - TestID|GetPolicyDetailsEchelonUI02
+#                  InstanceValues:
+#                    PolicyNumber: HE22757082801 #HE22757082797
+#                    InstanceCustomerCredentials:
+#                      Email: vdportallogin@ageas.co.uk #vishal.deshpande@ageas.co.uk #
+#                      Password: Password@1234 #Mypw d@1234 #Password@1234
+      ~Stages:
+        - ~Stage: # Check MTA that we want to do are enabled on the policy that is being targeted
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetCustomerDetailsPortalBeforeMTA
+                  ~Role: >
+                    Capture the policy details from Echelon before the MTA
+                  ~Type: Act
+                  ~Action: GetPolicyInformationPortal
+                  ~ControlData:
+                    ~Ref(CustomerCredentials): InstanceCustomerCredentials
+#                      Email: X8886744@ageas.co.uk #vdportallogin@ageas.co.uk #vishal.deshpande@ageas.co.uk #
+#                      Password: Password123 #Password@1234 #Mypw d@1234 #Password@1234
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                  ~Judgements:
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: GetCustomerDetailsSourceBeforeMTA
+                  ~Role: >
+                    Capture the policy details from Echelon before the MTA
+                  ~Type: Act
+                  ~Action: GetPolicyDetailsEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria: *SelectCustomerByPolicyNumber
+                  ~Judgements:
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: ComparePolicyInfoOfPortalAndSourceSystem
+                  ~Role: >
+                    Comparing the policy details fetch from Portal and Source(Echelon/EIS)
+                  ~Type: Act
+                  ~Action: CompareData
+                  ~ControlData:
+                    InputA: //001/GetCustomerDetailsPortalBeforeMTA.CustomerPolicyDetailOnPortal.NormalizedData.HomeInsurance[0].UniversalView #Sending Map to compare
+                    InputB: //001/GetCustomerDetailsSourceBeforeMTA.CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView #Sending Map to compare
+                  ~Judgements:
+                    - //001/ComparePolicyInfoOfPortalAndSourceSystem.NumDiffs!=0|Fail(UnexpectedPolicyDifference, "Before MTA - Difference in Customer data reported by Echleon and Portal")
+                  ~Unconditionals:

@@ -1,0 +1,225 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:  &SelectCustomerByClientName
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(StandardPortalUserName)
+      Password: ~(StandardPortalPassword)
+  People:
+    Person01: &AdditionalDriver01
+      DriverType: Frequent
+      RelationshipToProposer: Spouse
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: (None)
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+      Licence:
+        Type: Full UK Car Licence
+        ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+        AccessToOtherVehicles: Own another car
+      InsurancePreviouslyRefused: false
+    Person02: &Person02
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0001
+      ~Headline: Create a New Policy on Echelon
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                ClientGroupId: ~(ClientGroupId)
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    Index: A
+
+      ~Stages:
+        - ~Stage: #1 Create Motor Quote on Echelon
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateQuoteOnEchelonUI
+                  ~Role: >
+                    Create a new quote on Echelon UI
+                  ~Type: Act
+                  ~Action: QuoteCreationMotorOnEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: AMDW
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      InsuranceDetails:
+                        LicenseDetails:
+                          LicenceType: Full Licence
+                          ~Gen(LicenceDate): DateRelToTodayAsStr|-3650|dd/MM/yyyy #10 years held
+                        VehicleSearch:
+                          Registration: KS51NFM
+                          LeftHandDrive: false
+                          NumberOfSeats: 5
+                        VehicleDetails:
+                          ~Gen(PurchaseDate): DateRelToTodayAsStr|-5|dd/MM/yyyy
+                          CurrentMarketValue: 2445
+                          VehicleOwner: Proposer
+                          ProposerRegisteredKeeper: true
+                          WhereKeptOvernight: Driveway
+                          WhereKeptPostcode: B17 8TU
+                          Modifications: false
+                        VehicleSecurityDetails:
+                          Alarm: Factory Fitted
+                          Immobiliser: Factory Fitted
+                          Tracker: No Tracker
+                        CoverDetails:
+                          ClassOfUse: Social, Domestic, Pleasure
+                          AnnualMileage: 7999
+                          LevelOfVoluntaryExcess: 100
+                        MotoringDetails:
+                          UseOfVehicleByProposer: Main User
+                          NumberOfOtherVehiclesInHousehold: 1
+                          AccessToOtherVehicles: None
+                        PreviousInsurance:
+                          PreviousInsurance: true
+                          DrivingExperienceNotInYourName:
+                          NCDAppliedToAnyOtherVehicle : false
+                          TypeOfInsurance: Private Car
+                          NCDClaimed: 9
+                          NCDCurrentlyProtected: true
+                          ProtectedMCDRequired : true
+                          ~Gen(PolicyExpiryDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                        AdditionalDrivers:
+                          DrivingRestrictions: Insured Only
+                        ClaimDetails:
+                          AnyClaims: false
+                        ClientUserFields:
+                          DrivingLicenseNumber: TESTZ862144SA9ET
+                        PolicyUserFields:
+                          WhereDidYouHearAboutUs: Easyfundraising
+                        DynamicUnderwriterQuestions:
+                          WhatIsTheDaytimeLocationOfTheVehicle: At home
+                          HowManyChildrenAreInTheHousehold: 2
+                          IsTheProposerMemberofIAM: false
+                          AreYouAHomeOwner: true
+                          DoYouRegularlyUseTheCarInPeakTime: false
+                          HowDoYouPayForYourInsurance: Full Payment
+                          IsTheVehicleImported: false
+                          DoYouHaveADashcamFittedToYourCar: Both
+                      PreferredDeliveryMethod: Email
+                      ProposerPersonalDetails:
+                        Title: Miss
+                        FirstName: Sandra
+                        LastName: Testzxz
+                        MaritalStatus: Single
+                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-12045|dd/MM/yyyy
+                        Gender: Female
+                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-12045|dd/MM/yyyy #39 years Old
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: Bakery Assistant
+                          Industry: Fast Food
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      ProposerContactDetails:
+                        CorrespondenceAddress:
+                          HouseIdentifier: 16
+                          Postcode: B17 8TU
+                          PropertyType: House
+                        MainTelephoneNumber: "07345345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: true
+                        Email: false
+                        Telephone: true
+                        SMS: false
+                  ~Unconditionals:
+
+
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateNewPolicyOnEchelon
+                  ~Role: >
+                    Capture policy details from portal before MTA
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateQuoteOnEchelonUI.QuoteDetails.ClientNumber)
+                    QuoteDetails:
+                      QuoteReference: ~(//001/CreateQuoteOnEchelonUI.QuoteDetails.QuoteReference)
+                    PaymentDetails:
+                      PaymentMethod: NoPayment #Other expected values :- NoPayment / StoredCard / NewCard
+                        #Incase of
+                        #- NoPayment:- Framework will skip payment and complete policyCreation
+                        #- StoredCard:- Framework will complete payment with Creditcard option and policyCreation
+                      #- NewCard:- This has dependency on Semafone so not built Yet. The below-mentioned details are for NewCard Option
+                  #                      CardDetails:
+                  #                      CardHolderName: Test
+                  #                      ExpirationDate: 03/2029
+                  #                      CreditCardNumber: 4444333322221111
+                  #                      CVV: 555
+                  ~Judgements:
+                  ~Unconditionals:

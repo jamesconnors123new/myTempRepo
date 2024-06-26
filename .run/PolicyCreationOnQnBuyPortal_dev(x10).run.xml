@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PolicyCreationOnQnBuyPortal_dev(x10)" type="Application" factoryName="Application" folderName="OperationTests">
+    <envs>
+      <env name="ClientGroupId" value="ABBDET" />
+      <env name="PortalLoginURL" value="http://homedev.ageascloud.co.uk/" />
+      <env name="StandardPortalPassword" value="Password123" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/OpertationTests/PolicyCreationOnQnBuyPortalx10.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,90 @@
+~Templates:
+  CredentialsSets:
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: X8887526@ageas.co.uk
+      Password: ~(StandardPortalPassword)
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalUserName
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+                PolicyNumber: HE22757083236
+                ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+
+              Instances:
+                - Identities:
+                    - TestID|EX-CP-0001
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-02
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-03
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-04
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-05
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-06
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-07
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-08
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-09
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+                - Identities:
+                    - TestID|GetPolInfoPortal-10
+                  InstanceValues:
+                    PolicyNumber: HE22757083236
+
+      ~Stages:
+        - ~Stage: # Check MTA that we want to do are enabled on the policy that is being targeted
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetPolicyDetailsPortal
+                  ~Role: >
+                    Capture the policy details from Echelon before the MTA
+                  ~Type: Act
+                  ~Action: GetPolicyInformationPortal
+                  ~ControlData:
+                    CustomerCredentials: *StandardPortalUserCredentialsSet
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                  ~Judgements:
+                  ~Unconditionals:

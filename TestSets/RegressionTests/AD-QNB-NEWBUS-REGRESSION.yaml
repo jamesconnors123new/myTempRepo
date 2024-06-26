@@ -1,0 +1,405 @@
+#Author: Sarah Clark
+#Init Version: 01-05-2024
+#Purpose: Set of Tests targeted at Ageas Direct
+
+~Templates:
+
+  RiskControlPattern:
+    Dates:
+      FarInTheFutureDate: 31/12/2099
+      ~Gen(Today): DateRelToTodayAsStr|0|dd/MM/yyyy
+      ~Gen(Tomorrow): DateRelToTodayAsStr|1|dd/MM/yyyy
+    FutureDateTheQuote: false
+
+  CoverTypeBuildingsAndContentsWithAccidentalDamage: &CoverTypeBuildingsAndContentsAndAccidentalDamage
+    Buildings: true
+    Contents: true
+    BuildingAccidentalDamage: true
+    ContentAccidentalDamage: true
+
+  QuotesDetails: &DefaultQuoteDetails
+    ProductType: Home
+    InceptionDate: Today
+
+  TypeOfHouseHoldCover: &DefaultTypeOfHouseholdCover
+    Buildings: true
+    Contents: true
+    BuildingAccidentalDamage: false
+    ContentAccidentalDamage: false
+
+  InsuredAmount: &DefaultInsuredAmount
+    BuildingVoluntaryExcess: 100
+    ContentVoluntaryExcess: 100
+    RebuildingCost: 100000
+    ContentSum: 80000
+
+  InsuranceHistory: &DefaultInsuranceHistory
+    ContentClaimFreeYears: 0
+    BuildingClaimFreeYears: 0
+    InsurancePreviouslyRefused: false
+    PreviousInsurance: false
+
+  ContentDetails: &DefaultContentDetails
+    Safe: true
+    ValuablesAwayFromHome: false
+    ValuablesInTheHome: false
+    SpecifiedItemsAvailable: false
+
+  BuildingDetails: &DefaultBuildingDetails
+    BuildingType: House
+    StructureType: Detached  #
+    ConstructionType: Standard  #Creation of code for options
+    YearBuilt: 2010
+    NumberOfBedrooms: 2
+    RiskAddress:
+      HouseIdentifier: 1
+      Postcode: NG17 3AS
+    BuildingAddress:
+      HouseIdentifier: 1
+      Postcode: NG17 3AS
+    AdditionalInformation:
+      ListingStatus: false
+      BuildingWorkStatus: false
+      GoodRepairStatus: true
+      GeologicalThreats: false
+      FreeFromFloodingThreats: true
+
+
+  Usage: &DefaultUsageDetails
+    NonFamilyLodger: false
+    LetWithSublet: false
+    BusinessUse: false
+    HolidayHomeStatus: false
+    Occupancy: Occupied
+
+
+  Security: &DefaultSecurity
+    Locks: true
+    Alarms: Basic DIY Alarm
+    NeighbourhoodWatch: true
+
+  SalesDetails: &SalesDetails
+    QuotesDetails: *DefaultQuoteDetails
+    InsuranceDetails:
+      TypeOfHouseHoldCover: *DefaultTypeOfHouseholdCover
+      InsuredAmount: *DefaultInsuredAmount
+      InsuranceHistory: *DefaultInsuranceHistory
+      ContentDetails: *DefaultContentDetails
+      BuildingDetails: *DefaultBuildingDetails
+      Usage: *DefaultUsageDetails
+      Security: *DefaultSecurity
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned
+        FirstTimeBuyers: false
+    PreferredDeliveryMethod: Email
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+      LastName: Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth):  DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Ol
+      Gender: Male
+      UkResidentSince: default
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        HouseIdentifier: 1
+        Postcode: NG17 3AS
+      MainTelephoneNumber: "07345345345"
+      EmailAddress: dummy@ageas.com
+    MarketingChoice:
+      Postal: false
+      Email: true
+      Telephone: false
+      SMS: true
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: 1
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annually
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+      PropertyOwned: OwnedOutright
+      TypeOfLodgers: No Guest
+    JointPolicyHolderStatus: false
+    ClaimHistoryAvailable: false
+    ConsentToRenew: true
+    OptionalExtras:
+      ExcessProtection: false
+      HomeEmergency: false
+      LegalExpenses: false
+
+  CoverTypeBuildingsOnly: &CoverTypeBuildingsOnly
+    Buildings: true
+    Contents: false
+    BuildingAccidentalDamage: false
+    ContentAccidentalDamage: false
+
+  CoverTypeContentsOnly: &CoverTypeContentsOnly
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: false
+        Contents: true
+
+  ContentDetailsInHomeSpecifiedItems: &ContentDetailsInHomeSpecifiedItems
+    Safe: true
+    SpecifiedItemsAvailable: true
+    SpecifiedItems:
+      InHome: #Do you have any valuables over £2,000 that you don’t take outside of the home?
+        - Item: Valuables
+          Description: Phone and Watches
+          Value: 3000
+        - Item: Items At University/College
+          Description: Books
+          Value: 150
+        - Item: Pictures
+          Description: Portraits
+          Value: 1000
+        - Item: Precious Metals
+          Description: Gold Bar
+          Value: 2000
+        - Item: Specified Contents
+          Description: PC and other electronics
+          Value: 5000
+      AwayHome:
+        - Item: Camcorders
+          Description: Camcorders
+          Value: 300
+        - Item: Car Audio Equipment
+          Description: Car Audio Equipment
+          Value: 200
+
+  People:
+    Person01: &Person01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      DateOfBirth: DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Ol
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: TestingTeam
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId StandardBuildingsAndContentsQuote
+      ~Headline: Add Ageas customer home quotes and policies with Credit Card payment for Quote And Buy General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                TheSalesDetails:
+                  <<: *SalesDetails
+              Instances:
+                - Identities:
+                    - TestID|QANDB01_StandardQuote-Today
+                  InstanceValues:
+                    TheSalesDetails:
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover: *CoverTypeBuildingsAndContentsAndAccidentalDamage
+                      ProposerPersonalDetails:
+                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)A
+                      ProposerContactDetails:
+                        EmailAddress: ~(TestingTeam)_000_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@n0ie34cm.mailosaur.net
+                      QuotesDetails:
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                - Identities:
+                    - TestID|QANDB02_StandardQuote-Future
+                  InstanceValues:
+                    TheSalesDetails:
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover: *CoverTypeBuildingsAndContentsAndAccidentalDamage
+                      ProposerPersonalDetails:
+                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)B
+                      ProposerContactDetails:
+                        EmailAddress: ~(TestingTeam)_000_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@n0ie34cm.mailosaur.net
+                      QuotesDetails:
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|1|dd/MM/yyyy
+    ~TestCase:
+      ~CaseId: &caseId StandardBuildingOnlyQuote
+      ~Headline: Add Ageas customer home quotes and policies with Credit Card payment for Quote And Buy General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                TheSalesDetails:
+                  <<: *SalesDetails
+              Instances:
+                - Identities:
+                    - TestID|QANDB01_StandardQuote-Today
+                  InstanceValues:
+                    TheSalesDetails:
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover: *CoverTypeBuildingsOnly
+                      ProposerPersonalDetails:
+                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)C
+                      ProposerContactDetails:
+                        EmailAddress: ~(TestingTeam)_000_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@n0ie34cm.mailosaur.net
+                      QuotesDetails:
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationOnQnBuyPortal
+                  ~Role: >
+                    Create a new home quote for Ageas on Quote And Buy Portal
+                  ~Type: Act
+                  ~Action: QuoteCreationOnQnBuyPortal
+                  ~ControlData:
+                    ~Ref(SalesDetails): TheSalesDetails
+                  ~Unconditionals:
+
+    ~TestCase:
+      ~CaseId: &caseId StandardBuildingOnlyQuote
+      ~Headline: Add Ageas customer home quotes and policies with Credit Card payment for Quote And Buy General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                TheSalesDetails:
+                  <<: *SalesDetails
+              Instances:
+                - Identities:
+                    - TestID|QANDB01_Standard_Contents_Only_Quote-Today
+                  InstanceValues:
+                    TheSalesDetails:
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover: *CoverTypeContentsOnly
+                      ProposerPersonalDetails:
+                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)C
+                      ProposerContactDetails:
+                        EmailAddress: ~(TestingTeam)_000_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@n0ie34cm.mailosaur.net
+                      QuotesDetails:
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationOnQnBuyPortal
+                  ~Role: >
+                    Create a new home quote for Ageas on Quote And Buy Portal
+                  ~Type: Act
+                  ~Action: QuoteCreationOnQnBuyPortal
+                  ~ControlData:
+                    ~Ref(SalesDetails): TheSalesDetails
+                  ~Unconditionals:
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationOnQnBuyPortal
+                  ~Role: >
+                    Create a new home quote for Ageas on Quote And Buy Portal
+                  ~Type: Act
+                  ~Action: QuoteCreationOnQnBuyPortal
+                  ~ControlData:
+                     ~Ref(SalesDetails): TheSalesDetails
+                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: PolicyCreationOnQnBuyPortal
+#                  ~Role: >
+#                    Create a home policy with credit card payment method for the quote created on Portal
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnQnBuyPortal
+#                  ~ControlData:
+#                    QuoteDetails:
+#                      DateOfBirth: ~(DateOfBirth)
+#                      Postcode: ~(InstancePostcode)
+#                    PaymentData:
+#                      ProposerIsCardHolder: true
+#                      CardPermission: true
+#                      Type: Visa
+#                      CardHolderName: Test
+#                      ExpirationDate: 03/2024
+#                      CreditCardNumber: 4444333322221111
+#                      CVV: 555
+#                    PaymentMethod: Annual
+#                    #~Ref(PaymentData): InstancePaymentData
+#                    QuoteReference: ~(//001/QuoteCreationOnQnBuyPortal.QuoteDetails.QuoteReference)
+#                  ~Judgements:
+#                  ~Unconditionals:

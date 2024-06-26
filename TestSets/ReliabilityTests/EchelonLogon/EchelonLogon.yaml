@@ -1,0 +1,261 @@
+~Templates:
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: Echelon login reliability testing
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate logins
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+              Instances:
+
+                - Identities:
+                    - TestID|EchLogin-00
+                - Identities:
+                    - TestID|EchLogin-01
+                - Identities:
+                    - TestID|EchLogin-02
+                - Identities:
+                    - TestID|EchLogin-03
+                - Identities:
+                    - TestID|EchLogin-04
+                - Identities:
+                    - TestID|EchLogin-05
+                - Identities:
+                    - TestID|EchLogin-06
+                - Identities:
+                    - TestID|EchLogin-07
+                - Identities:
+                    - TestID|EchLogin-08
+                - Identities:
+                    - TestID|EchLogin-09
+
+                - Identities:
+                    - TestID|EchLogin-10
+                - Identities:
+                    - TestID|EchLogin-11
+                - Identities:
+                    - TestID|EchLogin-12
+                - Identities:
+                    - TestID|EchLogin-13
+                - Identities:
+                    - TestID|EchLogin-14
+                - Identities:
+                    - TestID|EchLogin-15
+                - Identities:
+                    - TestID|EchLogin-16
+                - Identities:
+                    - TestID|EchLogin-17
+                - Identities:
+                    - TestID|EchLogin-18
+                - Identities:
+                    - TestID|EchLogin-19
+
+                - Identities:
+                    - TestID|EchLogin-20
+                - Identities:
+                    - TestID|EchLogin-21
+                - Identities:
+                    - TestID|EchLogin-22
+                - Identities:
+                    - TestID|EchLogin-23
+                - Identities:
+                    - TestID|EchLogin-24
+                - Identities:
+                    - TestID|EchLogin-25
+                - Identities:
+                    - TestID|EchLogin-26
+                - Identities:
+                    - TestID|EchLogin-27
+                - Identities:
+                    - TestID|EchLogin-28
+                - Identities:
+                    - TestID|EchLogin-29
+
+                - Identities:
+                    - TestID|EchLogin-30
+                - Identities:
+                    - TestID|EchLogin-31
+                - Identities:
+                    - TestID|EchLogin-32
+                - Identities:
+                    - TestID|EchLogin-33
+                - Identities:
+                    - TestID|EchLogin-34
+                - Identities:
+                    - TestID|EchLogin-35
+                - Identities:
+                    - TestID|EchLogin-36
+                - Identities:
+                    - TestID|EchLogin-37
+                - Identities:
+                    - TestID|EchLogin-38
+                - Identities:
+                    - TestID|EchLogin-39
+
+
+                - Identities:
+                    - TestID|EchLogin-40
+                - Identities:
+                    - TestID|EchLogin-41
+                - Identities:
+                    - TestID|EchLogin-42
+                - Identities:
+                    - TestID|EchLogin-43
+                - Identities:
+                    - TestID|EchLogin-44
+                - Identities:
+                    - TestID|EchLogin-45
+                - Identities:
+                    - TestID|EchLogin-46
+                - Identities:
+                    - TestID|EchLogin-47
+                - Identities:
+                    - TestID|EchLogin-48
+                - Identities:
+                    - TestID|EchLogin-49
+
+
+                - Identities:
+                    - TestID|EchLogin-50
+                - Identities:
+                    - TestID|EchLogin-51
+                - Identities:
+                    - TestID|EchLogin-52
+                - Identities:
+                    - TestID|EchLogin-53
+                - Identities:
+                    - TestID|EchLogin-54
+                - Identities:
+                    - TestID|EchLogin-55
+                - Identities:
+                    - TestID|EchLogin-56
+                - Identities:
+                    - TestID|EchLogin-57
+                - Identities:
+                    - TestID|EchLogin-58
+                - Identities:
+                    - TestID|EchLogin-59
+
+
+                - Identities:
+                    - TestID|EchLogin-60
+                - Identities:
+                    - TestID|EchLogin-61
+                - Identities:
+                    - TestID|EchLogin-62
+                - Identities:
+                    - TestID|EchLogin-63
+                - Identities:
+                    - TestID|EchLogin-64
+                - Identities:
+                    - TestID|EchLogin-65
+                - Identities:
+                    - TestID|EchLogin-66
+                - Identities:
+                    - TestID|EchLogin-67
+                - Identities:
+                    - TestID|EchLogin-68
+                - Identities:
+                    - TestID|EchLogin-69
+
+
+                - Identities:
+                    - TestID|EchLogin-70
+                - Identities:
+                    - TestID|EchLogin-71
+                - Identities:
+                    - TestID|EchLogin-72
+                - Identities:
+                    - TestID|EchLogin-73
+                - Identities:
+                    - TestID|EchLogin-74
+                - Identities:
+                    - TestID|EchLogin-75
+                - Identities:
+                    - TestID|EchLogin-76
+                - Identities:
+                    - TestID|EchLogin-77
+                - Identities:
+                    - TestID|EchLogin-78
+                - Identities:
+                    - TestID|EchLogin-79
+
+
+                - Identities:
+                    - TestID|EchLogin-80
+                - Identities:
+                    - TestID|EchLogin-81
+                - Identities:
+                    - TestID|EchLogin-82
+                - Identities:
+                    - TestID|EchLogin-83
+                - Identities:
+                    - TestID|EchLogin-84
+                - Identities:
+                    - TestID|EchLogin-85
+                - Identities:
+                    - TestID|EchLogin-86
+                - Identities:
+                    - TestID|EchLogin-87
+                - Identities:
+                    - TestID|EchLogin-88
+                - Identities:
+                    - TestID|EchLogin-89
+
+
+                - Identities:
+                    - TestID|EchLogin-90
+                - Identities:
+                    - TestID|EchLogin-91
+                - Identities:
+                    - TestID|EchLogin-92
+                - Identities:
+                    - TestID|EchLogin-93
+                - Identities:
+                    - TestID|EchLogin-94
+                - Identities:
+                    - TestID|EchLogin-95
+                - Identities:
+                    - TestID|EchLogin-96
+                - Identities:
+                    - TestID|EchLogin-97
+                - Identities:
+                    - TestID|EchLogin-98
+                - Identities:
+                    - TestID|EchLogin-99
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: Logon to Echelon
+                  ~Role: >
+                    Perform a login to Echelon
+                  ~Type: Act
+                  ~Action: EchelonLogon
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet

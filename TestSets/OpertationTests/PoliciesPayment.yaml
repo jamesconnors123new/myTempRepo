@@ -1,0 +1,79 @@
+~Templates:
+  CredentialsSets:
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(StandardPortalUserName)
+      Password: ~(StandardPortalPassword)
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: EchelonLoginURL
+      ~Val: https://injector-uat.ageas.co.uk/strata/ageas/household/login
+  - ~Setting: #Portal Login
+      ~Src: Local
+      ~Id: PortalLoginURL
+      ~Val: https://portaltest.ageascloud.co.uk/login
+  - ~Setting:
+      ~Src: Local
+      ~Id: StandardEchelonUserName
+      ~Val: a50_vdeshpande_uat
+  - ~Setting:
+      ~Src: Local
+      ~Id: StandardEchelonUserPassword
+      ~Val: Password02
+  - ~Setting:
+      ~Src: Local
+      ~Id: StandardPortalPassword
+      ~Val: Password123
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Create a New Policy on Echelon
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    Index: A
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+                    PostCode: RG4 5LP
+                    Password: ~(StandardPortalPassword)
+                    Lastname: Databuild
+                    JointPolicyHolderDetails: false
+                    PolicyNumber: HE22757069586
+
+      ~Stages:
+        - ~Stage: # Check MTA that we want to do are enabled on the policy that is being targeted
+            ~Activities:
+              - ~Activity:
+                  ~Label: PaymentOnPortal
+                  ~Role: >
+                    Completing the payment on portal of policy brought
+                  ~Type: Act
+                  ~Action: PaymentOnPortal
+                  ~ControlData:
+                    CustomerCredentials: # *StandardPortalUserCredentialsSet
+                      Email: demoOfPortal@test.com #~(PolicyNumber)@ageas.co.uk
+                      Password: Password123 #~(StandardPortalPassword)
+                    QuoteReference: 064183291147360
+                    InsuranceType: Home
+                    CardDetails: #Need to discuss As of now there is no option to add card detals
+                      CardHolderName: Test
+                      CardNumber: 4444333322221111
+                      ExpiryDate: 03/2028
+                      CVV: 555
+                  ~Judgements:
+                  ~Unconditionals:

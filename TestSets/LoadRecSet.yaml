@@ -1,0 +1,104 @@
+~GlobalSettings:
+
+~CommonInitActivities:
+  - ~Activity:
+      ~Label: LoadClientData
+      ~Role: >
+        Load client data to allow policy creation
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        RecSet: MtaClients
+        Sources:
+          - TestContent/Records.yml
+
+
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportDataToFileA
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Variant01Data
+        Exports:
+          - TestCases:
+            - TC01
+            DataItems:
+            - //001/EchoControlDataA.ClientId
+  - ~Activity:
+      ~Label: ExportDataToFileA
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Variant02Data
+        Exports:
+          - TestCases:
+              - TC02
+            DataItems:
+              - //001/EchoControlDataA.ClientId
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: TC01
+      ~Headline: Access record set 01
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+              Instances:
+                - Identities:
+                    - TestID|TC01-00
+                  InstanceValues:
+                    ~Ref(ClientIdValue):  //000/LoadClientData.MtaClients[0].ClientId
+                - Identities:
+                    - TestID|TC01-01
+                  InstanceValues:
+                    ~Ref(ClientIdValue): //000/LoadClientData.MtaClients[1].ClientId
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+            - ~Activity:
+                ~Label: EchoControlDataA
+                ~Role:
+                ~Type: Act
+                ~Action: EchoControlData
+                ~ControlData:
+                  ~Ref(ClientId): ClientIdValue
+  - ~TestCase:
+      ~CaseId: TC02
+      ~Headline: Access record set 02
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+              Instances:
+                - Identities:
+                    - TestID|TC02-00
+                  InstanceValues:
+                    ~Ref(ClientIdValue):  //000/LoadClientData.MtaClients[2].ClientId
+                - Identities:
+                    - TestID|TC02-01
+                  InstanceValues:
+                    ~Ref(ClientIdValue): //000/LoadClientData.MtaClients[3].ClientId
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: EchoControlDataA
+                  ~Role:
+                  ~Type: Act
+                  ~Action: EchoControlData
+                  ~ControlData:
+                    ~Ref(ClientId): ClientIdValue

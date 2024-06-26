@@ -1,0 +1,449 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName: &SelectCustomerByClientName
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+#                Team: E2E
+#                LogicalPattern: Mta
+#                AreaOfTesting: Por
+#                AreaOfBusiness: Bau
+#                TestingType: f
+#                TestingTeam: E2E
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+               - Identities:
+                   - TestID|MTA01_TC001
+                 InstanceValues:
+                    LastnameVal: Testzxz
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                    MaritalStatus: Civil Partnership
+                    HouseIdentifier: 6
+                    Postcode: HA9 9SB
+                    Gender: Female
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13980|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-62000|dd/MM/yyyy #9 years Old
+               - Identities:
+                   - TestID|MTA01_TC002
+                 InstanceValues:
+                    LastnameVal: Testzxz
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                    MaritalStatus: Civil Partnership
+                    HouseIdentifier: 14
+                    Postcode: N16 0DJ
+                    Gender: Male
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #9 years Old
+               - Identities:
+                   - TestID|MTA01_TC003
+                 InstanceValues:
+                    LastnameVal: Testzxz
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                    MaritalStatus: Married
+                    HouseIdentifier: 3
+                    Postcode: PA1 2LS
+                    Gender: Female
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-11025|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7857|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC004
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Reverend
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Divorced
+                  HouseIdentifier: 14
+                  Postcode: IG1 2AA
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-9200|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-5237|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC005
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Miss
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: 32
+                  Postcode: WD19 4JA
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-6400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-4100|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC006
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Ms
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Widowed
+                  HouseIdentifier: 5
+                  Postcode: IG1 1NH
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-8800|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-1000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC007
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Ms
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Widowed
+                  HouseIdentifier: 5
+                  Postcode: IG1 1NH
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-8800|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-1000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC008
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Ms
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: 21
+                  Postcode: HA3 7SY
+                  Gender: Not Specified
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-1000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC009
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Civil Partnership
+                  HouseIdentifier: 10
+                  Postcode: B34 6ES
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-16400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-1000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC010
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mrs
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Married
+                  HouseIdentifier: 98
+                  Postcode: FY1 4AF
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-21400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-10000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC011
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Doctor
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: 10
+                  Postcode: BH7 6DP
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-7400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC012
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Doctor
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Married
+                  HouseIdentifier: 2
+                  Postcode: BN2 9NB
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-9950|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-4000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC013
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Married
+                  HouseIdentifier: 10
+                  Postcode: BH7 6DP
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-7400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC014
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Lady
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: Hartlands
+                  Postcode: PL8 2AU
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-16400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC015
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Divorced
+                  HouseIdentifier: 7
+                  Postcode: OX1 1ES
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-10480|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC016
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mrs
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Married
+                  HouseIdentifier: 53
+                  Postcode: PE1 3EB
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-8417|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-1270|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC017
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Miss
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: 9
+                  Postcode: PO5 4BS
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-7400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC018
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: 86
+                  Postcode: RG1 7LJ
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-7400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC019
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Married
+                  HouseIdentifier: 12A
+                  Postcode: RH1 2AX
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-17400|dd/MM/yyyy #29 years Old
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-3500|dd/MM/yyyy #9 years Old
+               - Identities:
+                    - TestID|MTA01_TC020
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Miss
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: Woolaw Bungalow
+                  Postcode: NE19 1TB
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-13400|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC021
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Single
+                  HouseIdentifier: 6
+                  Postcode: BD10 0BW
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-18290|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-6000|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC022
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Married
+                  HouseIdentifier: 49
+                  Postcode: BS5 8DU
+                  Gender: Male
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-9867|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-1720|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC023
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mrs
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Married
+                  HouseIdentifier:
+                  Postcode:
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-14285|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-1000|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC024
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Ms
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Divorced
+                  HouseIdentifier: 26
+                  Postcode: LS6 1RB
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-11350|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-9245|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC025
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Divorced
+                  HouseIdentifier: 33
+                  Postcode: L8 0TU
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-17400|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-5000|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC026
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mr
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Divorced
+                  HouseIdentifier: 11
+                  Postcode: L11 8NJ
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-15400|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC027
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Mrs
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Civil Partnership
+                  HouseIdentifier: 18
+                  Postcode: S20 6TE
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-12400|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-10000|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC028
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Ms
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Civil Partnership
+                  HouseIdentifier: 29
+                  Postcode: SL1 3EF
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-11400|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-2000|dd/MM/yyyy
+               - Identities:
+                    - TestID|MTA01_TC029
+                 InstanceValues:
+                  LastnameVal: Testzxz
+                  Title: Ms
+                  ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)
+                  MaritalStatus: Widowed
+                  HouseIdentifier: 31
+                  Postcode: AL3 4HA
+                  Gender: Female
+                  ~Gen(DateOfBirth): DateRelToTodayAsStr|-11400|dd/MM/yyyy
+                  ~Gen(UkResidentSince): DateRelToTodayAsStr|-2000|dd/MM/yyyy
+               
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: Create Quote On Echelon UI
+                  ~Role: >
+                    Create a new quote on Echelon UI
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: AgeasDirect
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        AddressSelector:
+                          HouseIdentifier: ~(HouseIdentifier)
+                          Postcode: ~(Postcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:

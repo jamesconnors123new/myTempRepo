@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v45="http://cdl.co.uk/service/webuser/v45">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <v45:getWebUserOverview>
+            <username>default</username>
+        </v45:getWebUserOverview>
+    </soapenv:Body>
+</soapenv:Envelope>

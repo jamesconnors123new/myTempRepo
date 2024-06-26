@@ -1,0 +1,50 @@
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: Echelon_home
+      ~Val: https://injector-uat.ageas.co.uk/strata/ageas/household/login
+  - ~Setting: #Portal Login
+      ~Src: Local
+      ~Id: PortalLoginURL
+      ~Val: https://portaltest.ageascloud.co.uk/login
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId CheckMtaIsAllowed
+      ~Headline: Execute CheckMTAIsAllowed
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+
+              Instances:
+                -  Identities:
+                     - TestID|CI01
+                   InstanceValues:
+                     PolicyNumber: HE22757069287
+                     MtaEffectiveDate: 26/08/2023
+
+      ~Stages:
+        - ~Stage: #1. Check MTA that we want to do are enabled on the policy that is being targeted
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckHomeMTAIsAllowed
+                  ~Role: >
+                    Validate particular type of MTA is available on the portal.
+                  ~Type: Act
+                  ~Action: CheckMTAIsAllowed
+                  ~ControlData:
+                    CustomerCredentials: &CustomerCred #tag credentials for use later in the test
+                      Email: ~(PolicyNumber)@ageas.co.uk
+                      Password: Password123
+                    PolicyNumber: ~(PolicyNumber)
+                    MTAEffectiveDate: ~(MtaEffectiveDate)
+                  ~Judgements:
+                    - Home.PolicyHolderDetails==FALSE|HardRunFault("Home policyholder details MTA is not enabled")
+                    - Home.RiskAddress==FALSE|HardRunFault("Home risk address MTA is not enabled")
+                    - Home.CoverDetails==FALSE|HardRunFault("Home cover details MTA is not enabled")
+                  ~Unconditionals:

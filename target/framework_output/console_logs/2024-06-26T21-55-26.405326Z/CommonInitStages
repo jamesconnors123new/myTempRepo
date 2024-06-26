@@ -1,0 +1,17 @@
+[2024-06-26T21:55:26.486148Z] - Start - Invocation of //000/LoadStandardClientData
+[2024-06-26T21:55:26.486632Z] - Start - Bind Control Data
+[2024-06-26T21:55:26.487213Z] - End - Bind Control Data
+[2024-06-26T21:55:26.487900Z] - Start - sqc.bstof.builtinops.datatools.RecordLoader
+[2024-06-26T21:55:26.488041Z] - Start - Load data set
+[2024-06-26T21:55:26.493350Z] - Count of null entries in the source file list is 0
+[2024-06-26T21:55:26.493590Z] - Count of invalid entries in the source file list is 0
+[2024-06-26T21:55:26.493888Z] - Count of files that do not exist or not readable source files is 1 [Data/Eis/Variant01/EisUi_Variant01_Standard_Clients(000).yml]
+[2024-06-26T21:55:26.494070Z] - Count of readable files is 0 []
+[2024-06-26T21:55:26.494388Z] - End - Load data set
+[2024-06-26T21:55:26.494472Z] - End - sqc.bstof.builtinops.datatools.RecordLoader
+          _ControlData:
+            RecSet: EisUi_Variant01_Standard_Clients
+            Sources: [Data/Eis/Variant01/EisUi_Variant01_Standard_Clients(000).yml]
+[2024-06-26T21:55:26.495786Z] - Execution error in CommonInitStages(415a982c-8068-4850-8b4d-dcbb611c5518)[//000/LoadStandardClientData] will throw exception.
+[2024-06-26T21:55:26.495883Z] - End - Invocation of //000/LoadStandardClientData
+[2024-06-26T21:55:26.495971Z] - ExecError|Activity executor reported that it Faulted

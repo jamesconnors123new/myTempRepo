@@ -1,0 +1,38 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EisUi_ClientBuilder_RunConfig" type="Application" factoryName="Application" folderName="DataTools">
+    <envs>
+      <env name="AreaOfBusiness" value="JamG" />
+      <env name="AreaOfTesting" value="ConG" />
+      <env name="ClientGroupId" value="SITSETAZ" />
+      <env name="CoreEisPassword" value="qa" />
+      <env name="CoreEisUserName" value="qa" />
+      <env name="EchelonLoginURL" value="https://injector-uat.ageas.co.uk/strata/ageas/household/login" />
+      <env name="EISLoginURL" value="https://cssr-app-agea-dev03.dev.az05.agea.cloud/login" />
+      <env name="EISLoginURL_DEV03_newsarah" value="https://cssr-app-agea-dev03.dev.az05.agea.cloud/login" />
+      <env name="EISLoginURL_OLD-24042024" value="https://cssr-app-agea-sit.dev.az05.agea.cloud/login" />
+      <env name="EISLoginURL_tt1" value="https://cssr-app-agea-digtt1.dev.az05.agea.cloud/login" />
+      <env name="EmailSequenceNumber" value="000" />
+      <env name="LogicalPattern" value="Mta" />
+      <env name="PerformDeepPageSyncMeasures" value="false" />
+      <env name="PortalLoginURL" value="https://spportaldev.ageascloud.co.uk/login" />
+      <env name="ProjectRootPath" value="..\..\..\..\..\..\.." />
+      <env name="ProjectRootPathAlt" value="..\..\..\..\..\..\.." />
+      <env name="RunId" value="123" />
+      <env name="StandardEchelonPassword" value="Password@03" />
+      <env name="StandardEchelonUserName" value="a50_robot01_uat" />
+      <env name="StandardEchelonUserPassword" value="Password@02" />
+      <env name="StandardEisPassword" value="qa" />
+      <env name="StandardEisUserName" value="qa" />
+      <env name="StandardPortalPassword" value="Password123" />
+      <env name="Team" value="T3" />
+      <env name="TestingTeam" value="Auto" />
+      <env name="TestingType" value="f" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./DataTools/EisClientSetup/EisUi_Variant01_ClientBuilder.yaml" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

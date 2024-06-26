@@ -1,0 +1,8 @@
+- Data: {PolicyNumber: HH0000000008101, Declines: null, Referrals: null, PolicyStatus: Policy
+      Active, ClientNumber: IC0000008767}
+  Id: EIS_POLICY_BUILDER_HOME_STANDARD-130d7a72-f576-46b8-8f05-9e4d9922edb1
+  IdTags: {TestID: EIS-AGEAS-HOME-001-02}
+- Data: {PolicyNumber: HH0000000008103, Declines: null, Referrals: null, PolicyStatus: Policy
+      Active, ClientNumber: IC0000008766}
+  Id: EIS_POLICY_BUILDER_HOME_STANDARD-e045eb2b-f8ab-4cc4-93bc-ccf59fe399bb
+  IdTags: {TestID: EIS-AGEAS-HOME-001-01}

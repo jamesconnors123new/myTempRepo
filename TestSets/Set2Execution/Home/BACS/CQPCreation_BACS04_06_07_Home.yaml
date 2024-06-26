@@ -1,0 +1,490 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: EIS-HOME-BACS04-Policies-Data
+        Exports:
+          - TestCases:
+              - EIS_HOME_POLICIES_BACS04
+            DataItems:
+              - //002/QuoteCreationInEis.EisClientDetails
+              - //002/PolicyCreationOnEis.PolicyDetails
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EIS_HOME_POLICIES_BACS04
+      ~Headline: Add Ageas customer home quotes and policies with cheque payment for General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                LastnameVal: Testzxz
+              Instances:
+                - Identities:
+                    - TestID|BACS04_TC003
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Doctor
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AA
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 10
+                    CorrespondencePostcode: BH7 6DP
+                    RiskAddressHouseIdentifier: 10
+                    RiskPostcode: BH7 6DP
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-7400|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7100|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 24568
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 28
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: ADHXSP
+                    ClaimHistoryAvailable: false
+                - Identities:
+                    - TestID|BACS06_TC001
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Doctor
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AB
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 2
+                    CorrespondencePostcode: BN2 9NB
+                    RiskAddressHouseIdentifier: 2
+                    RiskPostcode: BN2 9NB
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-9960|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-4000|dd/MM/yyyy #9 years Old
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: PrivateLandlord
+                    BuildingType: Other Flat
+                    StructureType: Basement Flat
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 16
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: ADHXSP, ADHXSPS
+                    ClaimHistoryAvailable: false
+                - Identities:
+                    - TestID|BACS07_TC001
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AC
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 1
+                    CorrespondencePostcode: HA3 0LP
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: HA3 0LP
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12400|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12400|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: OwnedOutright
+                    BuildingType: Other Flat
+                    StructureType: First Floor Flat
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 12345
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 21
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: AHHLEGAL, ADHXSP
+                - Identities:
+                    - TestID|BACS04_TC006
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AD
+                    MaritalStatus: CivilPartnership
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 23
+                    CorrespondencePostcode: HA3 7SY
+                    RiskAddressHouseIdentifier: 21
+                    RiskPostcode: HA3 7SY
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13250|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-8700|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Detached Bungalow
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 30
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: AHHLEGAL, ADHXSP
+                - Identities:
+                    - TestID|BACS04_TC008
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AE
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 5
+                    CorrespondencePostcode: BD17 5AT
+                    RiskAddressHouseIdentifier: 5
+                    RiskPostcode: BD17 5AT
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12645|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12645|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Rented
+                    BuildingType: Semi Detached Bungalow
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 5
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: AHHLEGAL
+                - Identities:
+                    - TestID|BACS07_TC006
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mx
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)AF
+                    MaritalStatus: Single
+                    Gender: NotSpecified
+                    CorrespondenceHouseIdentifier: 3
+                    CorrespondencePostcode: PA1 2LS
+                    RiskAddressHouseIdentifier: 3
+                    RiskPostcode: PA1 2LS
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14400|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12400|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Leased
+                    BuildingType: Townhouse
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 78499
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 15
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: AHHLEGAL
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateClientOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: ~(CustomerBrand)
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new home quote for Ageas on EIS
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Home
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: ~(BuildingsCover)
+                          Contents: ~(ContentsCover)
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: false
+                          ~Ref(OptionalExtras): InstanceOptionalExtras
+                        InsuredAmount:
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100
+                          RebuildingCost: 100000
+                          ContentSum: 70000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                          SpecifiedItemsAvailable: ~(SpecifiedItemsAvailable)
+                          ~Ref(SpecifiedItems): InstanceSpecifiedItems
+                          UnspecifiedItems:
+                            CoverStatus: true
+                            ItemAmount: 3333
+                        BuildingDetails:
+                          BuildingType: ~(BuildingType)
+                          StructureType: ~(StructureType)
+                          ConstructionType: Standard
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          BuildingAddress:
+                            HouseIdentifier: ~(RiskAddressHouseIdentifier)
+                            Postcode: ~(RiskPostcode)
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false
+                          LetWithSublet: false
+                          BusinessUsage:
+                            BusinessUse: false
+                            ClericalUse: false
+                            PropertyUse: meetings
+                          HolidayHomeStatus: false
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                      ProposerPersonalDetails:
+                        CorrespondenceAddress: *ProposerContactDetails1
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: Bakery Assistant
+                          Industry: Fast Food
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      OtherDetails:
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        WallConstructionType: Brick
+                        RoofConstructionType: Concrete
+                        NumberOfDaysPropertyLeftUnoccupied: 0
+                        PercentageOfFlatRoof: 35
+                        PaymentType: ~(PaymentType)
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfBathroom: 1
+                        UnspentCriminalConviction: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: true
+                            Other: false
+                        PropertyOwned: ~(PropertyOwned)
+                      JointPolicyHolderStatus: ~(JointPolicyHolderStatus)
+                      JointPolicyHolderDetails: *JphPerson01
+                      ConsentToRenew: true
+                      ~Ref(Endorsement): InstanceEndorsement
+                  ~Judgements:
+                    - EisClientDetails.Declines=TRUE|HardRunFault("Quote was declined, cannot create policy")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: AddCCForExistingClient
+                  ~Role: >
+                    Adding Credit Card for existing customer
+                  ~Type: Act
+                  ~Action: AddCCForExistingClient
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    PaymentData:
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a policy with given payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                    QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

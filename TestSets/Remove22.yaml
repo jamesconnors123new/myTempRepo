@@ -1,0 +1,82 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-001
+      ~Headline: Remove Individual From The CRM
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-001
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckCRMUserExists
+                  ~Role: >
+                    Check CRM that WebUser exists before enacting removal of individual
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData: &creds
+                    CustomerCredentials:
+                      Email: bstofportalreg46@ageas.co.uk
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Email address did not match a valid user in the CRM")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RemoveFromCRM
+                  ~Role: >
+                    Remove individual from the CRM
+                  ~Type: Act
+                  ~Action: RemoveIndividualFromCRM
+                  ~ControlData:
+                    CustomerCredentials:
+                      IndividualId: ~(//001/CheckCRMUserExists.CRM.Customer.IndividualId)
+                  ~Judgements:
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckCRMUserDoesNotExists
+                  ~Role: >
+                    Check CRM that WebUser no longer exists
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData: *creds
+                  ~Judgements:
+                    - CRM.Customer.Match=TRUE|Fail(WebUserStillExists,"Email address still matched a valid user in the CRM")
+                  ~Unconditionals:

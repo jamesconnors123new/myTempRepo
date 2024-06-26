@@ -1,0 +1,614 @@
+
+~Templates:
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+
+~ConcretePatterns:
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportDataToFileA
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: EchelonClientsVariant01Data
+        Exports:
+          - TestCases:
+              - ECHELON_CLIENTS_0001
+            DataItems:
+              - //001/CreateNewClientQuoteOnEchelon.QuoteDetails
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId ECHELON_CLIENTS_0001
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                    - TestID|-01
+                  InstanceValues:
+                    Index: A
+                - Identities:
+                    - TestID|-02
+                  InstanceValues:
+                    Index: B
+
+#                - Identities:
+#                    - TestID|-03
+#                  InstanceValues:
+#                   Index: C
+#                - Identities:
+#                    - TestID|-04
+#                  InstanceValues:
+#                    Index: D
+
+
+#                - Identities:
+#                    - TestID|-05
+#                  InstanceValues:
+#                    Index: E
+#                - Identities:
+#                    - TestID|-06
+#                  InstanceValues:
+#                    Index: F
+#                - Identities:
+#                    - TestID|-07
+#                  InstanceValues:
+#                    Index: G
+#                - Identities:
+#                    - TestID|-08
+#                  InstanceValues:
+#                    Index: H
+#                - Identities:
+#                    - TestID|-09
+#                  InstanceValues:
+#                    Index: I
+#                - Identities:
+#                    - TestID|-10
+#                  InstanceValues:
+#                    Index: J
+#                - Identities:
+#                    - TestID|-11
+#                  InstanceValues:
+#                    Index: K
+#                - Identities:
+#                    - TestID|-12
+#                  InstanceValues:
+#                    Index: L
+#                - Identities:
+#                    - TestID|-13
+#                  InstanceValues:
+#                    Index: M
+#                - Identities:
+#                    - TestID|-14
+#                  InstanceValues:
+#                    Index: N
+#                - Identities:
+#                    - TestID|-15
+#                  InstanceValues:
+#                    Index: O
+#                - Identities:
+#                    - TestID|-16
+#                  InstanceValues:
+#                    Index: P
+#                - Identities:
+#                    - TestID|-17
+#                  InstanceValues:
+#                    Index: Q
+#                - Identities:
+#                    - TestID|-18
+#                  InstanceValues:
+#                    Index: R
+#                - Identities:
+#                    - TestID|-19
+#                  InstanceValues:
+#                    Index: S
+#                - Identities:
+#                    - TestID|-20
+#                  InstanceValues:
+#                    Index: T
+#                - Identities:
+#                    - TestID|-21
+#                  InstanceValues:
+#                    Index: U
+#                - Identities:
+#                    - TestID|-22
+#                  InstanceValues:
+#                    Index: V
+#                - Identities:
+#                    - TestID|-23
+#                  InstanceValues:
+#                    Index: W
+#                - Identities:
+#                    - TestID|-24
+#                  InstanceValues:
+#                    Index: X
+#                - Identities:
+#                    - TestID|-25
+#                  InstanceValues:
+#                    Index: Y
+#                - Identities:
+#                    - TestID|-26
+#                  InstanceValues:
+#                    Index: Z
+
+
+
+# Extra blocks for reliability testing
+# Do not remove.
+# Do not put in integration in an uncommented state
+#                - Identities:
+#                    - TestID|EX-DB-0101-01
+#                  InstanceValues:
+#                    Index: A
+#                - Identities:
+#                    - TestID|EX-DB-0101-02
+#                  InstanceValues:
+#                    Index: B
+#                - Identities:
+#                    - TestID|EX-DB-0101-03
+#                  InstanceValues:
+#                    Index: C
+#                - Identities:
+#                    - TestID|EX-DB-0101-04
+#                  InstanceValues:
+#                    Index: D
+#                - Identities:
+#                    - TestID|EX-DB-0101-05
+#                  InstanceValues:
+#                    Index: E
+#                - Identities:
+#                    - TestID|EX-DB-0101-06
+#                  InstanceValues:
+#                    Index: F
+#                - Identities:
+#                    - TestID|EX-DB-0101-07
+#                  InstanceValues:
+#                    Index: G
+#                - Identities:
+#                    - TestID|EX-DB-0101-08
+#                  InstanceValues:
+#                    Index: H
+#                - Identities:
+#                    - TestID|EX-DB-0101-09
+#                  InstanceValues:
+#                    Index: I
+#                - Identities:
+#                    - TestID|EX-DB-0101-10
+#                  InstanceValues:
+#                    Index: J
+#                - Identities:
+#                    - TestID|EX-DB-0101-11
+#                  InstanceValues:
+#                    Index: K
+#                - Identities:
+#                    - TestID|EX-DB-0101-12
+#                  InstanceValues:
+#                    Index: L
+#                - Identities:
+#                    - TestID|EX-DB-0101-13
+#                  InstanceValues:
+#                    Index: M
+#                - Identities:
+#                    - TestID|EX-DB-0101-14
+#                  InstanceValues:
+#                    Index: N
+#                - Identities:
+#                    - TestID|EX-DB-0101-15
+#                  InstanceValues:
+#                    Index: O
+#                - Identities:
+#                    - TestID|EX-DB-0101-16
+#                  InstanceValues:
+#                    Index: P
+#                - Identities:
+#                    - TestID|EX-DB-0101-17
+#                  InstanceValues:
+#                    Index: Q
+#                - Identities:
+#                    - TestID|EX-DB-0101-18
+#                  InstanceValues:
+#                    Index: R
+#                - Identities:
+#                    - TestID|EX-DB-0101-19
+#                  InstanceValues:
+#                    Index: S
+#                - Identities:
+#                    - TestID|EX-DB-0101-20
+#                  InstanceValues:
+#                    Index: T
+#                - Identities:
+#                    - TestID|EX-DB-0101-21
+#                  InstanceValues:
+#                    Index: U
+#                - Identities:
+#                    - TestID|EX-DB-0101-22
+#                  InstanceValues:
+#                    Index: V
+#                - Identities:
+#                    - TestID|EX-DB-0101-23
+#                  InstanceValues:
+#                    Index: W
+#                - Identities:
+#                    - TestID|EX-DB-0101-24
+#                  InstanceValues:
+#                    Index: X
+#                - Identities:
+#                    - TestID|EX-DB-0101-25
+#                  InstanceValues:
+#                    Index: Y
+#                - Identities:
+#                    - TestID|EX-DB-0001-26
+#                  InstanceValues:
+#                    Index: Z
+
+#                - Identities:
+#                    - TestID|EX-DB-0201-01
+#                  InstanceValues:
+#                    Index: A
+#                - Identities:
+#                    - TestID|EX-DB-0201-02
+#                  InstanceValues:
+#                    Index: B
+#                - Identities:
+#                    - TestID|EX-DB-0201-03
+#                  InstanceValues:
+#                    Index: C
+#                - Identities:
+#                    - TestID|EX-DB-0201-04
+#                  InstanceValues:
+#                    Index: D
+#                - Identities:
+#                    - TestID|EX-DB-0201-05
+#                  InstanceValues:
+#                    Index: E
+#                - Identities:
+#                    - TestID|EX-DB-0201-06
+#                  InstanceValues:
+#                    Index: F
+#                - Identities:
+#                    - TestID|EX-DB-0201-07
+#                  InstanceValues:
+#                    Index: G
+#                - Identities:
+#                    - TestID|EX-DB-0201-08
+#                  InstanceValues:
+#                    Index: H
+#                - Identities:
+#                    - TestID|EX-DB-0201-09
+#                  InstanceValues:
+#                    Index: I
+#                - Identities:
+#                    - TestID|EX-DB-0201-10
+#                  InstanceValues:
+#                    Index: J
+#                - Identities:
+#                    - TestID|EX-DB-0201-11
+#                  InstanceValues:
+#                    Index: K
+#                - Identities:
+#                    - TestID|EX-DB-0201-12
+#                  InstanceValues:
+#                    Index: L
+#                - Identities:
+#                    - TestID|EX-DB-0201-13
+#                  InstanceValues:
+#                    Index: M
+#                - Identities:
+#                    - TestID|EX-DB-0201-14
+#                  InstanceValues:
+#                    Index: N
+#                - Identities:
+#                    - TestID|EX-DB-0201-15
+#                  InstanceValues:
+#                    Index: O
+#                - Identities:
+#                    - TestID|EX-DB-0201-16
+#                  InstanceValues:
+#                    Index: P
+#                - Identities:
+#                    - TestID|EX-DB-0201-17
+#                  InstanceValues:
+#                    Index: Q
+#                - Identities:
+#                    - TestID|EX-DB-0201-18
+#                  InstanceValues:
+#                    Index: R
+#                - Identities:
+#                    - TestID|EX-DB-0201-19
+#                  InstanceValues:
+#                    Index: S
+#                - Identities:
+#                    - TestID|EX-DB-0201-20
+#                  InstanceValues:
+#                    Index: T
+#                - Identities:
+#                    - TestID|EX-DB-0201-21
+#                  InstanceValues:
+#                    Index: U
+#                - Identities:
+#                    - TestID|EX-DB-0201-22
+#                  InstanceValues:
+#                    Index: V
+#                - Identities:
+#                    - TestID|EX-DB-0201-23
+#                  InstanceValues:
+#                    Index: W
+#                - Identities:
+#                    - TestID|EX-DB-0201-24
+#                  InstanceValues:
+#                    Index: X
+#                - Identities:
+#                    - TestID|EX-DB-0201-25
+#                  InstanceValues:
+#                    Index: Y
+#                - Identities:
+#                    - TestID|EX-DB-0201-26
+#                  InstanceValues:
+#                    Index: Z
+
+#                - Identities:
+#                    - TestID|EX-DB-0301-01
+#                  InstanceValues:
+#                    Index: A
+#                - Identities:
+#                    - TestID|EX-DB-0301-02
+#                  InstanceValues:
+#                    Index: B
+#                - Identities:
+#                    - TestID|EX-DB-0301-03
+#                  InstanceValues:
+#                    Index: C
+#                - Identities:
+#                    - TestID|EX-DB-0301-04
+#                  InstanceValues:
+#                    Index: D
+#                - Identities:
+#                    - TestID|EX-DB-0301-05
+#                  InstanceValues:
+#                    Index: E
+#                - Identities:
+#                    - TestID|EX-DB-0301-06
+#                  InstanceValues:
+#                    Index: F
+#                - Identities:
+#                    - TestID|EX-DB-0301-07
+#                  InstanceValues:
+#                    Index: G
+#                - Identities:
+#                    - TestID|EX-DB-0301-08
+#                  InstanceValues:
+#                    Index: H
+#                - Identities:
+#                    - TestID|EX-DB-0301-09
+#                  InstanceValues:
+#                    Index: I
+#                - Identities:
+#                    - TestID|EX-DB-0301-10
+#                  InstanceValues:
+#                    Index: J
+#                - Identities:
+#                    - TestID|EX-DB-0301-11
+#                  InstanceValues:
+#                    Index: K
+#                - Identities:
+#                    - TestID|EX-DB-0301-12
+#                  InstanceValues:
+#                    Index: L
+#                - Identities:
+#                    - TestID|EX-DB-0301-13
+#                  InstanceValues:
+#                    Index: M
+#                - Identities:
+#                    - TestID|EX-DB-0301-14
+#                  InstanceValues:
+#                    Index: N
+#                - Identities:
+#                    - TestID|EX-DB-0301-15
+#                  InstanceValues:
+#                    Index: O
+#                - Identities:
+#                    - TestID|EX-DB-0301-16
+#                  InstanceValues:
+#                    Index: P
+#                - Identities:
+#                    - TestID|EX-DB-0301-17
+#                  InstanceValues:
+#                    Index: Q
+#                - Identities:
+#                    - TestID|EX-DB-0301-18
+#                  InstanceValues:
+#                    Index: R
+#                - Identities:
+#                    - TestID|EX-DB-0301-19
+#                  InstanceValues:
+#                    Index: S
+#                - Identities:
+#                    - TestID|EX-DB-0301-20
+#                  InstanceValues:
+#                    Index: T
+#                - Identities:
+#                    - TestID|EX-DB-0301-21
+#                  InstanceValues:
+#                    Index: U
+#                - Identities:
+#                    - TestID|EX-DB-0301-22
+#                  InstanceValues:
+#                    Index: V
+#                - Identities:
+#                    - TestID|EX-DB-0301-23
+#                  InstanceValues:
+#                    Index: W
+#                - Identities:
+#                    - TestID|EX-DB-0301-24
+#                  InstanceValues:
+#                    Index: X
+#                - Identities:
+#                    - TestID|EX-DB-0301-25
+#                  InstanceValues:
+#                    Index: Y
+#                - Identities:
+#                    - TestID|EX-DB-0001-26
+#                  InstanceValues:
+#                    Index: Z
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateNewClientQuoteOnEchelon
+                  ~Role: >
+                    Create a new client quote on Echelon UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEchelonUI
+                  ~ControlData:
+
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: AHDW #ShortForm
+                        Brand: Ageas
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: true
+                          Contents: true
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: false
+                        InsuredAmount: #Rebuilding Cost
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100
+                          RebuildingCost: 100000
+                          ContentSum: 70000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                        BuildingDetails:
+                          BuildingType: Detached  #
+                          ConstructionType: Standard  #Creation of code for options
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          RiskAddress:
+                            HouseIdentifier: 1
+                            Postcode: RG45LP
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+                          LetWithSublet: false
+                          BusinessUse: false
+                          HolidayHomeStatus: false #Boolean for now
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned #Leased/Rented/Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: Email
+                      ProposerPersonalDetails:
+                        Title: Mr
+                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                        LastName: Testzxz
+                        MaritalStatus: Single
+                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+                        Gender: Male
+                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: BakeryAssistant
+                          Industry: FastFood
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      ProposerContactDetails:
+                        CorrespondenceAddress:
+                          HouseIdentifier: 1
+                          Postcode: RG45LP
+                        MainTelephoneNumber: "07345345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: true
+                        Email: false
+                        Telephone: true
+                        SMS: false
+                      OtherDetails: #Policy User Fields
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        NumberOfBathroom: 1
+                        WallConstructionType: Brick
+                        RoofConstructionType: Concrete
+                        NumberOfDaysPropertyLeftUnoccupied: 0
+                        PercentageOfFlatRoof: 35
+                        PaymentType: Annual
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: false
+                            Other: false #if first two options are true thne other should not be true. condition
+                        PropertyOwned: Owned
+                      JointPolicyHolderDetails: false
+                      JointPolicyHolder:
+                        Title: Mr
+                        FirstName: JPHFirstName
+                        LastName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+                        MaritalStatus: Single
+                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+                        Gender: Male
+                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+                        RelationshipWithPolicyholder: (None)
+                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: EchoControlDataA
+#                  ~Role:
+#                  ~Type: Act
+#                  ~Action: EchoControlData
+#                  ~ControlData:
+#                    ~Ref(ClientNumber): ~(//001/CreateNewClientQuoteOnEchelon.QuoteDetails.ClientNumber)
+##                    ~Ref(ClientNumber): ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)

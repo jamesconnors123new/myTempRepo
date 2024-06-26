@@ -1,0 +1,79 @@
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: EchelonLoginURL
+      ~Val: https://injector-uat.ageas.co.uk/strata/ageas/household/login
+  - ~Setting: #Portal Login
+      ~Src: Local
+      ~Id: PortalLoginURL
+      ~Val: https://portaltest.ageascloud.co.uk/login
+~CommonInitActivities:
+
+  ~GlobalSettings:
+    - ~Setting:
+        ~Src: EnvVar
+        ~Id: StandardPortalPassword
+    - ~Setting:
+        ~Src: EnvVar
+        ~Id: StandardPortalUserName
+    - ~Setting:
+        ~Src: EnvVar
+        ~Id: StandardEchelonPassword
+    - ~Setting:
+        ~Src: EnvVar
+        ~Id: StandardEchelonUserName
+    - ~Setting:
+        ~Src: EnvVar
+        ~Id: EchelonLoginURL
+    - ~Setting: #Portal Login
+        ~Src: EnvVar
+        ~Id: PortalLoginURL
+  ~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+                EchelonLoginURL: ~(EchelonLoginURL)
+                InstanceMTASpec:
+                  MTAType: OPEX
+                  OpexCover:
+                    ExcessProtection: true
+                    HomeEmergency: false
+                    LegalExpenses: false
+              Instances:
+                - Identities:
+                    - TestID|EX-CP-0001
+                  InstanceValues:
+                    PolicyNumber: HE22757069919
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: PerformRatableMTAOnHomePolicy
+                  ~Role: >
+                    Perform MTA on a policy
+                  ~Type: Act
+                  ~Action: PerformMTAOnPolicy
+                  ~ControlData:
+                    CustomerCredentials: &CustomerCred #tag credentials for use later in the test
+                      Email: ~(PolicyNumber)@ageas.co.uk
+                      Password: Password123
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                    MTAEffectiveDate: ~(MtaEffectiveDate)
+                    ~Ref(MTASpec): InstanceMTASpec
+                  ~Judgements:
+                  ~Unconditionals:

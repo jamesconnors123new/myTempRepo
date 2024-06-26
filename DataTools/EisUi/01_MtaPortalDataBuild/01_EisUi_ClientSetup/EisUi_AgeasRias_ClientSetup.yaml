@@ -1,0 +1,852 @@
+~Templates:
+
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    AdditionalDriver01: &AdditionalDriver01
+      DriverType: Frequent
+      RelationshipToProposer: Spouse
+      Title: Mr
+      FirstName: Philip
+      LastName: Smith
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      Gender: Male
+      MaritalStatus: Married
+      DrivingRestrictions: Insured And Named Drivers
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Accountant
+        Industry: Accountancy
+      SecondaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+      Licence:
+        Type: Full UK Car Licence
+        ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+        AccessToOtherVehicles: Own another car
+    JointPolicyHolder01: &JointPolicyHolder01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+  StandardAgeasCreateClientTemplate01: &StandardAgeasCreateClientTemplate01
+    QuotesDetails:
+      Brand: Ageas
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: Ageas~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(AlphaIndex)
+      LastName: Testzxz
+      DerivedName: Ageas~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(AlphaIndex) Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        # HouseIdentifier: Room ~(NumericIndex),
+        # Postcode: CV4 7AL
+#        HouseIdentifier: AV1.~(NumericIndex),
+#        Postcode: CV4 7ES
+        HouseIdentifier: "1"
+        Postcode: NG17 3AS
+      # MainTelephoneNumber: "07345345345"
+      MainTelephoneNumber: 07777000~(NumericIndex)
+      # EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+      EmailAddress: Ageas.~(AlphaIndex).~(NumericIndex)_~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      SMS: true
+      Email: true
+      Postal: false
+      Telephone: false
+
+  StandardRiasCreateClientTemplate01: &StandardRiasCreateClientTemplate01
+    QuotesDetails:
+      Brand: Rias
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: Rias~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(AlphaIndex)
+      LastName: Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        # HouseIdentifier: Room ~(NumericIndex),
+        # Postcode: CV4 7AL
+#        HouseIdentifier: AV1.~(NumericIndex),
+#        Postcode: CV4 7ES
+        HouseIdentifier: "1"
+        Postcode: NG17 3AS
+      # MainTelephoneNumber: "07345345345"
+      MainTelephoneNumber: 07777000~(NumericIndex)
+      # EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+      EmailAddress: Rias.~(AlphaIndex).~(NumericIndex)_~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      SMS: true
+      Email: false
+      Postal: true
+      Telephone: false
+
+~ConcretePatterns:
+
+~GlobalSettings:
+
+  # URLs
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+  # Credentials
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+
+
+  # Component Fields for String Building etc.
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EmailSequenceNumber
+
+
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunIdNew
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RcProjectPath
+
+~CommonInitActivities:
+
+~CommonFinalActivities:
+
+  # Output to framework_output folder
+  - ~Activity:
+      ~Label: ExportDataToFileAgeasClients
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: RunId(~(RunIdNew))_EisUi_Ageas_ClientsData
+        Exports:
+          - TestCases:
+              - EISUI_AGEAS_CLIENT_BUILDER_01
+            DataItems:
+              - //001/CreateAgeasClientsOnEis.EisClientDetails
+
+  #  - ~Activity:
+  #      ~Label: ExportDataToFileRiasClients
+  #      ~Role:
+  #      ~Type: Act
+  #      ~Action: DataExporter
+  #      ~ControlData:
+  #        ExportDestination:
+  #          Filename: RunId(~(RunIdNew))_EisUi_Rias_ClientsData
+  #        Exports:
+  #          - TestCases:
+  #              - EISUI_RIAS_CLIENT_BUILDER_01
+  #            DataItems:
+  #              - //001/CreateRiasClientsOnEis.EisClientDetails
+
+
+  # Output to Data folder
+  - ~Activity:
+      ~Label: ExportDataToFileAgeasClients
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: ~(RcProjectPath)\Data\Eis\RunId(~(RunIdNew))_EisUi_Ageas_ClientsData
+        Exports:
+          - TestCases:
+              - EISUI_AGEAS_CLIENT_BUILDER_01
+            DataItems:
+              - //001/CreateAgeasClientsOnEis.EisClientDetails
+
+  #  - ~Activity:
+  #      ~Label: ExportDataToFileRiasClients
+  #      ~Role:
+  #      ~Type: Act
+  #      ~Action: DataExporter
+  #      ~ControlData:
+  #        ExportDestination:
+  #          Filename: ~(RcProjectPath)\Data\Eis\RunId(~(RunIdNew))_EisUi_Rias_ClientsData
+  #        Exports:
+  #          - TestCases:
+  #              - EISUI_RIAS_CLIENT_BUILDER_01
+  #            DataItems:
+  #              - //001/CreateRiasClientsOnEis.EisClientDetails
+
+
+~TestCases:
+
+  - ~TestCase:
+      ~CaseId: EISUI_AGEAS_CLIENT_BUILDER_01
+      ~Headline: TBC
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+
+                Team: ~(Team)
+                LogicalPattern: ~(LogicalPattern)
+                AreaOfTesting: ~(AreaOfTesting)
+                AreaOfBusiness: ~(AreaOfBusiness)
+                TestingType: ~(TestingType)
+                TestingTeam: ~(TestingTeam)
+                EmailSequenceNumber: ~(EmailSequenceNumber)
+                DomainName: n0ie34cm.mailosaur.net
+                RunIdNew: ~(RunIdNew)
+
+              Instances:
+
+
+                - Identities:
+                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-001
+                  InstanceValues:
+                    AlphaIndex: AG-AA
+                    NumericIndex: '001'
+                - Identities:
+                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-002
+                  InstanceValues:
+                    AlphaIndex: AG-AB
+                    NumericIndex: '002'
+                - Identities:
+                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-003
+                  InstanceValues:
+                    AlphaIndex: AG-AC
+                    NumericIndex: '003'
+                - Identities:
+                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-004
+                  InstanceValues:
+                    AlphaIndex: AG-AD
+                    NumericIndex: '004'
+                - Identities:
+                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-005
+                  InstanceValues:
+                    AlphaIndex: AG-AE
+                    NumericIndex: '005'
+
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-006
+#                  InstanceValues:
+#                    AlphaIndex: AG-AF
+#                    NumericIndex: '006'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-007
+#                  InstanceValues:
+#                    AlphaIndex: AG-AG
+#                    NumericIndex: '007'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-008
+#                  InstanceValues:
+#                    AlphaIndex: AG-AH
+#                    NumericIndex: '008'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-009
+#                  InstanceValues:
+#                    AlphaIndex: AG-AI
+#                    NumericIndex: '009'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-010
+#                  InstanceValues:
+#                    AlphaIndex: AG-AJ
+#                    NumericIndex: '010'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-011
+#                  InstanceValues:
+#                    AlphaIndex: AG-AK
+#                    NumericIndex: '011'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-012
+#                  InstanceValues:
+#                    AlphaIndex: AG-AL
+#                    NumericIndex: '012'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-013
+#                  InstanceValues:
+#                    AlphaIndex: AG-AM
+#                    NumericIndex: '013'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-014
+#                  InstanceValues:
+#                    AlphaIndex: AG-AN
+#                    NumericIndex: '014'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-015
+#                  InstanceValues:
+#                    AlphaIndex: AG-AO
+#                    NumericIndex: '015'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-016
+#                  InstanceValues:
+#                    AlphaIndex: AG-AP
+#                    NumericIndex: '016'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-017
+#                  InstanceValues:
+#                    AlphaIndex: AG-AQ
+#                    NumericIndex: '017'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-018
+#                  InstanceValues:
+#                    AlphaIndex: AG-AR
+#                    NumericIndex: '018'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-019
+#                  InstanceValues:
+#                    AlphaIndex: AG-AS
+#                    NumericIndex: '019'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-020
+#                  InstanceValues:
+#                    AlphaIndex: AG-AT
+#                    NumericIndex: '020'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-021
+#                  InstanceValues:
+#                    AlphaIndex: AG-AU
+#                    NumericIndex: '021'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-022
+#                  InstanceValues:
+#                    AlphaIndex: AG-AV
+#                    NumericIndex: '022'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-023
+#                  InstanceValues:
+#                    AlphaIndex: AG-AW
+#                    NumericIndex: '023'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-024
+#                  InstanceValues:
+#                    AlphaIndex: AG-AX
+#                    NumericIndex: '024'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-025
+#                  InstanceValues:
+#                    AlphaIndex: AG-AY
+#                    NumericIndex: '025'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-026
+#                  InstanceValues:
+#                    AlphaIndex: AG-AZ
+#                    NumericIndex: '026'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-027
+#                  InstanceValues:
+#                    AlphaIndex: AG-BA
+#                    NumericIndex: '027'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-028
+#                  InstanceValues:
+#                    AlphaIndex: AG-BB
+#                    NumericIndex: '028'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-029
+#                  InstanceValues:
+#                    AlphaIndex: AG-BC
+#                    NumericIndex: '029'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-030
+#                  InstanceValues:
+#                    AlphaIndex: AG-BD
+#                    NumericIndex: '030'
+#
+#
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-031
+#                  InstanceValues:
+#                    AlphaIndex: AG-BE
+#                    NumericIndex: '031'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-032
+#                  InstanceValues:
+#                    AlphaIndex: AG-BF
+#                    NumericIndex: '032'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-033
+#                  InstanceValues:
+#                    AlphaIndex: AG-BG
+#                    NumericIndex: '033'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-034
+#                  InstanceValues:
+#                    AlphaIndex: AG-BH
+#                    NumericIndex: '034'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-035
+#                  InstanceValues:
+#                    AlphaIndex: AG-BI
+#                    NumericIndex: '035'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-036
+#                  InstanceValues:
+#                    AlphaIndex: AG-BJ
+#                    NumericIndex: '036'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-037
+#                  InstanceValues:
+#                    AlphaIndex: AG-BK
+#                    NumericIndex: '037'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-038
+#                  InstanceValues:
+#                    AlphaIndex: AG-BL
+#                    NumericIndex: '038'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-039    #    039 invalid address
+#                  InstanceValues:
+#                    AlphaIndex: AG-BM
+#                    NumericIndex: '101'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-040
+#                  InstanceValues:
+#                    AlphaIndex: AG-BN
+#                    NumericIndex: '040'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-041
+#                  InstanceValues:
+#                    AlphaIndex: AG-BO
+#                    NumericIndex: '041'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-042
+#                  InstanceValues:
+#                    AlphaIndex: AG-BP
+#                    NumericIndex: '042'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-043
+#                  InstanceValues:
+#                    AlphaIndex: AG-BQ
+#                    NumericIndex: '043'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-044
+#                  InstanceValues:
+#                    AlphaIndex: AG-BR
+#                    NumericIndex: '044'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-045
+#                  InstanceValues:
+#                    AlphaIndex: AG-BS
+#                    NumericIndex: '045'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-046
+#                  InstanceValues:
+#                    AlphaIndex: AG-BT
+#                    NumericIndex: '046'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-047
+#                  InstanceValues:
+#                    AlphaIndex: AG-BU
+#                    NumericIndex: '047'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-048
+#                  InstanceValues:
+#                    AlphaIndex: AG-BV
+#                    NumericIndex: '048'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-049
+#                  InstanceValues:
+#                    AlphaIndex: AG-BW
+#                    NumericIndex: '049'
+#                - Identities:
+#                    - TestID|EISUI_AGEAS_CLIENT_BUILDER_01-050
+#                  InstanceValues:
+#                    AlphaIndex: AG-BX
+#                    NumericIndex: '050'
+
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateAgeasClientsOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails: *StandardAgeasCreateClientTemplate01
+
+                  ~Unconditionals:
+
+
+  - ~TestCase:
+      ~CaseId: EISUI_RIAS_CLIENT_BUILDER_01
+      ~Headline: TBC
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+
+                Team: ~(Team)
+                LogicalPattern: ~(LogicalPattern)
+                AreaOfTesting: ~(AreaOfTesting)
+                AreaOfBusiness: ~(AreaOfBusiness)
+                TestingType: ~(TestingType)
+                TestingTeam: ~(TestingTeam)
+                EmailSequenceNumber: ~(EmailSequenceNumber)
+                DomainName: n0ie34cm.mailosaur.net
+#                DomainName: ~(AlphaIndex)~(NumericIndex).mailosaur.net
+                RunIdNew: ~(RunIdNew)
+
+              Instances:
+                - Identities:
+                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-001
+                  InstanceValues:
+                    AlphaIndex: RI-AA
+                    NumericIndex: '001'
+                - Identities:
+                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-002
+                  InstanceValues:
+                    AlphaIndex: RI-AB
+                    NumericIndex: '002'
+                - Identities:
+                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-003
+                  InstanceValues:
+                    AlphaIndex: RI-AC
+                    NumericIndex: '003'
+                - Identities:
+                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-004
+                  InstanceValues:
+                    AlphaIndex: RI-AD
+                    NumericIndex: '004'
+                - Identities:
+                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-005
+                  InstanceValues:
+                    AlphaIndex: RI-AE
+                    NumericIndex: '005'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-006
+#                  InstanceValues:
+#                    AlphaIndex: RI-AF
+#                    NumericIndex: '006'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-007
+#                  InstanceValues:
+#                    AlphaIndex: RI-AG
+#                    NumericIndex: '007'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-008
+#                  InstanceValues:
+#                    AlphaIndex: RI-AH
+#                    NumericIndex: '008'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-009
+#                  InstanceValues:
+#                    AlphaIndex: RI-AI
+#                    NumericIndex: '009'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-010
+#                  InstanceValues:
+#                    AlphaIndex: RI-AJ
+#                    NumericIndex: '010'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-011
+#                  InstanceValues:
+#                    AlphaIndex: RI-AK
+#                    NumericIndex: '011'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-012
+#                  InstanceValues:
+#                    AlphaIndex: RI-AL
+#                    NumericIndex: '012'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-013
+#                  InstanceValues:
+#                    AlphaIndex: RI-AM
+#                    NumericIndex: '013'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-014
+#                  InstanceValues:
+#                    AlphaIndex: RI-AN
+#                    NumericIndex: '014'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-015
+#                  InstanceValues:
+#                    AlphaIndex: RI-AO
+#                    NumericIndex: '015'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-016
+#                  InstanceValues:
+#                    AlphaIndex: RI-AP
+#                    NumericIndex: '016'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-017
+#                  InstanceValues:
+#                    AlphaIndex: RI-AQ
+#                    NumericIndex: '017'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-018
+#                  InstanceValues:
+#                    AlphaIndex: RI-AR
+#                    NumericIndex: '018'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-019
+#                  InstanceValues:
+#                    AlphaIndex: RI-AS
+#                    NumericIndex: '019'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-020
+#                  InstanceValues:
+#                    AlphaIndex: RI-AT
+#                    NumericIndex: '020'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-021
+#                  InstanceValues:
+#                    AlphaIndex: RI-AU
+#                    NumericIndex: '021'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-022
+#                  InstanceValues:
+#                    AlphaIndex: RI-AV
+#                    NumericIndex: '022'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-023
+#                  InstanceValues:
+#                    AlphaIndex: RI-AW
+#                    NumericIndex: '023'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-024
+#                  InstanceValues:
+#                    AlphaIndex: RI-AX
+#                    NumericIndex: '024'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-025
+#                  InstanceValues:
+#                    AlphaIndex: RI-AY
+#                    NumericIndex: '025'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-026
+#                  InstanceValues:
+#                    AlphaIndex: RI-AZ
+#                    NumericIndex: '026'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-027
+#                  InstanceValues:
+#                    AlphaIndex: RI-BA
+#                    NumericIndex: '027'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-028
+#                  InstanceValues:
+#                    AlphaIndex: RI-BB
+#                    NumericIndex: '028'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-029
+#                  InstanceValues:
+#                    AlphaIndex: RI-BC
+#                    NumericIndex: '029'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-030
+#                  InstanceValues:
+#                    AlphaIndex: RI-BD
+#                    NumericIndex: '030'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-031
+#                  InstanceValues:
+#                    AlphaIndex: RI-BE
+#                    NumericIndex: '031'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-032
+#                  InstanceValues:
+#                    AlphaIndex: RI-BF
+#                    NumericIndex: '032'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-033
+#                  InstanceValues:
+#                    AlphaIndex: RI-BG
+#                    NumericIndex: '033'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-034
+#                  InstanceValues:
+#                    AlphaIndex: RI-BH
+#                    NumericIndex: '034'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-035
+#                  InstanceValues:
+#                    AlphaIndex: RI-BI
+#                    NumericIndex: '035'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-036
+#                  InstanceValues:
+#                    AlphaIndex: RI-BJ
+#                    NumericIndex: '036'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-037
+#                  InstanceValues:
+#                    AlphaIndex: RI-BK
+#                    NumericIndex: '037'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-038
+#                  InstanceValues:
+#                    AlphaIndex: RI-BL
+#                    NumericIndex: '038'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-039
+#                  InstanceValues:
+#                    AlphaIndex: RI-BM
+#                    NumericIndex: '039'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-040
+#                  InstanceValues:
+#                    AlphaIndex: RI-BN
+#                    NumericIndex: '040'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-041
+#                  InstanceValues:
+#                    AlphaIndex: RI-BO
+#                    NumericIndex: '041'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-042
+#                  InstanceValues:
+#                    AlphaIndex: RI-BP
+#                    NumericIndex: '042'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-043
+#                  InstanceValues:
+#                    AlphaIndex: RI-BQ
+#                    NumericIndex: '043'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-044
+#                  InstanceValues:
+#                    AlphaIndex: RI-BR
+#                    NumericIndex: '044'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-045
+#                  InstanceValues:
+#                    AlphaIndex: RI-BS
+#                    NumericIndex: '045'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-046
+#                  InstanceValues:
+#                    AlphaIndex: RI-BT
+#                    NumericIndex: '046'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-047
+#                  InstanceValues:
+#                    AlphaIndex: RI-BU
+#                    NumericIndex: '047'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-048
+#                  InstanceValues:
+#                    AlphaIndex: RI-BV
+#                    NumericIndex: '048'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-049
+#                  InstanceValues:
+#                    AlphaIndex: RI-BW
+#                    NumericIndex: '049'
+#                - Identities:
+#                    - TestID|EISUI_RIAS_CLIENT_BUILDER_01-050
+#                  InstanceValues:
+#                    AlphaIndex: RI-BX
+#                    NumericIndex: '050'
+#
+#
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateRiasClientsOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails: *StandardRiasCreateClientTemplate01
+
+                  ~Unconditionals:
+

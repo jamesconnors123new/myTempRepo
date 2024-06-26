@@ -1,0 +1,32 @@
+[2024-06-26T21:57:20.608454Z] - Start - Start or resume execution of Initiation activity sequence
+[2024-06-26T21:57:20.608647Z] - Start - Invocation of //000
+[2024-06-26T21:57:20.608782Z] - Start - Bind Control Data
+[2024-06-26T21:57:20.609548Z] - Replace Team with CafAft in ~(Team)
+[2024-06-26T21:57:20.609670Z] - Resulting in CafAft
+[2024-06-26T21:57:20.609761Z] - Replace LogicalPattern with Mta in ~(LogicalPattern)
+[2024-06-26T21:57:20.609830Z] - Resulting in Mta
+[2024-06-26T21:57:20.609901Z] - Replace AreaOfTesting with ConG in ~(AreaOfTesting)
+[2024-06-26T21:57:20.609966Z] - Resulting in ConG
+[2024-06-26T21:57:20.610027Z] - Replace AreaOfBusiness with JamG in ~(AreaOfBusiness)
+[2024-06-26T21:57:20.610090Z] - Resulting in JamG
+[2024-06-26T21:57:20.610159Z] - Replace TestingType with f in ~(TestingType)
+[2024-06-26T21:57:20.610225Z] - Resulting in f
+[2024-06-26T21:57:20.610342Z] - Replace TestingTeam with Auto in ~(TestingTeam)
+[2024-06-26T21:57:20.610522Z] - Resulting in Auto
+[2024-06-26T21:57:20.610604Z] - Replace EmailSequenceNumber with 000 in ~(EmailSequenceNumber)
+[2024-06-26T21:57:20.610675Z] - Resulting in 000
+[2024-06-26T21:57:20.610749Z] - End - Bind Control Data
+[2024-06-26T21:57:20.610832Z] - Start - sqc.bstof.builtinops.initiators.LiteralCaseInstanceListInitiator
+[2024-06-26T21:57:20.611297Z] - End - sqc.bstof.builtinops.initiators.LiteralCaseInstanceListInitiator
+          _ControlData:
+            Instances:
+            - Identities: [TestID|EIS-AGEAS-HOME-001-16]
+              InstanceValues: {Index: P}
+            - Identities: [TestID|EIS-AGEAS-HOME-001-17]
+              InstanceValues: {Index: Q}
+            Common: {Team: CafAft, LogicalPattern: Mta, AreaOfTesting: ConG, AreaOfBusiness: JamG,
+              TestingType: f, TestingTeam: Auto, EmailSequenceNumber: '000', DomainName: n0ie34cm.mailosaur.net,
+              Postcode: NG17 3AS}
+[2024-06-26T21:57:20.612255Z] - Store output from activity, tagged as //000
+[2024-06-26T21:57:20.612337Z] - End - Invocation of //000
+[2024-06-26T21:57:20.612411Z] - End - Start or resume execution of Initiation activity sequence

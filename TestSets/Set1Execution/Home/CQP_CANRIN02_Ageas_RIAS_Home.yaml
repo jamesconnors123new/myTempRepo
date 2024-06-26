@@ -1,0 +1,1277 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName: &SelectCustomerByClientName
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Eis-Home-CANRIN02-Policies-Data
+        Exports:
+          - TestCases:
+              - EIS_HOME_POLICIES_CANRIN02
+            DataItems:
+              - //002/QuoteCreationInEis.EisClientDetails
+              - //002/PolicyCreationOnEis.PolicyDetails
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EIS_HOME_POLICIES_CANRIN02
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                LastnameVal: Testzxz
+                JointPolicyHolderStatus: false
+              Instances:
+                - Identities:
+                    - TestID|CANRIN02_TC001
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Lady
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MG
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 1, Simon Lane
+                    RiskPostcode: SO14 2BY
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15900|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Annual
+                    PaymentMethod: CreditCard
+                - Identities:
+                    - TestID|CANRIN02_TC004 #~directdebit
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mrs
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MH
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 21, London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 179, North Hyde Lane
+                    RiskPostcode: UB2 5SE
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-19000|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: House
+                    StructureType: End Terraced House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                        - Item: Valuables
+                          Description: Phone and Watches
+                          Value: 3000
+                        - Item: Items At University/College
+                          Description: Books
+                          Value: 150
+                        - Item: Pictures
+                          Description: Portraits
+                          Value: 1000
+                        - Item: Precious Metals
+                          Description: Gold Bar
+                          Value: 2000
+                        - Item: Specified Contents
+                          Description: PC and other electronics
+                          Value: 5000
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 830
+                        - Item: Car Audio Equipment
+                          Description: Car Audio Equipment
+                          Value: 200
+                        - Item: Computer Equipment
+                          Description: Computer Equipment
+                          Value: 1232
+                        - Item: Contact Lenses
+                          Description: Contact Lenses
+                          Value: 250
+                        - Item: Electrical Goods
+                          Description: Dishwasher
+                          Value: 1310
+                        - Item: Furs
+                          Description: Furs
+                          Value: 300
+                        - Item: Golfing Equipment
+                          Description: Golf Stick
+                          Value: 2100
+                        - Item: Guns
+                          Description: Guns
+                          Value: 3000
+                        - Item: Hifi / TV and Video Equipment
+                          Description: Netflix
+                          Value: 350
+                        - Item: High Risk Sports Equipment
+                          Description: High Ball
+                          Value: 600
+                        - Item: Jewellery/Watches
+                          Description: Jewellery/Watches
+                          Value: 500
+                        - Item: Miscellaneous Valuables
+                          Description: Miscellaneous Valuables
+                          Value: 300
+                        - Item: Mobile Phone(s)
+                          Description: Mobile Phone(s)
+                          Value: 2300
+                        - Item: Money and Credit Cards
+                          Description: Money and CreditCards
+                          Value: 3000
+                        - Item: Musical Instruments (for Amateur use)
+                          Description: Musical Saxaphone
+                          Value: 390
+                        - Item: Pedal Cycles
+                          Description: Kids Cycles
+                          Value: 300
+                        - Item: Porcelain
+                          Description: Furs
+                          Value: 300
+                        - Item: Portable Medical Equipment
+                          Description: Portable Medical Equipment
+                          Value: 200
+                        - Item: Precious Metals
+                          Description: Precious Metals
+                          Value: 400
+                        - Item: Bicycle
+                          Description: Mount Bicycle
+                          Value: 2300
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 17
+                    ClientNumber: IC0000000434
+                - Identities:
+                    - TestID|CANRIN02_TC007
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MI
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 1, Pizza Hut
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-16700|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6100|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: House
+                    StructureType: End Terraced House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                        - Item: Valuables
+                          Description: Phone and Watches
+                          Value: 3000
+                        - Item: Items At University/College
+                          Description: Books
+                          Value: 150
+                        - Item: Pictures
+                          Description: Portraits
+                          Value: 1000
+                        - Item: Precious Metals
+                          Description: Gold Bar
+                          Value: 2000
+                        - Item: Specified Contents
+                          Description: PC and other electronics
+                          Value: 5000
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 830
+                        - Item: Car Audio Equipment
+                          Description: Car Audio Equipment
+                          Value: 200
+                        - Item: Computer Equipment
+                          Description: Computer Equipment
+                          Value: 1232
+                        - Item: Contact Lenses
+                          Description: Contact Lenses
+                          Value: 250
+                        - Item: Electrical Goods
+                          Description: Dishwasher
+                          Value: 1310
+                        - Item: Furs
+                          Description: Furs
+                          Value: 300
+                        - Item: Golfing Equipment
+                          Description: Golf Stick
+                          Value: 2100
+                        - Item: Guns
+                          Description: Guns
+                          Value: 3000
+                        - Item: Hifi / TV and Video Equipment
+                          Description: Netflix
+                          Value: 350
+                        - Item: High Risk Sports Equipment
+                          Description: High Ball
+                          Value: 600
+                        - Item: Jewellery/Watches
+                          Description: Jewellery/Watches
+                          Value: 500
+                        - Item: Miscellaneous Valuables
+                          Description: Miscellaneous Valuables
+                          Value: 300
+                        - Item: Mobile Phone(s)
+                          Description: Mobile Phone(s)
+                          Value: 2300
+                        - Item: Money and Credit Cards
+                          Description: Money and CreditCards
+                          Value: 3000
+                        - Item: Musical Instruments (for Amateur use)
+                          Description: Musical Saxaphone
+                          Value: 390
+                        - Item: Pedal Cycles
+                          Description: Kids Cycles
+                          Value: 300
+                        - Item: Porcelain
+                          Description: Furs
+                          Value: 300
+                        - Item: Portable Medical Equipment
+                          Description: Portable Medical Equipment
+                          Value: 200
+                        - Item: Precious Metals
+                          Description: Precious Metals
+                          Value: 400
+                        - Item: Bicycle
+                          Description: Mount Bicycle
+                          Value: 2300
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 01
+                - Identities: # directdebit
+                    - TestID|CANRIN02_TC010
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Reverend
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MJ
+                    MaritalStatus: Widowed
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 10, Tesco
+                    RiskPostcode: M8 5DP
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-16700|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-100|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: House
+                    StructureType: End Terraced House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                        - Item: Valuables
+                          Description: Phone and Watches
+                          Value: 3000
+                        - Item: Items At University/College
+                          Description: Books
+                          Value: 150
+                        - Item: Pictures
+                          Description: Portraits
+                          Value: 1000
+                        - Item: Precious Metals
+                          Description: Gold Bar
+                          Value: 2000
+                        - Item: Specified Contents
+                          Description: PC and other electronics
+                          Value: 5000
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 830
+                        - Item: Car Audio Equipment
+                          Description: Car Audio Equipment
+                          Value: 200
+                        - Item: Computer Equipment
+                          Description: Computer Equipment
+                          Value: 1232
+                        - Item: Contact Lenses
+                          Description: Contact Lenses
+                          Value: 250
+                        - Item: Electrical Goods
+                          Description: Dishwasher
+                          Value: 1310
+                        - Item: Furs
+                          Description: Furs
+                          Value: 300
+                        - Item: Golfing Equipment
+                          Description: Golf Stick
+                          Value: 2100
+                        - Item: Guns
+                          Description: Guns
+                          Value: 309
+                        - Item: Hifi / TV and Video Equipment
+                          Description: Netflix
+                          Value: 350
+                        - Item: High Risk Sports Equipment
+                          Description: High Ball
+                          Value: 600
+                        - Item: Jewellery/Watches
+                          Description: Jewellery/Watches
+                          Value: 502
+                        - Item: Miscellaneous Valuables
+                          Description: Miscellaneous Valuables
+                          Value: 300
+                        - Item: Mobile Phone(s)
+                          Description: Mobile Phone(s)
+                          Value: 321
+                        - Item: Money and Credit Cards
+                          Description: Money and CreditCards
+                          Value: 3000
+                        - Item: Musical Instruments (for Amateur use)
+                          Description: Musical Saxaphone
+                          Value: 390
+                        - Item: Pedal Cycles
+                          Description: Kids Cycles
+                          Value: 300
+                        - Item: Porcelain
+                          Description: Furs
+                          Value: 300
+                        - Item: Portable Medical Equipment
+                          Description: Portable Medical Equipment
+                          Value: 200
+                        - Item: Precious Metals
+                          Description: Precious Metals
+                          Value: 400
+                        - Item: Bicycle
+                          Description: Mount Bicycle
+                          Value: 765
+                    PaymentType: Annual
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                    ClientNumber: IC0000000430
+                - Identities:
+                    - TestID|CANRIN02_TC013
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Professor
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MK
+                    MaritalStatus: CivilPartnership
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 8, Broad street
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+                    PaymentType: Annual
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12100|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2600|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: House
+                    StructureType: End Terraced House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                - Identities:
+                    - TestID|CANRIN02_TC016
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Lady
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)ML
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 67 London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-1400|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 10
+                    #ClientNumber IC0000000431
+                - Identities:
+                    - TestID|CANRIN02_TC019
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Doctor
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MM
+                    MaritalStatus: Widowed
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 1, London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 11
+                    RiskPostcode: IG11 7EP
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7600|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentSource: Customer
+                        IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Buildings & Contents
+                        Cause: Flood
+                        Cost: 679
+                        ClaimNumber: 123
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                          - Item: Valuables
+                            Description: Phone and Watches
+                            Value: 3000
+                          - Item: Items At University/College
+                            Description: Books
+                            Value: 150
+                          - Item: Pictures
+                            Description: Portraits
+                            Value: 1000
+                          - Item: Precious Metals
+                            Description: Gold Bar
+                            Value: 2000
+                          - Item: Specified Contents
+                            Description: PC and other electronics
+                            Value: 5000
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 300
+                        - Item: Car Audio Equipment
+                          Description: Car Audio Equipment
+                          Value: 200
+                        - Item: Computer Equipment
+                          Description: Computer Equipment
+                          Value: 1200
+                        - Item: Contact Lenses
+                          Description: Contact Lenses
+                          Value: 250
+                        - Item: Electrical Goods
+                          Description: Electrical Goods
+                          Value: 1300
+                        - Item: Furs
+                          Description: Furs
+                          Value: 300
+                        - Item: Golfing Equipment
+                          Description: Golf Stick
+                          Value: 2100
+                        - Item: Guns
+                          Description: Guns
+                          Value: 3000
+                        - Item: Hifi / TV and Video Equipment
+                          Description: Netflix
+                          Value: 350
+                        - Item: High Risk Sports Equipment
+                          Description: Ball
+                          Value: 607
+                        - Item: Jewellery/Watches
+                          Description: Jewellery/Watches
+                          Value: 500
+                        - Item: Miscellaneous Valuables
+                          Description: Miscellaneous Valuables
+                          Value: 300
+                        - Item: Mobile Phone(s)
+                          Description: Mobile Phone(s)
+                          Value: 2300
+                        - Item: Money and Credit Cards
+                          Description: Money and CreditCards
+                          Value: 3000
+                        - Item: Musical Instruments (for Amateur use)
+                          Description: Musical Saxaphone
+                          Value: 843
+                        - Item: Pedal Cycles
+                          Description: Kids Cycles
+                          Value: 300
+                        - Item: Porcelain
+                          Description: Furs
+                          Value: 300
+                        - Item: Portable Medical Equipment
+                          Description: Portable Medical Equipment
+                          Value: 200
+                        - Item: Precious Metals
+                          Description: Platinum
+                          Value: 4005
+                        - Item: Bicycle
+                          Description: Mount Bicycle
+                          Value: 2300
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 10
+                - Identities:
+                    - TestID|CANRIN02_TC020
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mx
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MN
+                    MaritalStatus: Married
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: BT33 0GW
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-16200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-600|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentSource: Customer
+                        IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Buildings & Contents
+                        Cause: Flood
+                        Cost: 679
+                        ClaimNumber: 123
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Annual
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                - Identities: #Credit Card
+                    - TestID|CANRIN02_TC025
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MO
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: NG19 7TS
+                    RiskAddressHouseIdentifier: Rectory Road
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    PaymentType: Annual
+                    PaymentMethod: CreditCard
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-19200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-600|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: Bungalow
+                    StructureType: Detached Bungalow
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                - Identities:
+                    - TestID|CANRIN02_TC026
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MP
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 8, London Road
+                    CorrespondencePostcode: BT33 0GW
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: RG40 2AB
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+#                    InstanceOptionalExtras: AHHLEGAL, ADHXSP
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-8700|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentSource: Customer
+                        IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Buildings & Contents
+                        Cause: Flood
+                        Cost: 679
+                        ClaimNumber: 123
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                        - Item: Valuables
+                          Description: Phone and Watches
+                          Value: 3000
+                        - Item: Items At University/College
+                          Description: Books
+                          Value: 150
+                        - Item: Pictures
+                          Description: Portraits
+                          Value: 1000
+                        - Item: Precious Metals
+                          Description: Gold Bar
+                          Value: 2000
+                        - Item: Specified Contents
+                          Description: PC and other electronics
+                          Value: 5000
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 830
+                        - Item: Car Audio Equipment
+                          Description: Car Audio Equipment
+                          Value: 200
+                        - Item: Computer Equipment
+                          Description: Computer Equipment
+                          Value: 1232
+                        - Item: Contact Lenses
+                          Description: Contact Lenses
+                          Value: 250
+                        - Item: Electrical Goods
+                          Description: Dishwasher
+                          Value: 1310
+                        - Item: Furs
+                          Description: Furs
+                          Value: 300
+                        - Item: Golfing Equipment
+                          Description: Golf Stick
+                          Value: 2100
+                        - Item: Guns
+                          Description: Guns
+                          Value: 3000
+                        - Item: Hifi / TV and Video Equipment
+                          Description: Netflix
+                          Value: 350
+                        - Item: High Risk Sports Equipment
+                          Description: High Ball
+                          Value: 600
+                        - Item: Jewellery/Watches
+                          Description: Jewellery/Watches
+                          Value: 500
+                        - Item: Miscellaneous Valuables
+                          Description: Miscellaneous Valuables
+                          Value: 300
+                        - Item: Mobile Phone(s)
+                          Description: Mobile Phone(s)
+                          Value: 2300
+                        - Item: Money and Credit Cards
+                          Description: Money and CreditCards
+                          Value: 3000
+                        - Item: Musical Instruments (for Amateur use)
+                          Description: Musical Saxaphone
+                          Value: 390
+                        - Item: Pedal Cycles
+                          Description: Kids Cycles
+                          Value: 300
+                        - Item: Porcelain
+                          Description: Furs
+                          Value: 300
+                        - Item: Portable Medical Equipment
+                          Description: Portable Medical Equipment
+                          Value: 200
+                        - Item: Precious Metals
+                          Description: Precious Metals
+                          Value: 400
+                        - Item: Bicycle
+                          Description: Mount Bicycle
+                          Value: 2300
+                    PaymentType: Annual
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                - Identities:
+                    - TestID|CANRIN02_TC027 #DirectDebit
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MQ
+                    MaritalStatus: CivilPartnership
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: NG19 7TS
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    InstanceOptionalExtras: ADHXSPS, AHOMEEM
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13100|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: Bungalow
+                    StructureType: Detached Bungalow
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentSource: Customer
+                        IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Buildings & Contents
+                        Cause: Flood
+                        Cost: 679
+                        ClaimNumber: 123
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 21
+                - Identities:
+                    - TestID|CANRIN02_TC037
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MS
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: SO14 2BY
+                    RiskAddressHouseIdentifier: 12
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Annual
+                    PaymentMethod: CreditCard
+                - Identities:
+                    - TestID|CANRIN02_TC040 #directdebit
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MT
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: UB2 5LN
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: UB2 5LN
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: Other Flat
+                    StructureType: Ground Floor Flat
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Annual
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                - Identities:
+                    - TestID|CANRIN02_TC043
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MU
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: 98-99,London Road
+                    CorrespondencePostcode: IG1 2AA
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentSource: Customer
+                        IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Buildings & Contents
+                        Cause: Flood
+                        Cost: 679
+                        ClaimNumber: 123
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 16
+                - Identities:
+                    - TestID|CANRIN02_TC047
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MV
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: Bulls Bridge
+                    RiskPostcode: UB2 5LN
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    PaymentType: Annual
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: Townhouse
+                    StructureType: Mid Terraced Town House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                - Identities:
+                    - TestID|CANRIN02_TC051
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MW
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: Rectory Lane
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Annual
+                    PaymentMethod: CreditCard
+                - Identities:
+                    - TestID|CANRIN02_TC052 #directdebit
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MX
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 18
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: Maisonette
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 10
+                - Identities:
+                    - TestID|CANRIN02_TC057 #directdebit
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MY
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG5 4ND
+                    RiskAddressHouseIdentifier: Brigton Road
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 15
+                - Identities:
+                    - TestID|CANRIN02_TC058 #directdebit
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MZ
+                    MaritalStatus: Divorced
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 1
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # OwnedOutright
+                    BuildingType: House
+                    StructureType: Semi-Detached House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 10
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateClientOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: ~(CustomerBrand)
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new home quote for Ageas on EIS
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Home
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: ~(BuildingsCover)
+                          Contents: ~(ContentsCover)
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: false
+                          ~Ref(OptionalExtras): InstanceOptionalExtras
+                        InsuredAmount:
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100
+                          RebuildingCost: 100000
+                          ContentSum: 70000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                          SpecifiedItemsAvailable: ~(SpecifiedItemsAvailable)
+                          ~Ref(SpecifiedItems): InstanceSpecifiedItems
+                          UnspecifiedItems:
+                            CoverStatus: true
+                            ItemAmount: 3333
+                        BuildingDetails:
+                          BuildingType: ~(BuildingType)
+                          StructureType: ~(StructureType)
+                          ConstructionType: Standard
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          BuildingAddress:
+                            HouseIdentifier: ~(RiskAddressHouseIdentifier)
+                            Postcode: ~(RiskPostcode)
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false
+                          LetWithSublet: false
+                          BusinessUsage:
+                            BusinessUse: false
+                            ClericalUse: false
+                            PropertyUse: meetings
+                          HolidayHomeStatus: false
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                      ProposerPersonalDetails:
+                        CorrespondenceAddress: *ProposerContactDetails1
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: Bakery Assistant
+                          Industry: Fast Food
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      OtherDetails:
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        WallConstructionType: Brick #Building
+                        RoofConstructionType: Concrete #Building
+                        NumberOfDaysPropertyLeftUnoccupied: 0 #Occupacy
+                        PercentageOfFlatRoof: 35
+                        PaymentType: ~(PaymentType) # PaymentMethod
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfBathroom: 1 #Building
+                        UnspentCriminalConviction: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: true
+                            Other: false
+                        PropertyOwned: ~(PropertyOwned)
+                      JointPolicyHolderStatus: ~(JointPolicyHolderStatus)
+                      JointPolicyHolderDetails: *JphPerson01
+                      ConsentToRenew: true
+                      ~Ref(Endorsement): InstanceEndorsement
+                  ~Judgements:
+                    - EisClientDetails.Declines=TRUE|HardRunFault("Quote was declined, cannot create policy")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: AddCCForExistingClient
+                  ~Role: >
+                    Adding Credit Card for existing customer
+                  ~Type: Act
+                  ~Action: AddCCForExistingClient
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    PaymentData:
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a policy with given payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                    QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

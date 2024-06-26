@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EchelonLogon" type="Application" factoryName="Application" folderName="ReliabilityTests">
+    <envs>
+      <env name="EchelonLoginURL" value="https://injector-uat.ageas.co.uk/strata/ageas/household/login" />
+      <env name="StandardEchelonUserName" value="a50_robot01_uat" />
+      <env name="StandardEchelonUserPassword" value="Password123" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/ReliabilityTests/EchelonLogon/EchelonLogon.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

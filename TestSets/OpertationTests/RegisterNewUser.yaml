@@ -1,0 +1,67 @@
+~Templates:
+  CustomerSelectionCriteria:
+    ByClientNumber: &SelectCustomerByClientName
+      Lastname: ~(Lastname)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId RegisterNewUser
+      ~Headline: Register a new user
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+#                Team: T3
+#                LogicalPattern: Mta
+#                AreaOfTesting: Por
+#                AreaOfBusiness: Bau
+#                TestingType: f
+#                TestingTeam: Auto
+#                EmailSequenceNumber: "000"
+#                ClientGroupId: ~(ClientGroupId)
+#                DomainName: n0ie34cm.mailosaur.net
+
+              Instances:
+                -  Identities:
+                     - TestID|CI01
+                   InstanceValues:
+                     Index: M
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: Register New User
+                  ~Role: >
+                    Validate new policy can be registered on the portal
+                  ~Type: Act
+                  ~Action: RegisterNewUser
+                  ~ControlData:
+                    NewRegistrationDetails:
+                      Email: PorMtaAALC1@ageas.co.uk
+                      Password: Password123
+                      PolicyNumber: HE22757070663
+                      DateOfBirth: 27/04/1983
+                      Postcode: RG4 5LP
+                  ~Judgements:
+                    - RegistrationStatus==false|HardRunFault("Home policy is not registered")
+                  ~Unconditionals:

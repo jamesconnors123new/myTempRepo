@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CQPCreation_CANRIN16_Home_UAT" type="Application" factoryName="Application" folderName="HomeSet2Execution_UAT">
+    <envs>
+      <env name="AreaOfBusiness" value="Bau" />
+      <env name="AreaOfTesting" value="Por" />
+      <env name="ClientGroupId" value="UATSETEJ" />
+      <env name="CoreEisPassword" value="qa" />
+      <env name="CoreEisUserName" value="qa" />
+      <env name="EISLoginURL" value="https://cssr-app-agea-uat.test.az05.agea.cloud/" />
+      <env name="LogicalPattern" value="Mta" />
+      <env name="StandardEisPassword" value="qa" />
+      <env name="StandardEisUserName" value="qa" />
+      <env name="Team" value="T3" />
+      <env name="TestingTeam" value="Auto" />
+      <env name="TestingType" value="f" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="&quot;C:\Idea Project\E2E-TestBuild\E2E-BC-Test-Databuild\EisYaml\Set2Execution\Home\CANRIN/CQPCreation_CANRIN16_Home.yaml&quot;" />
+    <method v="2" />
+  </configuration>
+</component>

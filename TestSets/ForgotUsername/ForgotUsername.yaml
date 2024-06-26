@@ -1,0 +1,208 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+  - ~Setting:
+      ~Src: Local
+      ~Id: ForgotUsernameRootURL
+      ~Val: https://azportaltestfd.brokerwebservice.co.uk/forgot_username
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-001
+      ~Headline: Forgot Username - Found
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-001
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckUsernameExists
+                  ~Role: >
+                    Prior to enacting Forgotten Username process, check Username exists in CRM
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData: &creds
+                    CustomerCredentials:
+                      Email: bstofportalreg37@ageas.co.uk
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Active Web User not found prior to Forgotten Username process")
+                    - strEq(CRM.Customer.Email,"~(_ControlData.CustomerCredentials.Email)")=FALSE|HardRunFault("Returned email ~(CRM.Customer.Email) but expected ~(_ControlData.CustomerCredentials.Email)")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RetrieveForgottenUsername
+                  ~Role: >
+                    Submit email address to Forgotten Username service and check returned Username matches
+                  ~Type: Act
+                  ~Action: ForgotUsername
+                  ~ControlData: *creds
+                  ~Judgements:
+                    - strEq(UI.Email, "~(_ControlData.CustomerCredentials.Email)")=FALSE|Fail(EmailNoMatch,"Email returned ~(UI.Email) but expected ~(_ControlData.CustomerCredentials.Email)")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-002
+      ~Headline: Forgot Username - Extended Unambiguous Search - Found
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-002
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckUsernameExists
+                  ~Role: >
+                    Prior to enacting Forgotten Username process, check Username exists in CRM
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData: &creds
+                    CustomerCredentials:
+                      Email: bstofportalreg42@ageas.co.uk
+                      IncorrectEmail: ~(DefaultUnregisteredEmail)
+                      Postcode: NN4 8TQ
+                      Dob: 1948/06/03
+                      LastName: Testzxz
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Active Web User not found prior to Forgotten Username process")
+                    - strEq(CRM.Customer.Email,"~(_ControlData.CustomerCredentials.Email)")=FALSE|HardRunFault("Returned email ~(CRM.Customer.Email) but expected ~(_ControlData.CustomerCredentials.Email)")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RetrieveForgottenUsernameExtendedSearch
+                  ~Role: >
+                    Submit an email address incorrectly to Forgotten Username service, fill out the extended search form and check returned username matches
+                  ~Type: Act
+                  ~Action: ForgotUsername
+                  ~ControlData: *creds
+                  ~Judgements:
+                    - strEq(UI.Email, "~(_ControlData.CustomerCredentials.Email)")=FALSE|Fail(EmailNoMatch,"Email returned ~(UI.Email) but expected ~(_ControlData.CustomerCredentials.Email)")
+                  ~Unconditionals:
+
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-003
+      ~Headline: Forgot Username - Extended Ambiguous Search - Found
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-003
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckUsernameExists
+                  ~Role: >
+                    Prior to enacting Forgotten Username process, check Username exists in CRM
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData: &creds
+                    CustomerCredentials:
+                      Email: bstofportalreg1@ageas.co.uk
+                      IncorrectEmail: ~(DefaultUnregisteredEmail)
+                      Postcode: NN4 8TQ
+                      Dob: 1948/04/23
+                      LastName: Testzxz
+                      PolNum: GDCCA06498318
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Active Web User not found prior to Forgotten Username process")
+                    - strEq(CRM.Customer.Email,"~(_ControlData.CustomerCredentials.Email)")=FALSE|HardRunFault("Returned email ~(CRM.Customer.Email) but expected ~(_ControlData.CustomerCredentials.Email)")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RetrieveForgottenUsernameExtendedSearch
+                  ~Role: >
+                    Submit an email address incorrectly to Forgotten Username service, fill out the extended search form and check returned username matches
+                  ~Type: Act
+                  ~Action: ForgotUsername
+                  ~ControlData: *creds
+                  ~Judgements:
+                    - strEq(UI.Email, "~(_ControlData.CustomerCredentials.Email)")=FALSE|Fail(EmailNoMatch,"Email returned ~(UI.Email) but expected ~(_ControlData.CustomerCredentials.Email)")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-004
+      ~Headline: Forgot Username - Extended Search - User Not Found
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-004
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckUsernameExists
+                  ~Role: >
+                    Prior to enacting Forgotten Username process, check Username does NOT exists in CRM
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData: &creds
+                    CustomerCredentials:
+                      Email: ~(DefaultUnregisteredEmail)
+                      IncorrectEmail: ~(DefaultUnregisteredEmail)
+                      Postcode: NN4 8TQ
+                      Dob: 1948/04/23
+                      LastName: Testzxz
+                      PolNum: GDCCA11111111
+                  ~Judgements:
+                    - CRM.Customer.Match=TRUE|HardRunFault("Active Web User found prior to Forgotten Username process")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RetrieveForgottenUsernameExtendedSearch
+                  ~Role: >
+                    Submit an email address incorrectly to Forgotten Username service, fill out the extended search form and check returned username matches
+                  ~Type: Act
+                  ~Action: ForgotUsername
+                  ~ControlData: *creds
+                  ~Judgements:
+                    - UI.UserNotFoundIndicator=FALSE|Fail(UserNotFoundIndicator,"User not found indicator missing")
+                  ~Unconditionals:

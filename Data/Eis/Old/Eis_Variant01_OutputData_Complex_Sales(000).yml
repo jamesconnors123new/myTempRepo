@@ -1,0 +1,200 @@
+- Data:
+    QuotesDetails: {Affinity: AHCC, Brand: Ageas, ProductType: Home, InceptionDate: 07/05/2024}
+    InsuranceDetails:
+      TypeOfHouseHoldCover: {Buildings: true, Contents: true, BuildingAccidentalDamage: true,
+        ContentAccidentalDamage: true, OptionalExtras: null}
+      InsuredAmount: {BuildingVoluntaryExcess: 100, ContentVoluntaryExcess: 100, RebuildingCost: 100000,
+        ContentSum: 70000}
+      InsuranceHistory: {ContentClaimFreeYears: 0, BuildingClaimFreeYears: 0, InsurancePreviouslyRefused: false,
+        PreviousInsurance: false}
+      ContentDetails:
+        Safe: true
+        SpecifiedItemsAvailable: false
+        UnspecifiedItems: {CoverStatus: false, ItemAmount: 3333}
+        SpecifiedItems: null
+      BuildingDetails:
+        BuildingType: House
+        StructureType: Detached House
+        ConstructionType: Standard
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress: {HouseIdentifier: '1', Postcode: NG173AS}
+        AdditionalInformation: {ListingStatus: false, BuildingWorkStatus: false, GoodRepairStatus: true,
+          GeologicalThreats: false, FreeFromFloodingThreats: true}
+      Usage:
+        NonFamilyLodger: false
+        LetWithSublet: false
+        BusinessUse: false
+        BusinessUsage: {BusinessUse: false, ClericalUse: false, PropertyUse: meetings}
+        HolidayHomeStatus: false
+        Occupancy: Occupied
+      Security: {Locks: true, Alarms: Basic DIY Alarm, NeighbourhoodWatch: true}
+      ProposerRelationshipToRisk: {LegalRelationship: Owned, FirstTimeBuyers: false}
+    PreferredDeliveryMethod: Print
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ConGMtaSITSETAZP
+      LastName: Testzxz
+      DerivedName: ConGMtaSITSETAZP Testzxz
+      MaritalStatus: Single
+      Gender: Male
+      PrimaryEmploymentStatus: {Employed: true, Category: Employee, Type: BakeryAssistant,
+        Industry: FastFood}
+      SecondaryEmploymentStatus: {Employed: false}
+      DateOfBirth: 30/10/1983
+      UkResidentSince: 30/10/1983
+    ProposerContactDetails:
+      CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+      MainTelephoneNumber: '07345345345'
+      EmailAddress: P_Auto_000_T3_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+    MarketingChoice: {Postal: true, Email: false, Telephone: true, SMS: false}
+    OtherDetails: {SufferedLossNotResultedInClaim: false}
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: '1'
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      UnspentCriminalConviction: false
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet: {Cat: false, Dog: false, Other: false}
+      PropertyOwned: OwnedOutright
+    JointPolicyHolderStatus: false
+    ConsentToRenew: false
+    JointPolicyHolder:
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      Gender: Male
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus: {Employed: true, Category: Employed, Type: Bakery Assistant,
+        Industry: Fast Food}
+      SecondaryEmploymentStatus: {Employed: false}
+      InsuranceHistory: {InsurancePreviouslyRefused: false}
+      NonRtaConvictions: false
+      DateOfBirth: 21/04/1989
+      UkResidentSince: 21/04/1989
+    JointPolicyHolderDetails:
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      Gender: Male
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus: {Employed: true, Category: Employed, Type: Bakery Assistant,
+        Industry: Fast Food}
+      SecondaryEmploymentStatus: {Employed: false}
+      InsuranceHistory: {InsurancePreviouslyRefused: false}
+      NonRtaConvictions: false
+      DateOfBirth: 21/04/1989
+      UkResidentSince: 21/04/1989
+    Index: P
+  Id: EIS_COMPLEX_CLIENT_BUILDER-ea57309d-244c-4175-a87c-f36c4da88d47
+  IdTags: {TestID: EIS-AGEAS-HOME-001-16}
+- Data:
+    QuotesDetails: {Affinity: AHCC, Brand: Ageas, ProductType: Home, InceptionDate: 07/05/2024}
+    InsuranceDetails:
+      TypeOfHouseHoldCover: {Buildings: true, Contents: true, BuildingAccidentalDamage: true,
+        ContentAccidentalDamage: true, OptionalExtras: null}
+      InsuredAmount: {BuildingVoluntaryExcess: 100, ContentVoluntaryExcess: 100, RebuildingCost: 100000,
+        ContentSum: 70000}
+      InsuranceHistory: {ContentClaimFreeYears: 0, BuildingClaimFreeYears: 0, InsurancePreviouslyRefused: false,
+        PreviousInsurance: false}
+      ContentDetails:
+        Safe: true
+        SpecifiedItemsAvailable: false
+        UnspecifiedItems: {CoverStatus: false, ItemAmount: 3333}
+        SpecifiedItems: null
+      BuildingDetails:
+        BuildingType: House
+        StructureType: Detached House
+        ConstructionType: Standard
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress: {HouseIdentifier: '1', Postcode: NG173AS}
+        AdditionalInformation: {ListingStatus: false, BuildingWorkStatus: false, GoodRepairStatus: true,
+          GeologicalThreats: false, FreeFromFloodingThreats: true}
+      Usage:
+        NonFamilyLodger: false
+        LetWithSublet: false
+        BusinessUse: false
+        BusinessUsage: {BusinessUse: false, ClericalUse: false, PropertyUse: meetings}
+        HolidayHomeStatus: false
+        Occupancy: Occupied
+      Security: {Locks: true, Alarms: Basic DIY Alarm, NeighbourhoodWatch: true}
+      ProposerRelationshipToRisk: {LegalRelationship: Owned, FirstTimeBuyers: false}
+    PreferredDeliveryMethod: Print
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ConGMtaSITSETAZQ
+      LastName: Testzxz
+      DerivedName: ConGMtaSITSETAZQ Testzxz
+      MaritalStatus: Single
+      Gender: Male
+      PrimaryEmploymentStatus: {Employed: true, Category: Employee, Type: BakeryAssistant,
+        Industry: FastFood}
+      SecondaryEmploymentStatus: {Employed: false}
+      DateOfBirth: 30/10/1983
+      UkResidentSince: 30/10/1983
+    ProposerContactDetails:
+      CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+      MainTelephoneNumber: '07345345345'
+      EmailAddress: Q_Auto_000_T3_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+    MarketingChoice: {Postal: true, Email: false, Telephone: true, SMS: false}
+    OtherDetails: {SufferedLossNotResultedInClaim: false}
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: '1'
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      UnspentCriminalConviction: false
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet: {Cat: false, Dog: false, Other: false}
+      PropertyOwned: OwnedOutright
+    JointPolicyHolderStatus: false
+    ConsentToRenew: false
+    JointPolicyHolder:
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      Gender: Male
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus: {Employed: true, Category: Employed, Type: Bakery Assistant,
+        Industry: Fast Food}
+      SecondaryEmploymentStatus: {Employed: false}
+      InsuranceHistory: {InsurancePreviouslyRefused: false}
+      NonRtaConvictions: false
+      DateOfBirth: 21/04/1989
+      UkResidentSince: 21/04/1989
+    JointPolicyHolderDetails:
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      Gender: Male
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus: {Employed: true, Category: Employed, Type: Bakery Assistant,
+        Industry: Fast Food}
+      SecondaryEmploymentStatus: {Employed: false}
+      InsuranceHistory: {InsurancePreviouslyRefused: false}
+      NonRtaConvictions: false
+      DateOfBirth: 21/04/1989
+      UkResidentSince: 21/04/1989
+    Index: Q
+  Id: EIS_COMPLEX_CLIENT_BUILDER-40bb8d8f-63f4-4570-9b14-0e80c3ffd953
+  IdTags: {TestID: EIS-AGEAS-HOME-001-17}

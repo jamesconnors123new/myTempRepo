@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GetCarPolicyDetailsEchelonUI" type="Application" factoryName="Application" folderName="OperationTests">
+    <envs>
+      <env name="EchelonLoginURL" value="https://injector-uat.ageas.co.uk/strata/ageas/household/login" />
+      <env name="StandardEchelonPassword" value="Password123" />
+      <env name="StandardEchelonUserName" value="a50_robot01_uat" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/OpertationTests/GetCarPolicyDetailsEchelonUI.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

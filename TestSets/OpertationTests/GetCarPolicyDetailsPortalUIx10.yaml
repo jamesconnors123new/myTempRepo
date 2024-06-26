@@ -1,0 +1,93 @@
+~Templates:
+
+  CredentialsSets:
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(StandardPortalUserName)
+      Password: ~(StandardPortalPassword)
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalUserName
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0001
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+                PolicyNumber: GDCCA07045266
+                ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+
+              Instances:
+                - Identities:
+                    - TestID|EX-CP-0001
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-02
+                  InstanceValues:
+                   PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-03
+                  InstanceValues:
+                   PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-04
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-05
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-06
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-07
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-08
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-09
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+                - Identities:
+                    - TestID|GetCarPolInfoPortal-10
+                  InstanceValues:
+                    PolicyNumber: GDCCA07045266
+
+      ~Stages:
+        - ~Stage: # Check MTA that we want to do are enabled on the policy that is being targeted
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetCarPolicyDetailsPortal
+                  ~Role: >
+                    Capture the policy details from Portal before the MTA
+                  ~Type: Act
+                  ~Action: GetCarPolicyDetailsPortal
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: ~(PolicyNumber)@ageas.co.uk
+                      Password: Password123
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                  ~Judgements:
+                  ~Unconditionals:

@@ -1,0 +1,209 @@
+package PageObjects.EchelonModel;
+
+import org.openqa.selenium.By;
+
+public interface EchelonQuoteCreationLocatorModel {
+
+  public By PROPOSER_SURNAME();
+  public By PROPOSER_FORENAME();
+  public By PROPOSER_GENDER();
+  public By PROPOSE_MARITAL_STATUS();
+  public By PROPOSE_TITLE();
+  public By PROPOSE_DATE_OF_BIRTH();
+  public By PROPOSE_UK_RESIDENT_SINCE();
+
+  public By JPH_SURNAME();
+  public By JPH_FORENAME();
+  public By JPH_GENDER();
+  public By JPH_MARITAL_STATUS();
+  public By JPH_TITLE();
+  public By JPH_DATE_OF_BIRTH();
+  public By JPH_UK_RESIDENT_SINCE();
+  public By JPH_RELATIONSHIP_WITH_POLICY_HOLDER();
+  public By JPH_INSURANCE_REFUSED_PREVIOUSLY();
+
+  public By EMP_OCCUPATION_DET();
+  public By EMP_EMP_STATUS();
+  public By EMP_INDUSTRY();
+  public By PART_TIME_OCCUPATION();
+  public By PART_TIME_EMP_STATUS();
+  public By PART_TIME_INDUSTRY();
+
+  public By JPH_EMP_OCCUPATION_DET();
+  public By JPH_EMP_EMP_STATUS();
+  public By JPH_EMP_INDUSTRY();
+  public By JPH_PART_TIME_OCCUPATION();
+  public By JPH_PART_TIME_EMP_STATUS();
+  public By JPH_PART_TIME_INDUSTRY();
+
+  public By OPTION();
+  public By POST_CODE();
+  public By FIND_ADDRES();
+  public By HOUSE_INDENTIFIER();
+  public By CONTACT_TYPE();
+  public By CONTACT_INPUT_FIELD();
+  public By PREFFERED_DELIVERY();
+  public By PROPOSER_EMAIL();
+
+  public By BUILDING_TYPE();
+
+  public By CONSTRUCTION_TYPE();
+  public By YEAR_BUILT();
+  public By NUMBER_OF_BEDROOM();
+  public By NUMBER_OF_BATHROOM();
+  public By OWNERSHIP();
+  public By LISTING_STATUS();
+  public By BUILDING_WORK_STATUS();
+  public By REPAIR_STATUS();
+  public By GEOLOGICAL_STATUS();
+  public By FLOODING_THREAT();
+  public By BUILDING_REBUILDING_COST();
+  public By BUILDING_ACCIDENTAL_DAMAGE();
+  public By BUILDING_VOLUNTARY_EXCESS();
+  public By CONTENT_ACCIDENTAL_DAMAGE();
+  public By CONTENT_VOLUNTARY_EXCESS();
+  public By INTERESTED_PARTY();
+  public By SUM_INSURED();
+  public By SAFE_INSTALLED();
+  public By SPECIFIED_CONTENT();
+  public By RTA_CONVICTION_DETAILS();
+  public By JPH_RTA_CONVICTION_DETAILS();
+  public By NON_FAMILY_LEDGERS();
+  public By LET_SUB_LET();
+  public By BUSINESS_USE();
+  public By HOLIDAY_HOME_STATUS();
+  public By OCCUPANCY();
+  public By SECURITY_LOCKS();
+  public By ALARMS();
+  public By NEIGHBOURHOOD_WATCH();
+  public By RISK_DROPDOWN();
+  public By MARKETING_POSTAL();
+  public By MARKETING_EMAIL();
+  public By MARKETING_TELEPHONE();
+  public By MARKETING_SMS();
+  public By SUFFERED_LOSS();
+  public By SOURCE_CUSTOMER();
+  public By NEXT_PAGE();
+  public By JOINT_POLICY_HOLDER();
+  public By RISK_FIND_ADDRES();
+  public By RISK_HOUSE_INDENTIFIER();
+  public By RISK_POST_CODE();
+  public By USE_CONTACT_ADDRESS();
+  public By UPDATE_RISK_ADDRESS();
+  public By WALL_CONSTRUCTION_TYPE();
+  public By ROOF_CONSTRUCTION_TYPE();
+  public By PET_DETAILS();
+  public By PAYMENT_TYPE();
+  public By EXTENDED_HOUSE();
+  public By COUNTY_COURT_JUDGEMENT();
+  public By DECLARED_BANKRUPT();
+  public By NUMBER_OF_ADULT();
+  public By NUMBER_OF_CHILDREN();
+  public By ROOF_PERCENTAGE();
+  public By LEFT_UNOCCUPIED();
+  public By PROPERTY_OWNER();
+  public By GET_QUOTES();
+  public By QUOTE_VALUE();
+  public By STORE_QUOTE();
+  public By QUOTE_REFERENCE();
+  public By STORE_QUOTE_DURATION();
+  public By VIEW_QUOTE();
+  public By WEB_REFERENCE();
+  public By SELECT_CREDIT_CARD();
+  public By PREV_CARD_EXPIRY_DATE();
+  public By PAYMENT_BACK();
+  public By CONTINUE_WRAP_UP_WITHOUT_PAYMENT();
+  public By CARD_HOLDER_NAME();
+  public By CARD_EXPIRY_DATE();
+  public By CARD_EXPIRY_YEAR();
+  public By CARD_BELONG_TO_YOU();
+  public By MANUAL_PAYMENT();
+  public By PERMISSION_TO_STORED_CARD_DETAILS();
+  public By LIST_OF_QUESTION();
+  public By PAYMENT_SUMMARY();
+  public By PAYMENT_STATUS();
+
+  ////  MOTOR ////
+  public By LICENSE_TYPE();
+  public By LICENSE_DATE();
+  public By REGISTRATION();
+  public By FIND_VEHICLE();
+  public By LEFT_HAND_DRIVE();
+  public By NUMBER_OF_SEATS();
+  public By PURCHASE_DATE();
+  public By CURRENT_MARKET_VALUE();
+  public By VEHICLE_OWNER();
+  public By PROPOSER_REGISTERED_KEEPER();
+  public By WHERE_KEPT_OVERNIGHT();
+  public By WHERE_KEPT_POSTCODE();
+  public By MODIFICATIONS();
+  public By ALARM();
+  public By IMMOBILISER();
+  public By TRACKER();
+
+  //MOTORING DETAILS SECTION
+  public By CLASS_OF_USE();
+  public By ANNUAL_MILEAGE();
+  public By LEVEL_OF_VOLUNTARY_EXCESS();
+  public By USE_OF_VEHICLE_BY_PROPOSER();
+  public By NUMBER_OF_OTHER_VEHICLES_IN_HOUSEHOLD();
+  public By ACCESS_TO_OTHER_VEHICLES();
+
+  //PREVIOUS INSURANCE SECTION
+  public By PREVIOUS_INSURANCE();
+  public By DRIVING_EXPERIENCE_NOT_IN_YOUR_NAME();
+  public By DRIVING_RESTRICTIONS();
+  public By  ANY_CLAIMS();
+  public By NCD_APPLIED_TO_ANY_OTHER_VEHICLE();
+  public By TYPE_OF_INSURANCE();
+  public By NCD_CLAIMED();
+  public By NCD_CURRENTLY_PROTECTED();
+  public By PROTECTED_NCD_REQUIRED();
+  public By POLICY_EXPIRY_DATE();
+
+  public By  HOW_DO_YOU_PAY_FOR_YOUR_INSURANCE();
+  public By WHERE_DID_YOU_HEAR_ABOUT_US();
+  public By WHAT_IS_DAY_TIME_LOCATION_OF_VEHICLE();
+  public By HOW_MANY_CHILDREN_ARE_IN_THE_HOUSEHOLD();
+  public By IS_THE_PROPOSER_MEMBER_OF_IAM();
+  public By ARE_YOU_A_HOMEOWNER();
+  public By DO_YOU_REGULARLY_USE_THE_CAR_IN_PEAKTIME();
+  public By IS_THE_VEHICLE_IMPORTED();
+
+  public By DO_YOU_HAVE_A_DASHCAM_FITTED_TO_YOUR_CAR();
+
+  public By DRIVING_LICENCE_NUMBER();
+
+  public By PROPERTY_TYPE();
+
+  public By SPECIFIED_CONTENT_LIST();
+
+  public By PERSONAL_BELONGING_COVER();
+
+  public By SPECIFIED_CONTENT_AWAY_FROM_HOME();
+
+  public By NUMBER_OF_DOORS();
+  public By PRICE_PAID();
+  public By NUMBER_OF_YEARS_HELD_CONTINUOUSLY();
+
+  //For Van
+   public By TYPE_OF_COVER();
+  public By WHAT_IS_ANNUAL_MILEAGE_OF_THE_VEHICLE();
+  public By IS_VEHICLE_FITTED_WITH_RACKING();
+  public By DOES_VICHICLE_HAVE_SIGNAGE();
+  public By IS_PROPOSER_A_HOUSE_OWNER();
+  public By PUBLIC_LIABILITY_IN_FORCE();
+  public By IS_POLICY_SOLELY_FOR_SOCIAL_DOMESTIC_AND_PLEASURE_USE();
+
+  public By WILL_VEHICLE_CARRY_HAZARDOUS_GOODS();
+  public By DASHCAM_FITTED_TO_YOUR_VEHICLE();
+
+  public By WHERE_IS_VEHICLE_KEPT_DURING_THE_DAY();
+  public By WHERE_IS_VEHICLE_KEPT_OVERNIGHT();
+  public By  HOW_MANY_CHILDREN_OR_DEPENDANTS_UNDER_AGE_OF_16();
+  public By IS_VEHICLE_DRIVEN_AT_PEAK_TIMES();
+  public By  WHO_OWNS_THE_VEHICLE();
+  public By LICENSE_NO_DECLARED();
+
+
+}

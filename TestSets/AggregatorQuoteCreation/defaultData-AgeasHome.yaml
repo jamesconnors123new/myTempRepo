@@ -1,0 +1,394 @@
+
+  GenericInformation:
+    AboutYou:
+      Title: Mr #/Mrs/Miss/Ms/Dr
+      FirstName: Hamilton
+      LastName: Buck
+      EmailAddress: facilisi.sed.neque@yahoo.or
+      TelephoneNumber: 0800 748832
+      CorrespondenceAddress: Yes #Yes/No
+#        #If No
+#        HouseNumber:
+#        PostCode:
+#      DateOfBirth:
+#      MaritalStatus: #Single, Married, Civil Partnered, Divorced, Widowed
+#      EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#        # if Employee/Self Employed/Company Director/Government/Business Owner
+#        JobType:
+#        JobIndustry:
+#        # If Student
+#        Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#      SecondJob: #Yes/NO
+#        #If Yes
+#        EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#          # if Employee/Self Employed/Company Director/Government/Business Owner
+#          JobType:
+#          JobIndustry:
+#          # If Student
+#          Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#      JointPolicyholder: #Yes/No
+#        #if Yes
+#        Title: #Mr/Mrs/Miss/Ms/Dr
+#        FirstName:
+#        LastName:
+#        EmailAddress:
+#        TelephoneNumber:
+#        CorrespondenceAddress: #Yes/No
+#          #If No
+#          HouseNumber:
+#          PostCode:
+#        DateOfBirth:
+#        MaritalStatus: #Single, Married, Civil Partnered, Divorced, Widowed
+#        EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#          # if Employee/Self Employed/Company Director/Government/Business Owner
+#          JobType:
+#          JobIndustry:
+#          # If Student
+#          Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#        SecondJob: #Yes/NO
+#          #If Yes
+#          EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#            # if Employee/Self Employed/Company Director/Government/Business Owner
+#            JobType:
+#            JobIndustry:
+#            # If Student
+#            Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#      NumberOfAdults:
+#      NumberOfChildren:
+#      PetsLivingInHome:
+#      PayingGuestInHome:
+#      HouseUsedForBusinessPurpose: #Yes/No
+#        #if Yes
+#        ClericalUsage:    #Yes/No
+#      ClaimInLast5Years: #Yes/No
+#        #if Yes
+#        DateOfIncident:
+#        SectionOfPolicy: #Buildings & Contents / Buildings Only / Contents Only
+#        ClaimDescription: #Accidental Damage/Additional Expenses/Alternative Accommodation/Burst Boiler (Buildings Only)/Damage to Jewellery (Contents Only)/Deep Freeze Contents (Contents Only) etc
+#        CostClaim:
+#      SufferedLosses5YearsNotClaimed: #Yes/No
+#      #Have you or any persons USUALLY living with you suffered losses or incidents in the last five years where it did not result in a claim?
+#      ContactedBy: #Email/ Text/ Post/ Phone seperated by comma.
+#      CarInsuranceRenewal: #NoCarInsurance/Jan/Feb/…
+  HomeQuote:
+    HomeDetails:
+      CoverType: Buildings&contents #/ BuildingsOnly / ContentsOnly
+      Address: 4 Badminton house
+      Postcode: WD24 4RG
+      Property:
+        Type: Self-contained flat  #/House/Town House/Self-contained flat/Maisonette
+        BestDescribesYourHome: First Floor Flat
+#        Type : Bungalow/House/Town House: #Detached/Semi-Detached/End Terraced/Mid-Terraced
+#        Type : Self-ContainedFlat: #Basement Flat/Ground Floor Flat/First Floor Flat/Second Floor Flat and Above
+      BuiltStandardConstruction:
+        BuiltStandardConstYesOrNo: "No" #Yes/No
+        ExternalWallsMadeFrom: Aluminium #/Brick/Cob Construction/Essex Construction etc #Only if NO
+        RoofMadeOf: Asphalt   #Asphalt/Copper/Corrugated Iron/Shingle/Thatch - Fibre etc #Only if NO,
+        PercentageOfFlatRoof: 50  #in betweeen 0% to 100%
+      BedroomNumber:  3 #in betweeen 1 to 10
+      BathroomNumber: 1 #in betweeen 1 to 10
+      BuiltYear:  2007  #in betweeen 1750 to 2023
+      HomeExtension: "No" #Yes/No
+      Grade: "Grade 2*" #Grade 1, Grade 2, Grade 2*, No Grade
+      HomeFloodedIn25Years: "No" #Yes/No
+      MultiPointLockingSystem: "Yes" #Yes/No
+      TypeOfIntruderAlarm: Approved And Maintained Alarm #Basic DIY Alarm/ TelephoneLink/ Approved And Maintained Alarm/ No
+      RentOrOwn:
+        Type: Owned Outright #Owned Outright/Owned on Mortgage/Privately Rented/ Housing Association / Council Rented
+        FurnishedHome: "Yes" #Yes/No #Only for Privately Rented/ Housing Association / Council Rented
+    CoverDetails:
+      CoverStartDate: 16/06/2023 #Date format : Thursday, 8 June. Date must be before 60 days from today.
+      InsurancePayFrequency: Annually #Annually/ Monthly
+      NormallyOccupied: Day and night #Day and night/During the day/During the night/Unoccupied
+    ContentCover:
+      HeldContentLast2Year:
+        YesOrNo: "Yes" #Yes/No
+        ClaimFreeYears: 5 #in betweeen 0, 1 to 9 #only if HeldContentLast2Year is Yes
+      CostReplaceContents: £95,000 #in between £75,000 to £100,000
+      AccidentalDamageCover: "Yes" #Yes/No
+      ValuablesDetails:
+        YesOrNo: "Yes"
+        Details:      #only if ValuablesOver2000£ is Yes
+          -   Category:  "Works of art" #Jewellery / Watches / Precious stones, Works of art, Antiques / Furs / Collectors' items, Item made from precious metals
+              Description: "Works of art" # Text
+              Cost: 4500  # Number
+          -   Category: "Jewellery / Watches / Precious stones" #Jewellery / Watches / Precious stones, Works of art, Antiques / Furs / Collectors' items, Item made from precious metals
+              Description: "Jewellery / Watches / Precious stones" # Text
+              Cost: 3945  # Number
+      ExtraCoverPersonalBelongingsAwayFromHome:
+        YesOrNo: "Yes" #Yes/No
+        #only if ExtraCoverPersonalBelongings is Yes
+        Cost: "£1,500" #in between £500 to £10,000
+      IndividualItemsAwayFromHome: #Yes/No
+        YesOrNo: "Yes"
+        Details:
+          - Category: Mobile Phones #Jewellery / Watches, Mobile Phones, Laptops / Tablets, Bicycles, Photography/Video equipment (not drones) etc
+            Description: iPhone Mobile Phones #Text
+            Cost: 45644 # Number
+          - Category: Laptops / Tablets #Jewellery / Watches, Mobile Phones, Laptops / Tablets, Bicycles, Photography/Video equipment (not drones) etc
+            Description: Laptops / Tablets #Text
+            Cost: 2345 # Number
+    BuildingCover:
+      HeldBuildingInsuranceLast2Years:
+        YesOrNo: "Yes"
+        ClaimFreeYears: 5 #in between 1 to 10
+      AccidentalDamageCoverNeeded: "Yes" #Yes/No
+    AboutYou:
+        Title: Mr
+        FirstName: Hamilton
+        LastName: Buck
+        EmailAddress: facilisi.sed.neque@yahoo.com
+        PreferredTelephoneNumber: "08848823488"
+        CorrespondenceAddress:
+            YesOrNo: No
+            HouseNumber: 4
+            Postcode: WD24 4RG
+        DateOfBirth: 27/04/1985
+        MaritalStatus: Single #, Married, Civil Partnered, Divorced, Widowed
+        Postcode: WD24 4RG
+        EmploymentDetails:
+          EmploymentStatus: Employee #/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability
+          #if Employee/Self Employed/Company Director/Government/Business Owner
+          JobType: Teacher
+          JobIndustry: Education
+          #if Full Time Education
+         # JobType: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+        SecondJobDetails:
+          YesOrNo: Yes  #Yes/No
+          EmploymentStatus: Employee #/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability
+#            #if Employee/Self Employed/Company Director/Government/Business Owner
+          JobType: Plumber
+          JobIndustry: Service
+#            #if Full Time Education
+#          StudentType: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+        JointPolicyholderDetails:
+            YesOrNo: Yes
+            #if YES
+            Title: Miss
+            FirstName: Colton
+            LastName: Schmeler
+            DateOfBirth: 27/04/1980
+            MaritalStatus: Civil Partnered
+            Relationship: Commonlaw Partner
+            EmploymentDetails:
+              EmploymentStatus: Self Employed #/Self Employed/Company Director/Government/Civil Service/Business Owner/Partner
+#              #if Employee/Self Employed/Company Director/Government/Business Owner
+              JobType: player
+              JobIndustry: Gambling
+            SecondJobDetails:
+                YesOrNo: Yes  #Yes/No
+                EmploymentStatus: Company Director  #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability
+  #                #if Employee/Self Employed/Company Director/Government/Business Owner
+                JobType: Production
+                JobIndustry: Production
+
+    AdditionalInformation:
+      NumberOfAdults: 5
+      NumberOfChildren: 2
+      PetsLivingInHome: Yes - Cats and Dogs
+      PayingGuestInHome: Yes - Lodgers
+      HouseUsedForBusinessPurpose:
+        YesOrNo: Yes
+        ClericalUsage: Yes #/No
+      ClaimInLast5Years:
+        YesOrNo: Yes
+        Details:
+        - DateOfIncident: 01/2023 #Month/Year format
+          SectionOfPolicy: Buildings & Contents #Buildings & Contents / Buildings Only / Contents Only
+          ClaimDescription: Accidental Loss	#Accidental Damage/Additional Expenses/Alternative Accommodation/Burst Boiler (Buildings Only)/Damage to Jewellery (Contents Only)/Deep Freeze Contents (Contents Only) etc
+          CostClaim: 5646
+        - DateOfIncident: 03/2020  #Month/Year format
+          SectionOfPolicy: Buildings Only #Buildings & Contents / Buildings Only / Contents Only
+          ClaimDescription: Additional Expenses #Accidental Damage/Additional Expenses/Alternative Accommodation/Burst Boiler (Buildings Only)/Damage to Jewellery (Contents Only)/Deep Freeze Contents (Contents Only) etc
+          CostClaim: 8979
+      SufferedLossesIncidentLast5Years: No
+      ContactPreference: Email, Text #Email, Phone, Text, Post
+      CarInsuranceRenewal: No Car Insurance  # January, February etc
+
+
+
+
+  #  VanQuotes:
+#    Title:
+#    FirstName:
+#    LastName:
+#    DateOfBirth:
+#    UkResidentYesOrNo: #Yes Or No
+#      #If no
+#      YearOfUKResident:	#Month/Year
+#    MaritalStatus:	#Single, Married, Civil Partnered, Divorced, Widowed
+#    Postcode:
+#    HomeOwner:	#Yes/No
+#    ChildrenUnder16:	#Yes/No
+#    EmploymentStatus:	#Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability
+#      #if Employee/Self Employed/Company Director/Government/Business Owner
+#      JobType:
+#      JobIndustry:
+#      #if Full Time Education
+#      StudentType: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#    SecondJob:	#Yes/No
+#      EmploymentStatus:    #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability
+#        #if Employee/Self Employed/Company Director/Government/Business Owner
+#        JobType:
+#        JobIndustry:
+#        #if Full Time Education
+#        StudentType: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#    TypeDrivingLicence:  #Full UK Driving/UK Provisional/EU/Automatic
+#    DurationOfLicenseHeld:	#Number btween 1-35 Years
+#    ProtectNCD:	#No or 1-20 Years
+#    UseAnotherVehicle: #No access to other vehicles/Company car (not social, domestic, pleasure)/Company Car (inc social, domestic & pleasure use)/Own a motorcycle/Named driver on another person's policy/Owner of another car/Owner of another van
+#    CoverStartDate: #DateFormat Monday 5, June	30 days from today
+#    InsurancePayFrequency:	#Annually/Monthly
+#    CoverType:	#Comprehensive/ThirdParty Fire and Theft
+#    VanUse:	#Personal/Business/Haulage
+#     #If Business/Haulage
+#      PublicLiabilityInsurance:	#Yes/No
+#    CarryingHazardousGoods: #Yes/No
+#    DriveInPeakTimes:	#Yes/No
+#    AddAdditionalDriver:	#Yes/No
+#    EmailAddress:
+#    TelephoneNumber:
+#    RegistrationNumber:
+#    Seats:	#In between 1-10
+#    BodyStyle:	#Articulated Lorry/Caravanette/Flat-back/Mobile Canteen/Pickup/Skip/Tipper/Van/Wagon
+#    DashcamFitted:	#Yes/no
+#    CurrentValueOfVan: #Number
+#    YearVehicleBought:	#Month/Year
+#    OwnerRegisteredKeeper:	#Yes/No
+#    Owner:
+#    RegisteredKeeper:
+#    ModifiedVehicle:	#Yes/No
+#      #If Yes
+#      Category:
+#      Type:
+#    External/InternalRacking:	#Yes/No
+#    HaveSignage:	#Yes/No
+#    FittedWithTrackingDevice:	#Yes/No
+#    NoOfVehicles:	#Number btween Above 0 or 1
+#    EstimatedMilesDrivenNextYear:	#Number
+#    VehicleParkedOvernight:	#On your driveway/In a locked garage/On the road/Other
+#    OtherPlaceVehicleParked:	#Car Park/Car Port/Locked Building/Locked Compound/Private Property
+#    KeptOvernightAtHomeAddress:	#Yes/No
+#    #if No
+#      Postcode:
+#      Location:	#At Home/Unsecured Public Car Park/Secure Public Car Park/Street/Work
+#    DVLARestrictions:	#Yes/No
+#    MotoringAccidentOrClaiminLast3Years:	#Yes/No
+#       #If yes
+#      TypeOfClaim:
+#      IncidentHappen: #Month/Year
+#      DriverFault:	#Yes/No
+#    PenaltyOrConvictionsLast5Years:	#Yes/No
+#      #if Yes
+#      TypeOfOffence:
+#      DVLACodeOfOffence:
+#      DateOfConviction:	#Month/Year
+#      PointsReceiveOnLicense:	#Number
+#      CostOfFined:	#Number
+#      BanReceived:	#Yes/No
+#      BanNumberOfYears:	#Number
+#    PendingProsecutions:	#Yes/No
+#    RefusedInsuranceOrPolicyCancelledOrAdditionalPremiumImposed:	#Yes/No
+#    ContactedBy: #Email/ Text/ Post/ Phone seperated by comma.
+#    InsuranceRenewal:	#NoCarInsurance/Jan/Feb/…
+#  MotorQuotes:
+#    Title:	#Mr/Mrs/Miss/Ms/Dr
+#    FirstName:
+#    LastName:
+#    DateOfBirth:
+#    UkResidentYesOrNo: #Yes Or No
+#      #If no
+#      YearOfUKResident:	#Month/Year
+#    MaritalStatus:	#Single, Married, Civil Partnered, Divorced, Widowed
+#    ChildrenUnder16:	#Yes/No
+#    HomeOwner:	#Yes/No
+#    FrequencyOfEyeTest:	#Annually/Every other year/Less frequently
+#    EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#      # if Employee/Self Employed/Company Director/Government/Business Owner
+#      JobType:
+#      JobIndustry:
+#      # If Student
+#      Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#    SecondJob: #Yes/NO
+#      #If Yes
+#      EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#        # if Employee/Self Employed/Company Director/Government/Business Owner
+#        JobType:
+#        JobIndustry:
+#        # If Student
+#        Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#    Postcode:
+#    Address:
+#    TypeDrivingLicence:	#Full UK Driving/UK Provisional/EU/Automatic
+#    DurationOfLicenseHeld:	#Number btween 1-35 Years
+#    HaveIAMCertificate:	#Yes/No
+#    RefusedInsuranceOrPolicyCancelledOrAdditionalPremiumImposed:	#Yes/No
+#    UseAnotherVehicle:	#No access to other vehicles/Company car (not social, domestic, pleasure)/Company Car (inc social, domestic & pleasure use)/Own a motorcycle/Named driver on another person's policy/Owner of another car/Owner of another van
+#    RegistrationNumber:
+#    NCDYears:	#No or 1-20 Years
+#    ProtectNCD:	#Yes/No
+#    CoverStartDate: #DateFormat Monday 5, June	30 days from today
+#    InsurancePayFrequency:	#Annually/Monthly
+#    VanUse:	#Personal/Business/Haulage
+#    DriveInPeakTimes:	#Yes/No
+#    AddAdditionalDriver:	#No, 1,2,3,4
+#    EmailAddress:
+#    TelephoneNumber:
+#    AdditionalDriver:
+#      Title:	#Mr/Mrs/Miss/Ms/Dr
+#      FirstName:
+#      LastName:
+#      DriverGender:	#Male/Female
+#      DateOfBirth:
+#      UkResidentYesOrNo: #Yes Or No
+#        #If no
+#        YearOfUKResident:    #Month/Year
+#      MaritalStatus:	#Single, Married, Civil Partnered, Divorced, Widowed
+#      RelationshipWithDriver:	#Spouse, Common Law Partner,Civil Partner, Parent, Child, Brother or Sister, None
+#      EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#        # if Employee/Self Employed/Company Director/Government/Business Owner
+#        JobType:
+#        JobIndustry:
+#        # If Student
+#        Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#      SecondJob: #Yes/NO
+#        #If Yes
+#        EmploymentStatus: #Employee/Self Employed/Company Director/Full Time Education/Government/Civil Service/Houseperson/Business Owner/Partner/Retired/Unemployed/Not employed due to disability/
+#          # if Employee/Self Employed/Company Director/Government/Business Owner
+#          JobType:
+#          JobIndustry:
+#          # If Student
+#          Type: #Student Teacher Living Away/ Student- Living Away/ - Living at home, Student Nurse etc
+#      TypeDrivingLicence:	#Full UK Driving/UK Provisional/EU/Automatic
+#      DurationOfLicenseHeld:    #Number btween 1-35 Years
+#      RefusedInsuranceOrPolicyCancelledOrAdditionalPremiumImposed:	#Yes/No
+#      UseAnotherVehicle	: #No access to other vehicles/Company car (not social, domestic, pleasure)/Company Car (inc social, domestic & pleasure use)/Own a motorcycle/Named driver on another person's policy/Owner of another car/Owner of another van
+#    Seats:
+#    DashcamFitted: #Yes/no
+#    CurrentValueOfVan:
+#    YearVehicleBought:	#Month/Year
+#    OwnerRegisteredKeeper:	#Yes/No
+#    Owner:	#DropDown
+#    RegisteredKeeper:	#DropDown
+#    ModifiedVehicle:	#Yes/No
+#    Category:
+#    Type:
+#    FittedWithTrackingDevice:	#Yes/No
+#    NoOfVehicles:	#Number btween Above 0 or 1
+#    EstimatedMilesDrivenNextYear:	#Number
+#    KeptOvernightAtHomeAddress:	#Yes/No
+#    VanParkedPostcode:	#postcode
+#    VehicleParkedOvernight:	#On your driveway/In a locked garage/On the road/Other
+#    OtherPlaceVehicleParked:	#Car Park/Car Port/Locked Building/Locked Compound/Private Property
+#    VanParkedLocation:	#At Home/Unsecured Public Car Park/Secure Public Car Park/Street/Work
+#    DVLARestrictions:	#Yes/No
+#    MotoringAccidentOrClaiminLast3Years:	#Yes/No
+#    PenaltyOrConvictionsLast5Years:	#Yes/No
+#    PendingProsecutions:	#Yes/No
+#    ContactedBy:	#Email/ Text/ Post/ Phone seperated by comma.
+#    InsuranceRenewal:	#NoHomeInsurance/Jan/Feb/…
+
+
+
+
+

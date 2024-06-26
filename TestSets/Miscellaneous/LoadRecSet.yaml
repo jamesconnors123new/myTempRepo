@@ -1,0 +1,64 @@
+~GlobalSettings:
+
+~CommonInitActivities:
+  - ~Activity:
+      ~Label: LoadClientData
+      ~Role: >
+        Load client data to allow policy creation
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        RecSet: MtaClients
+        Sources:
+          - TestSets/Miscellaneous/Records.yml
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: TC01
+      ~Headline: Access record set
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+              Instances:
+                - Identities:
+                    - TestID|TC01-00
+                  InstanceValues:
+                    ~Ref(ClientIdValue):  //000/LoadClientData.MtaClients[0].ClientId
+#                    ClientIdValue2: ~(//000/LoadClientData.MtaClients[0].ClientId)
+                - Identities:
+                    - TestID|TC01-01
+                  InstanceValues:
+                    ~Ref(ClientIdValue): //000/LoadClientData.MtaClients[1].ClientId
+#                    ClientIdValue2: ~(//000/LoadClientData.MtaClients[1].ClientId)
+                - Identities:
+                    - TestID|TC01-02
+                  InstanceValues:
+                    ~Ref(ClientIdValue): //000/LoadClientData.MtaClients[2].ClientId
+#                    ClientIdValue2: ~(//000/LoadClientData.MtaClients[2].ClientId)
+                - Identities:
+                    - TestID|TC01-03
+                  InstanceValues:
+                    ~Ref(ClientIdValue): //000/LoadClientData.MtaClients[3].ClientId
+#                    ClientIdValue2: ~(//000/LoadClientData.MtaClients[3].ClientId)
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+            - ~Activity:
+                ~Label: EchoControlDataA
+                ~Role:
+                ~Type: Act
+                ~Action: EchoControlData
+                ~ControlData:
+                  ~Ref(ClientId): ClientIdValue
+#                  AllClientInfoAsDataText: ~(//000/LoadClientData.MtaClients)
+#                  ~Ref(AllClientInfoAsDataStruct1): //000/LoadClientData
+#                  ~Ref(AllClientInfoAsDataStruct2): //000/LoadClientData.MtaClients
+#                  SingleClientInfoAsDataText: ~(//000/LoadClientData.MtaClients[0])
+#                  ~Ref(SingleClientInfoAsDataStruct): //000/LoadClientData.MtaClients[0]
+#                  JustIdClientInfoAsDataText: ~(//000/LoadClientData.MtaClients[0].ClientId)
+#                  ~Ref(JustIdClientInfoAsDataStruct): //000/LoadClientData.MtaClients[0].ClientId

@@ -1,0 +1,360 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: Add quotes for customer build
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                LastnameVal: Testzxz
+              Instances:
+                - Identities:
+                    - TestID|MTA01_TC001
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    JointPolicyHolderStatus: false
+                    Title: Lady
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BA
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 18, Allerton Road
+                    CorrespondencePostcode: L25 7SF
+                    RiskAddressHouseIdentifier: 14
+                    RiskPostcode: WD24 4RG
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    PaymentType: Monthly
+                    PaymentMethod: CreditCard
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14910|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: Bungalow
+                    StructureType: End Terraced Bungalow
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                - Identities:
+                    - TestID|CANRIN02_TC007
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    JointPolicyHolderStatus: false
+                    LastnameVal: Testzxz
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MI
+                    MaritalStatus: Single
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 1, Pizza Hut
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: false
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-16700|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-6100|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: House
+                    StructureType: End Terraced House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                        - Item: Valuables
+                          Description: Phone and Watches
+                          Value: 3000
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 830
+                        - Item: Car Audio Equipment
+                          Description: Car Audio Equipment
+                          Value: 200
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 01
+                - Identities:
+                    - TestID|CANRIN02_TC019
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    JointPolicyHolderStatus: false
+                    LastnameVal: Testzxz
+                    Title: Doctor
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)MM
+                    MaritalStatus: Widowed
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 1, London Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskAddressHouseIdentifier: 11
+                    RiskPostcode: IG11 7EP
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-13200|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-7600|dd/MM/yyyy #9 years Old
+                    PropertyOwned: Owned
+                    BuildingType: Detached House
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentSource: Customer
+                        IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Buildings & Contents
+                        Cause: Flood
+                        Cost: 679
+                        ClaimNumber: 123
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                        - Item: Valuables
+                          Description: Phone and Watches
+                          Value: 600
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 300
+                    PaymentType: Monthly
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 10
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new home quote for Ageas on EIS
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: IC0000002604
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Home
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: ~(BuildingsCover)
+                          Contents: ~(ContentsCover)
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: false
+                          ~Ref(OptionalExtras): InstanceOptionalExtras
+                        InsuredAmount:
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100
+                          RebuildingCost: 100000
+                          ContentSum: 70000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                          SpecifiedItemsAvailable: ~(SpecifiedItemsAvailable)
+                          ~Ref(SpecifiedItems): InstanceSpecifiedItems
+                          UnspecifiedItems:
+                            CoverStatus: true
+                            ItemAmount: 3333
+                        BuildingDetails:
+                          BuildingType: ~(BuildingType)
+                          StructureType: ~(StructureType)
+                          ConstructionType: Standard
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          BuildingAddress:
+                            HouseIdentifier: ~(RiskAddressHouseIdentifier)
+                            Postcode: ~(RiskPostcode)
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false
+                          LetWithSublet: false
+                          BusinessUsage:
+                            BusinessUse: false
+                            ClericalUse: false
+                            PropertyUse: meetings
+                          HolidayHomeStatus: false
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                      ProposerPersonalDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: Bakery Assistant
+                          Industry: Fast Food
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      OtherDetails:
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        WallConstructionType: Brick
+                        RoofConstructionType: Concrete
+                        NumberOfDaysPropertyLeftUnoccupied: 0
+                        PercentageOfFlatRoof: 35
+                        PaymentType: ~(PaymentType)
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfBathroom: 1
+                        UnspentCriminalConviction: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: true
+                            Other: false
+                        PropertyOwned: ~(PropertyOwned)
+                      JointPolicyHolderStatus: ~(JointPolicyHolderStatus)
+                      JointPolicyHolderDetails: *JphPerson01
+                      ConsentToRenew: true
+                      ~Ref(Endorsement): InstanceEndorsement
+                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: AddCCForExistingClient
+#                  ~Role: >
+#                    Adding CC for existing customer
+#                  ~Type: Act
+#                  ~Action: AddCCForExistingClient
+#                  ~ControlData:
+#                    UserCredentials: *StandardEisUserCredentialsSet
+#                    CoreAppUserCredentials: *CoreUserCredentialsSet
+#                    PaymentData:
+#                      Type: Visa
+#                      CardHolderName: Test
+#                      ExpirationDate: 03/2024
+#                      CreditCardNumber: 4444333322221111
+#                      CVV: 555
+#                    SearchCriteria:
+#                      QuoteReference: ~(//001/QuoteCreationInEis.EisClientDetails.QuoteReference)
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a home policy with cheque payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    SearchCriteria:
+                      #ClientNumber: ~(//002/QuoteCreationInEis.EisClientDetails.ClientNumber)
+                      QuoteReference:  ~(//001/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                    QuoteReference:  ~(//001/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

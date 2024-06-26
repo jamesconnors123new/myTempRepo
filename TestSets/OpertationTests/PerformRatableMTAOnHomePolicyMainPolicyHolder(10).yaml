@@ -1,0 +1,148 @@
+  ~Templates:
+  CredentialsSets:
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(PolicyNumber)@ageas.co.uk
+      Password: ~(StandardPortalPassword)
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+              Instances:
+              - Identities:
+                  - TestID|EX-CP-0009-01
+                InstanceValues:
+                  PolicyNumber: HE22757069915
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Mrs
+              - Identities:
+                  - TestID|EX-CP-0009-02
+                InstanceValues:
+                  PolicyNumber: HE22757069916
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Ms
+              - Identities:
+                  - TestID|EX-CP-0009-03
+                InstanceValues:
+                  PolicyNumber: HE22757069917
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Miss
+              - Identities:
+                  - TestID|EX-CP-0009-04
+                InstanceValues:
+                  PolicyNumber: HE22757069918
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Mr
+              - Identities:
+                  - TestID|EX-CP-0009-05
+                InstanceValues:
+                  PolicyNumber: HE22757069919
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Miss
+              - Identities:
+                  - TestID|EX-CP-0009-06
+                InstanceValues:
+                  PolicyNumber: HE22757069920
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Mr
+              - Identities:
+                  - TestID|EX-CP-0009-07
+                InstanceValues:
+                  PolicyNumber: HE22757069921
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Dr
+              - Identities:
+                  - TestID|EX-CP-0009-08
+                InstanceValues:
+                  PolicyNumber: HE22757069922
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Ms
+              - Identities:
+                  - TestID|EX-CP-0009-09
+                InstanceValues:
+                  PolicyNumber: HE22757069923
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Dr
+              - Identities:
+                  - TestID|EX-CP-0009-10
+                InstanceValues:
+                  PolicyNumber: HE22757069924
+                  ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                  InstanceMTASpec:
+                    MTAType: MainPolicyholder
+                    MainPolicyHolder:
+                      PersonalDetails:
+                        Title: Mrs
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: PerformRatableMTAOnHomePolicy
+                  ~Role: >
+                    Perform MTA on a policy
+                  ~Type: Act
+                  ~Action: PerformMTAOnPolicy
+                  ~ControlData:
+                    CustomerCredentials: *StandardPortalUserCredentialsSet
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                    MTAEffectiveDate: ~(MtaEffectiveDate)
+                    ~Ref(MTASpec): InstanceMTASpec
+                  ~Judgements:
+                  ~Unconditionals:

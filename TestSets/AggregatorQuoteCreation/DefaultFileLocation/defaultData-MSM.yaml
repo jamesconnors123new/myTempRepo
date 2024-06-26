@@ -1,0 +1,233 @@
+{
+    "registration":"MM06UME",
+    "detailsAssumption":"No",
+    "manafacturer":"",
+    "model":"",
+    "fuelType":"",
+    "year":"",
+    "transmission":"",
+    "engineCapacity":"",
+    "trim":"",
+    "anotherJob" :"No",
+    "additionalOccuJob" : "Teacher",
+    "additionalOccuIndustry" : "School",
+    "alarmImmobiliser":"Has a factory fitted alarm and immobiliser",
+    "trackingDevice":"No",
+    "racking":"No",
+    "signage":"Yes",
+    "import":"No",
+    "lhdOrRHD":"Right Hand",
+    "seats":"5",
+    "claimOrLostLastFiveYears": "No",
+    "penaltyOrOffence": "No",
+    "value":"1820",
+    "codeemail":"vishal.deshpande@sqc.co.uk",
+    "outlookPassword": "Aut0Mat!on",
+    "emailTitle":"no-reply@notify.cloudflare.com",
+    "vanAlarm":"Other",
+    "birthDate": "04",
+    "insuranceStartDate":"Friday 29th October",
+    "birthMonth": "05",
+    "birthYear": "1950",
+    "Modified":"No",
+    "unemployedType": "Househusband",
+    "modified":[
+        {
+            "category":"",
+            "type":""
+        },
+        {
+            "category":"",
+            "type":""
+        },
+        {
+            "category":"",
+            "type":""
+        },
+        {
+            "category":"",
+            "type":""
+        },
+        {
+            "category":"",
+            "type":""
+        }
+    ],
+    "bodyType":"Van",
+    "purchaseDate":"01/01/2021",
+    "use":"Social domestic and pleasure only",
+    "typeOfBusiness":"Carriage Of Own Goods, Not For Hire Or Reward",
+    "businessMileage":"10000",
+    "personalMileage":"10000",
+    "whereKept":"On a driveway",
+    "keptOther":"",
+    "atHomeOrElsewhere":"At home",
+    "overnightPostcode":"BH5 2AS",
+    "overnightHouseNo":"25",
+    "accessOtherVehicles":"No",
+    "dangerousGoods":"No",
+    "companyType":"Sole Trader",
+    "publicLiability":"No",
+    "companyYears":"10",
+    "tradeAssociation":"No",
+    "organisationName":"Gas Safe",
+    "signWritten":"Yes",
+    "whereAreSigns":"Front and back",
+    "badDriverSign":"Yes",
+    "anotherDrive": "No",
+    "bought":"No",
+    "title":"Mr",
+    "firstname":"Burley",
+    "surname":"Gulgowski",
+    "dob":"10/07/1960",
+    "marital":"Married",
+    "homeowner":"Yes",
+    "children":"Yes",
+    "houseNameNo":"10",
+    "postcode":"BH10 5DS",
+    "employmentStatus":"Employed",
+    "occupation":"Dance Teacher",
+    "industry":"School",
+    "typeOfStudent":"Mature Student - Living At Home",
+    "ukResidentDate":"",
+    "licenceType":"Full UK",
+    "licenceIssued":"UK",
+    "licenceTransmission":"Includes manual vehicles",
+    "licenceNumber":"",
+    "provisionalLicenceNumber":"",
+    "licenceYears":"25 years",
+    "drivingQualification":"No",
+    "qualificationType":"",
+    "qualificationDate":"",
+    "convictionsYN": "No",
+    "dvlaKnowAboutTheDisability":"No",
+    "insuranceRefusedDeclined":"No",
+    "claims":[
+        {
+            "incidentDescription":"Accident",
+            "whoWasAtFault":"",
+            "typeOfTheft":"",
+            "otherWhatWasClaimFor":"",
+            "claimDate":"",
+            "typeOfDamageSuffered":"",
+            "costOfClaim":"",
+            "claimAgainstYourInsurance":"",
+            "ncdAffected":"",
+            "anyInjuries":""
+        }
+    ],
+    "convictions":[
+        {
+            "convictionType":"",
+            "convictionCode":"",
+            "whatWasConvictionFor":"",
+            "convictionDate":"",
+            "numberOfPoints":"",
+            "numberOfPointsOthers":"",
+            "fineYN":"",
+            "fineAmount":"",
+            "drivingBanYN":"",
+            "AlcoholReading": "",
+            "banLength":"",
+            "ConDateDD": "",
+            "ConDateMM": "",
+            "ConDateYYYY": ""
+        }
+    ],
+    "additionalDrivers":[
+        {
+        "relation": "",
+        "title": "",
+        "firstname": "",
+        "surname": "",
+        "dobdd": "",
+        "dobmm": "",
+        "dobyyyy": "",
+        "relationship": "",
+        "typeOfRealationShip": "",
+        "employmentStatus": "",
+        "occupation": "",
+        "industry": "",
+        "typeOfStudent": "",
+        "ukResidentDate": "",
+        "ukAdddDriverResidentSinceBirth": "",
+        "licenceType": "",
+        "saveAdditionalDriver": "",
+        "licenceYears": "",
+        "anotherJob": "",
+        "unemployedType": "",
+        "additionalOccuJob": "",
+        "claimOrLostLastFiveYears": "",
+        "additionalOccuIndustry": "",
+        "anotherDrive": "",
+        "useOfOtherVehicle": "",
+        "dvlaKnowAboutTheDisability": "",
+        "penaltyOrOffence": "",
+        "insuranceRefusedDeclined": "",
+            "claims":[
+                {
+                    "incidentDescription":"",
+                    "whoWasAtFault":"",
+                    "whoWasDriving":"",
+                    "typeOfTheft":"",
+                    "otherWhatWasClaimFor":"",
+                    "claimDate":"",
+                    "typeOfDamageSuffered":"",
+                    "costOfClaim":"",
+                    "claimAgainstYourInsurance":"",
+                    "ncdAffected":"",
+                    "anyInjuries":""
+                }
+            ],
+            "convictions":[
+                {
+                    "convictionType":"",
+                    "whatWasConvictionFor":"",
+                    "convictionDate":"",
+                    "numberOfPoints":"",
+                    "fineAmount":"",
+                    "banLength":""
+                }
+            ]
+        }
+    ],
+    "unspentConvictions":"No",
+    "AreYouRegisteredKeeperandOwner" : "No",
+    "whoIsRegisteredKeeper":"You",
+    "whoIsRegisteredOwner":"You",
+    "whoIsLegalOwner":"",
+    "typeOfCover":"Comprehensive",
+    "payPreference":"One annual payment",
+    "courtesyVehicleCover":"No/Not sure",
+    "europeanCover":"No/Not sure",
+    
+    "inceptionDays":1,
+    "excess":"£500",
+    "ncdYears":"2",
+    
+    "howDidYouEarnNCD":"With this vehicle or a previous vehicle",
+    "ncdProtection":"Yes",
+    "additionalDriver": "No",
+    "legalCover":"No/Not sure",
+    "breakdownCover":"No/Not sure",
+    "additionalProducts":[
+        {
+            "personalAccident":"No/I'll decide later",
+            "courtesyVehicle":"No/I'll decide later",
+            "breakdownCover":"No/I'll decide later",
+            "motorLegal":"No/I'll decide later"
+        }
+    ],
+    "email":"kassandra.Haley@erich.biz",
+    "phonenumber":"01202112112",
+    "password":"Aut0Mat!on",
+    "reminder":"Yes",
+    "marketing":[
+        {
+            "email":"",
+            "phone":"",
+            "text":"",
+            "post":""
+        }
+    ]
+}

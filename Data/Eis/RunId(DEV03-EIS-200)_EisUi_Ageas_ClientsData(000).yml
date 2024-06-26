@@ -1,0 +1,70 @@
+- Data:
+    ClientNumber: IC0000010329
+    SalesDetails:
+      QuotesDetails: {Brand: Ageas}
+      ProposerPersonalDetails: {Title: Mr, FirstName: AgeasConGMtaSITSETAZAG-AA, LastName: Testzxz,
+        DerivedName: AgeasConGMtaSITSETAZAG-AA Testzxz, MaritalStatus: Single, Gender: Male,
+        DateOfBirth: 13/11/1983, UkResidentSince: 13/11/1983}
+      ProposerContactDetails:
+        CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+        MainTelephoneNumber: '07777000001'
+        EmailAddress: Ageas.AG-AA.001_Auto_000_JamesB_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+      MarketingChoice: {SMS: true, Email: true, Postal: false, Telephone: false}
+  Id: EISUI_AGEAS_CLIENT_BUILDER_01-a424c19c-6dae-435d-a874-ddee892498d2
+  IdTags: {TestID: EISUI_AGEAS_CLIENT_BUILDER_01-001}
+- Data:
+    ClientNumber: IC0000010331
+    SalesDetails:
+      QuotesDetails: {Brand: Ageas}
+      ProposerPersonalDetails: {Title: Mr, FirstName: AgeasConGMtaSITSETAZAG-AB, LastName: Testzxz,
+        DerivedName: AgeasConGMtaSITSETAZAG-AB Testzxz, MaritalStatus: Single, Gender: Male,
+        DateOfBirth: 13/11/1983, UkResidentSince: 13/11/1983}
+      ProposerContactDetails:
+        CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+        MainTelephoneNumber: '07777000002'
+        EmailAddress: Ageas.AG-AB.002_Auto_000_JamesB_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+      MarketingChoice: {SMS: true, Email: true, Postal: false, Telephone: false}
+  Id: EISUI_AGEAS_CLIENT_BUILDER_01-ad21d852-414b-4e18-bfe7-8c9f5a8149e0
+  IdTags: {TestID: EISUI_AGEAS_CLIENT_BUILDER_01-002}
+- Data:
+    ClientNumber: IC0000010328
+    SalesDetails:
+      QuotesDetails: {Brand: Ageas}
+      ProposerPersonalDetails: {Title: Mr, FirstName: AgeasConGMtaSITSETAZAG-AC, LastName: Testzxz,
+        DerivedName: AgeasConGMtaSITSETAZAG-AC Testzxz, MaritalStatus: Single, Gender: Male,
+        DateOfBirth: 13/11/1983, UkResidentSince: 13/11/1983}
+      ProposerContactDetails:
+        CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+        MainTelephoneNumber: '07777000003'
+        EmailAddress: Ageas.AG-AC.003_Auto_000_JamesB_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+      MarketingChoice: {SMS: true, Email: true, Postal: false, Telephone: false}
+  Id: EISUI_AGEAS_CLIENT_BUILDER_01-74c967d0-5f7d-4b35-b78a-1c89bfd95bbb
+  IdTags: {TestID: EISUI_AGEAS_CLIENT_BUILDER_01-003}
+- Data:
+    ClientNumber: IC0000010330
+    SalesDetails:
+      QuotesDetails: {Brand: Ageas}
+      ProposerPersonalDetails: {Title: Mr, FirstName: AgeasConGMtaSITSETAZAG-AD, LastName: Testzxz,
+        DerivedName: AgeasConGMtaSITSETAZAG-AD Testzxz, MaritalStatus: Single, Gender: Male,
+        DateOfBirth: 13/11/1983, UkResidentSince: 13/11/1983}
+      ProposerContactDetails:
+        CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+        MainTelephoneNumber: '07777000004'
+        EmailAddress: Ageas.AG-AD.004_Auto_000_JamesB_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+      MarketingChoice: {SMS: true, Email: true, Postal: false, Telephone: false}
+  Id: EISUI_AGEAS_CLIENT_BUILDER_01-2320735b-fd07-4c63-a944-dddf3b6c7e0f
+  IdTags: {TestID: EISUI_AGEAS_CLIENT_BUILDER_01-004}
+- Data:
+    ClientNumber: IC0000010332
+    SalesDetails:
+      QuotesDetails: {Brand: Ageas}
+      ProposerPersonalDetails: {Title: Mr, FirstName: AgeasConGMtaSITSETAZAG-AE, LastName: Testzxz,
+        DerivedName: AgeasConGMtaSITSETAZAG-AE Testzxz, MaritalStatus: Single, Gender: Male,
+        DateOfBirth: 13/11/1983, UkResidentSince: 13/11/1983}
+      ProposerContactDetails:
+        CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+        MainTelephoneNumber: '07777000005'
+        EmailAddress: Ageas.AG-AE.005_Auto_000_JamesB_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+      MarketingChoice: {SMS: true, Email: true, Postal: false, Telephone: false}
+  Id: EISUI_AGEAS_CLIENT_BUILDER_01-98d7435c-92cd-4cf7-8d0a-6ce75a8c314b
+  IdTags: {TestID: EISUI_AGEAS_CLIENT_BUILDER_01-005}

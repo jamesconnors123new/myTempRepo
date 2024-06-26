@@ -1,0 +1,125 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+  - ~Setting:
+      ~Src: Local
+      ~Id: localPostcode
+      ~Val: BH242FD
+  - ~Setting:
+      ~Src: Local
+      ~Id: AgeasQuotePortal
+      ~Val: https://test:test@hometest.ageascloud.co.uk/yourproperty
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: Echelon_home
+      ~Val: https://injector-uat.ageas.co.uk/strata/ageas/household/login
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: PortalLoginURL
+      ~Val: https://portaltest.ageascloud.co.uk/
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-Get-Customer-Details-From-Echelon-UI
+      ~Headline: Get Customer details from Echelon
+      ~InitiationActivities:
+       - ~Activity:
+           ~Role: >
+              Initiate cases
+           ~Type: Act
+           ~Action: SimpleInitiate
+           ~ControlData:
+             Identities:
+               - TestID|EX-01001
+             CustomerCredentials: &creds
+               CustomerIdentifier: "7100855"
+               PolicyIdentifier: GDCCA06498363
+               Email: bstofportalreg46@ageas.co.uk
+               Postcode: NN4 8TQ
+               Dob: 1948/06/07
+               Password: ~(DefaultPassword)
+               Address:
+                 3, FIVE ACRES FOLD,
+                 NORTHAMPTON
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: Get Client Summary Details from Echelon
+                  ~Role: >
+                     This returns client details from Echelon
+                  ~Type: Act
+                  ~Action: GetCustomerDetailsEchelonUI
+                  ~ControlData:
+                    UserCredentials:
+                      Email: a50_kbenson_uat
+                      Password: Gw3cLzCWbz
+                    SearchCriteria:
+                      PolicyNumber: HE22757066682
+#                      Firstname: Iva
+#                      Lastname: Testxzx
+##                      WebReference:
+#                      ClientNumber: 7585152
+#                      Postcode: WD24 4RG
+#                      DateOfBirth: 31-Dec-1980
+#                      EmailAddress: vishal.deshpande@ageas.co.uk
+                  ~Judgements:
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: GetPolicyInformationPortal
+                  ~Role: >
+                    Prior to checking policy has not been digitally claimed, search policy exists and the returned customer details match Control Data
+                  ~Type: Act
+                  ~Action: GetPolicyInformationPortal
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: HE22757066682@ageas.co.uk
+                      Password: Password123
+                    EffectiveDate:
+                    SelectionStrategies:
+                     PolicyNumber: HE22757066682, GDCCA06967303
+#                     PolicyStartDate: 14/06/2025
+#                     InsuranceType: Home, Motor #, Van
+
+                  ~Judgements:
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: GetCustomerDetailsPortal
+                  ~Role: >
+                    Prior to checking policy has not been digitally claimed, search policy exists and the returned customer details match Control Data
+                  ~Type: Act
+                  ~Action: GetCustomerDetailsPortal
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: HE22757066682@ageas.co.uk
+                      Password: Password123
+                    SelectionStrategies:
+                        PolicyNumber: HE22757066682
+#                      PolicyStartDate: 17/06/2023
+                  ~Judgements:
+                  ~Unconditionals:
+

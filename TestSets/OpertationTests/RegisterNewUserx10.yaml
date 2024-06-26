@@ -1,0 +1,155 @@
+~Templates:
+  CustomerSelectionCriteria:
+    ByClientNumber: &SelectCustomerByClientName
+      Lastname: ~(Lastname)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId RegisterNewUser
+      ~Headline: Register a new user
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                ClientGroupId: ~(ClientGroupId)
+                DomainName: n0ie34cm.mailosaur.net
+
+              Instances:
+                -  Identities:
+                     - TestID|CI01
+                   InstanceValues:
+                     ClientName: PorMtaAABA
+                     DateOfBirth: 19/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069990
+                -  Identities:
+                     - TestID|CI02
+                   InstanceValues:
+                     ClientName: PorMtaAABA
+                     DateOfBirth: 19/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069996
+                -  Identities:
+                     - TestID|CI03
+                   InstanceValues:
+                     ClientName: PorMtaAABA
+                     DateOfBirth: 19/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069997
+                -  Identities:
+                     - TestID|CI04
+                   InstanceValues:
+                     ClientName: PorMtaAABA
+                     DateOfBirth: 19/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069998
+                -  Identities:
+                     - TestID|CI05
+                   InstanceValues:
+                     ClientName: PorMtaAABA
+                     DateOfBirth: 19/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069999
+                -  Identities:
+                     - TestID|CI06
+                   InstanceValues:
+                     ClientName: PorMtaAABB
+                     DateOfBirth: 15/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069953
+                -  Identities:
+                     - TestID|CI07
+                   InstanceValues:
+                     ClientName: PorMtaAABB
+                     DateOfBirth: 15/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069948
+                -  Identities:
+                     - TestID|CI08
+                   InstanceValues:
+                     ClientName: PorMtaAABB
+                     DateOfBirth: 15/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069956
+                -  Identities:
+                     - TestID|CI09
+                   InstanceValues:
+                     ClientName: PorMtaAABB
+                     DateOfBirth: 15/03/1983
+                     PostCode: RG4 5LP
+                     Password: Password123
+                     PolicyNumber: HE22757069954
+                -  Identities:
+                     - TestID|CI10
+                   InstanceValues:
+                     ClientName: PorMtaAABB
+                     DateOfBirth: 19/03/1983
+                     PostCode: WD17 2PJ
+                     Password: Password123
+                     PolicyNumber: HE22757070000
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: Register New User
+                  ~Role: >
+                    Validate new policy can be registered on the portal
+                  ~Type: Act
+                  ~Action: RegisterNewUser
+                  ~ControlData:
+                    NewRegistrationDetails:
+                      Email: ~(ClientName)@ageas.co.uk
+                      Password: ~(StandardPortalPassword)
+                      PolicyNumber: ~(PolicyNumber)
+                      DateOfBirth: ~(DateOfBirth)
+                      Postcode: ~(PostCode)
+                  ~Judgements:
+                    - RegistrationStatus==false|HardRunFault("Home policy is not registered")
+                  ~Unconditionals:

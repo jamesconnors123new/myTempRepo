@@ -1,0 +1,51 @@
+Results summary - Version 2021-08-03A
+Report EIS_STANDARD_CLIENT_BUILDER-InitiationActivities
+  Add quotes for customer build
+  Overall-outcome - CompletedClean
+  Operational events:
+    Overall-outcome - CompletedClean
+  No issues recorded in test instance
+  No issues recorded in controller
+Report EIS_STANDARD_CLIENT_BUILDER-2df42b54-dc31-4148-963e-ea85e99952fa
+  Add quotes for customer build
+  Overall-outcome - AbortedByHardFault
+  Operational events:
+    StartRun - TestID|EIS-AGEAS-HOME-001-01
+    *!HardFault!*|Stage 1 reported error, run halted
+    Overall-outcome - AbortedByHardFault
+  No issues recorded in test instance
+  No issues recorded in controller
+Report EIS_STANDARD_CLIENT_BUILDER-3b9979c2-385c-4369-b977-b8fffd29e7f5
+  Add quotes for customer build
+  Overall-outcome - AbortedByHardFault
+  Operational events:
+    StartRun - TestID|EIS-AGEAS-HOME-001-02
+    *!HardFault!*|Stage 1 reported error, run halted
+    Overall-outcome - AbortedByHardFault
+  No issues recorded in test instance
+  No issues recorded in controller
+Report EIS_COMPLEX_CLIENT_BUILDER-InitiationActivities
+  Add quotes for customer build
+  Overall-outcome - CompletedClean
+  Operational events:
+    Overall-outcome - CompletedClean
+  No issues recorded in test instance
+  No issues recorded in controller
+Report EIS_COMPLEX_CLIENT_BUILDER-fc5bba2e-7f16-45e6-b57a-f7e5bdbaeb98
+  Add quotes for customer build
+  Overall-outcome - AbortedByHardFault
+  Operational events:
+    StartRun - TestID|EIS-AGEAS-HOME-001-16
+    *!HardFault!*|Stage 1 reported error, run halted
+    Overall-outcome - AbortedByHardFault
+  No issues recorded in test instance
+  No issues recorded in controller
+Report EIS_COMPLEX_CLIENT_BUILDER-b35a2ab2-d79a-450b-8e66-dab9794114ab
+  Add quotes for customer build
+  Overall-outcome - AbortedByHardFault
+  Operational events:
+    StartRun - TestID|EIS-AGEAS-HOME-001-17
+    *!HardFault!*|Stage 1 reported error, run halted
+    Overall-outcome - AbortedByHardFault
+  No issues recorded in test instance
+  No issues recorded in controller

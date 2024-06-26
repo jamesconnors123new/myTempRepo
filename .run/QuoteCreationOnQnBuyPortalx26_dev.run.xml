@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="QuoteCreationOnQnBuyPortalx26_dev" type="Application" factoryName="Application" folderName="OperationTests">
+    <envs>
+      <env name="PortalLoginURL" value="http://homedev.ageascloud.co.uk/" />
+      <env name="StandardPortalPassword" value="Password123" />
+      <env name="ClientGroupId" value="AAA" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/OpertationTests/QuoteCreationOnQnBuyPortalx26.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

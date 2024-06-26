@@ -1,0 +1,72 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+  - ~Setting:
+      ~Src: Local
+      ~Id: PortalLoginRootURL
+      ~Val: https://azportaltestfd.brokerwebservice.co.uk/login
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-001
+      ~Headline: Change Marketing Permissions In Customer Portal
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-001
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: LoginToPortal
+                  ~Role: >
+                    Login To Customer Portal
+                  ~Type: Act
+                  ~Action: PortalLogin
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: housemarketingchange@ageas.co.uk
+                      Password: ~(DefaultPassword)
+                  ~Judgements:
+                    - UI.LoginSuccessful=FALSE|Fail(LoginUnsuccessful,"Login to customer portal was unsuccessful")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: ChangeMarketingPermissions
+                  ~Role: >
+                    Login To Customer Portal
+                  ~Type: Act
+                  ~Action: PortalChangeMarketing
+                  ~ControlData:
+                    CustomerCredentials:
+                  ~Judgements:
+                  ~Unconditionals:

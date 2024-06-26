@@ -1,0 +1,152 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientNumber: &SelectCustomerByPolicyNumber
+      PolicyNumber: ~(PolicyNumber)
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+
+~CommonInitActivities:
+
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: Retrieve Policy details
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-02
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-03
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-04
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-05
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-06
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-07
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-08
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-09
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+                - Identities:
+                    - TestID|EX-DB-0001-10
+                  InstanceValues:
+                    PolicyNumber: CV0000000001967
+      #                - Identities: #UAT
+      #                  - TestID|EX-DB-0001-02
+      #                  InstanceValues:
+      #                    PolicyNumber: CV0000000001496  #- > IC0000001972
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetPolicyDetailsEis
+                  ~Role: >
+                    Capture the policy details from EIS
+                  ~Type: Act
+                  ~Action: GetPolicyDetailsEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SearchCriteria: *SelectCustomerByPolicyNumber
+                  ~Judgements:
+                  ~Unconditionals:

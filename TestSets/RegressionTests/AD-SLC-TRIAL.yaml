@@ -1,0 +1,212 @@
+
+
+
+~Templates:
+  CustomerPortalCredentials: &CustomerPortalCredentialsA
+    Email: ~(PortalUserNameVal)
+    Password: abc
+
+  AddBuildingsAccidentalDamage: &AddBuildingsAccidentalDamage
+    AddBuilding:
+      AccidentalDamage: true
+
+~ConcretePatterns:
+  ConcretePatternForMTA01: &ConcretePatternForMTA01
+    ~Stages:
+      - ~Stage: # 002 Retrieve policy details from portal before MTA and verify that they match the policy admin systems state for today
+          ~Activities:
+            - ~Activity:
+                ~Label: GetPolicyDetailsPortalBeforeMTA
+                ~Role: >
+                  Capture policy details from portal before MTA
+                ~Type: Act
+                ~Action: GetPolicyInformationPortal
+                ~ControlData:
+                   CustomerCredentials: *CustomerPortalCredentialsA
+                   ~Ref(MtaToChange): ~(InstanceMTASpec)
+~GlobalSettings:
+  - ~Setting: #Echelon Login Url
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Portal Login Url
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting: #Standard Portal Password
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+~CommonInitActivities:
+  - ~Activity: #Load the pre-prepared Policy Data Files
+      ~Label: LoadPolicyStandardDataFiles
+      ~Role: >
+        Load pre-prepared Policy Data Files to allow MTA execution
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        RecSet: PortalStandardMtaPolicies
+        Sources:
+          - Data/Portal_Home_Policies_Standard_Data(000).yml
+  - ~Activity: #Load the pre-prepared Policy Data Files
+      ~Label: LoadPolicyComplexDataFiles
+      ~Role: >
+        Load pre-prepared Policy Data Files to allow MTA execution
+      ~Type: Act
+      ~Action: LoadRecSet
+      ~ControlData:
+        RecSet: PortalComplexMtaPolicies
+        Sources:
+          - Data/Portal_Home_Policies_Complex_Data(000).yml
+
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId A01-002-Add-Buildings-Accidental-Damage
+      ~Headline: Add Buildings Accidental Damage
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                ExpectedChange:
+                  - '[ChangeDelta, position: 18, lines: [  Buildings: {BuildingAccidentalDamageCover:
+                                    false, Extension: false, IntruderAlarm: BasicDiyAlarm,] to [  Buildings: {BuildingAccidentalDamageCover:
+                                    true, Extension: false, IntruderAlarm: BasicDiyAlarm,]]'
+              Instances:
+                - Identities:
+                    - TestID|-001-Today
+                  InstanceValues:
+                    InstanceMTASpec: *AddBuildingsAccidentalDamage
+                    PortalUserNameVal: *AddBuildingsAccidentalDamage
+#                - Identities:
+#                    - TestID|-002-Future
+#                  InstanceValues:
+#                    MtaPatternControlSet:
+#                      FutureDateTheMta: true
+#                    InstanceMTASpec: *AddBuildingsAccidentalDamage
+#                    ~Ref(PolicyNumberVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[3].Data.PolicyNumber
+#                    ~Ref(PortalUserNameVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[3].Data.Email
+      <<: *ConcretePatternForMTA01
+
+  #   A01-003 Changes Policy Holder Details Title
+  #   Instance -001 MTA TODAY
+  #   Instance -002 MTA FUTURE
+  #   Uses standard data file
+  #
+#  - ~TestCase:
+#      ~CaseId: &caseId A01-003-ChangeToPolicyHolderDetails
+#      ~Headline: Home MTA Change Policy Holder Details
+#      ~InitiationActivities:
+#        - ~Activity:
+#            ~Role: >
+#              Initiate cases
+#            ~Type: Act
+#            ~Action: InitiateList
+#            ~ControlData:
+#              Common:
+#                # Define the default pattern characteristics for instances of this test cas
+#                #~Ref(PolicyNumber): PolicyNumberValue
+#                #~Ref(ActualNameToUse): ActualName
+#                MtaPatternControlSet:
+#                  <<: *MtaPatternControlSet01
+#                  MtaChanges:
+#                    Home:
+#                      PolicyHolderDetails: true
+#                      RiskAddress: false
+#                      CoverDetails: false
+#              Instances:
+#                - Identities:
+#                    - TestID|-001-Today
+#                  InstanceValues:
+#                    MtaPatternControlSet:
+#                      FutureDateTheMta: false
+#                    InstanceMTASpec: *ChangePolicyHolderTitle
+#                    ~Ref(PolicyNumberVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[4].Data.PolicyNumber
+#                    ~Ref(PortalUserNameVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[4].Data.Email
+#                    ActualNameVal: //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[4].Data.Name
+#                    ActualName: ~(PolicyNumberVal)
+##                    ExpectedChange:
+##                     - '[ChangeDelta, position: 11, lines: [  Name: Mr ~(ActualNameVal) ] to [  Name:
+##                      Mx ~(ActualNameVal) ]]'
+##                - Identities:
+##                    - TestID|-002-FUTURE
+##                  InstanceValues:
+##                    MtaPatternControlSet:
+##                      FutureDateTheMta: true
+##                    InstanceMTASpec: *ChangePolicyHolderTitle
+##                    ~Ref(PolicyNumberVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[5].Data.PolicyNumber
+##                    ~Ref(PortalUserNameVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[5].Data.Email
+##                    ~Ref(ActualNameVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[5].Data.Name
+##                    ExpectedChange:
+##                     - '[ChangeDelta, position: 11, lines: [  Name: Mr ~(ActualNameVal) ] to [  Name:
+##                      Mx ~(ActualNameVal) ]]'
+#      <<: *ConcretePatternForMTA01
+
+#   A01-004 Adds Opex - Home Emergency
+#   Instance -001 MTA TODAY
+#   Instance -002 MTA FUTURE
+#   Uses standard data file
+#   Validated 09/04
+#  - ~TestCase:
+#      ~CaseId: &caseId A01-004-Add-Opex
+#      ~Headline: Home MTA Add Opex
+#      ~InitiationActivities:
+#        - ~Activity:
+#            ~Role: >
+#              Initiate cases
+#            ~Type: Act
+#            ~Action: InitiateList
+#            ~ControlData:
+#              Common:
+#                # Define the default pattern characteristics for instances of this test cas
+#                #~Ref(PolicyNumber): PolicyNumberValue
+#                MtaPatternControlSet:
+#                  <<: *MtaPatternControlSet01
+#                  MtaChanges:
+#                    Home:
+#                      PolicyHolderDetails: false
+#                      RiskAddress: false
+#                      CoverDetails: true
+#                  RequiredEnhancedCover:
+#                    MustHaveExcessProtection: false
+#                    MustNotHaveExcessProtection: false
+#                    MustHaveLegal: false
+#                    MustNotHaveLegal: true
+#                    MustHaveEmergency: false
+#                    MustNotHaveEmergency: true
+#                ExpectedChange:
+#                  - '[ChangeDelta, position: 14, lines: [EnhanceCoverDetails: {AgeasExtraHomeEmergency:
+#                  false, ExcessProtection: false, HomeExcessProtectionSubsidence: false,] to [EnhanceCoverDetails:
+#                  {AgeasExtraHomeEmergency: true, ExcessProtection: false, HomeExcessProtectionSubsidence:
+#                  false,]]'
+#                # Define the specification of the default MTA to be performed for this test case
+#
+#              Instances:
+#                - Identities:
+#                    - TestID|AddToday
+#                  InstanceValues:
+#                    MtaPatternControlSet:
+#                      FutureDateTheMta: false
+#                    ~Ref(PolicyNumberVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[6].Data.PolicyNumber
+#                    ~Ref(PortalUserNameVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[6].Data.Email
+#                    InstanceMTASpec: *AddHomeEmergencyProtection
+##                - Identities:
+##                    - TestID|Future
+##                  InstanceValues:
+##                    MtaPatternControlSet:
+##                      FutureDateTheMta: true
+##                    ~Ref(PolicyNumberVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[7].Data.PolicyNumber
+##                    ~Ref(PortalUserNameVal): //000/LoadPolicyStandardDataFiles.PortalStandardMtaPolicies[7].Data.Email
+##                    InstanceMTASpec: *AddHomeEmergencyProtection
+#      <<: *ConcretePatternForMTA01
+

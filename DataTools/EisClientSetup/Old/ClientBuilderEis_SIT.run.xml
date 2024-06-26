@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ClientBuilderEisUi_SIT" type="Application" factoryName="Application" folderName="DataTools">
+    <envs>
+      <env name="ClientGroupId" value="AAA" />
+      <env name="EISLoginURL" value="https://cssr-app-agea-sit.dev.az05.agea.cloud/login" />
+      <env name="StandardEisPassword" value="qa" />
+      <env name="StandardEisUserName" value="qa" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./DataTools/EisClientSetup/ClientBuilderEis.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

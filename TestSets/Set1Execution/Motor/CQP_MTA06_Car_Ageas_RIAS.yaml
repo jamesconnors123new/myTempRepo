@@ -1,0 +1,644 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName: &SelectCustomerByClientName
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &AdditionalDriver01
+      DriverType: Frequent
+      RelationshipToProposer: Spouse
+      Title: Mr
+      FirstName: Philip
+      LastName: Testzxz
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-15000|dd/MM/yyyy
+      Gender: Male
+      MaritalStatus: Married
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Accountant
+        Industry: Accountancy
+      SecondaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Bakery
+      Licence:
+        Type: Full UK Car Licence
+        ~Gen(LicenceValidSince): DateRelToTodayAsStr|-7000|dd/MM/yyyy
+        AccessToOtherVehicles: Own another car
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Eis-Motor-MTA06-Standard-Data
+        Exports:
+          - TestCases:
+              - EIS_MOTOR_POLICIES_MTA06
+            DataItems:
+              - //002/QuoteCreationInEis.EisClientDetails
+              - //002/PolicyCreationOnEis.PolicyDetails
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EIS_MOTOR_POLICIES_MTA06
+      ~Headline: QuoteCreationInEisUi
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                LastnameVal: Testzxz
+              Instances:
+                - Identities:
+                    - TestID|MTA06_TC002
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000345
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    SalesChannel: Direct web
+                    Affinity: AMDW
+                    CoverType: Comprehensive
+                    MarketValue: 7200
+                    AdditionalDriverStatus: false
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BC
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: Kilbarchan Road
+                    CorrespondencePostcode: PA10 2AB
+                    RiskPostcode: PA10 2AB
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12700|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-1371|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-1500|dd/MM/yyyy
+                    Scheme: Standard
+                    PreviousNCDApplied: false
+                    ClaimYears: 5
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: LV10VDE
+                    PaymentType: Annually
+                    AnnualMileage: 2122
+                    BusinessMileage: 1800
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06_TC005
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000286
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    SalesChannel: Direct web
+                    Affinity: RMDW
+                    CoverType: Comprehensive
+                    MarketValue: 7400
+                    AdditionalDriverStatus: false
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)CE
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: Apple Farm Close
+                    CorrespondencePostcode: CB7 5PN
+                    RiskPostcode: CB7 5PN
+                    PreviousNCDApplied: false
+                    ClaimYears: 7
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-18100|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12300|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-2365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6507|dd/MM/yyyy
+                    Scheme: Standard
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: CE12BWO
+                    PaymentType: Annually
+                    AnnualMileage: 7659
+                    BusinessMileage: 6000
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06_TC008
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000286
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    SalesChannel: Direct web
+                    Affinity: RMDW
+                    CoverType: Comprehensive
+                    MarketValue: 3500
+                    AdditionalDriverStatus: false
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)CI
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: Apple Farm Close
+                    CorrespondencePostcode: CB7 5PN
+                    RiskPostcode: CB7 5PN
+                    PreviousNCDApplied: false
+                    ClaimYears: 9
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-18100|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12300|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-2365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6507|dd/MM/yyyy
+                    Scheme: Standard
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: CE12BWO
+                    PaymentType: Annually
+                    AnnualMileage: 9999
+                    BusinessMileage: 1600
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06_TC009
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000345
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    SalesChannel: Direct web
+                    Affinity: AMDW
+                    CoverType: Comprehensive
+                    MarketValue: 4600
+                    AdditionalDriverStatus: false
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BD
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 5
+                    CorrespondencePostcode: HU5 2NS
+                    RiskPostcode: HU5 2NS
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15400|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2091|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-605|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-2200|dd/MM/yyyy
+                    Scheme: Standard
+                    PreviousNCDApplied: false
+                    ClaimYears: 8
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: DG61LXE
+                    PaymentType: Annually
+                    AnnualMileage: 2222
+                    BusinessMileage: 1900
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06_TC010 # 1 additional driver
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000286
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    SalesChannel: Direct web
+                    Affinity: AMDW
+                    CoverType: Comprehensive
+                    MarketValue: 5100
+                    AdditionalDriverStatus: true
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BL
+                    MaritalStatus: Married
+                    Gender: Male
+                    CorrespondenceHouseIdentifier: Elms Road
+                    CorrespondencePostcode: RG41 1AG
+                    RiskPostcode: RG40 2AB
+                    PreviousNCDApplied: false
+                    ClaimYears: 7
+                    DocumentDeliveryMethod: Download
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-18900|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-8500|dd/MM/yyyy
+                    Scheme: Standard
+                    DrivingRestrictions: Insured And Spouse
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: DG61LXE
+                    PaymentType: Annually
+                    AnnualMileage: 7100
+                    BusinessMileage: 500
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06-TC013
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000345
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    SalesChannel: Direct web
+                    Affinity: AMDW
+                    CoverType: Comprehensive
+                    MarketValue: 6120
+                    AdditionalDriverStatus: false
+                    Title: Lord
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)PC
+                    MaritalStatus: Married
+                    Gender: NotSpecified
+                    CorrespondenceHouseIdentifier: Elms Road
+                    CorrespondencePostcode: EH3 6EN
+                    RiskPostcode: EH3 6EN
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-19700|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-16371|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1265|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-10030|dd/MM/yyyy
+                    Scheme: Standard
+                    PreviousNCDApplied: true
+                    ClaimYears: 10
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: CE12BWO
+                    PaymentType: Annually
+                    AnnualMileage: 2122
+                    BusinessMileage: 1500
+                    Usage: SDP including commuting
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 1
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06-TC015 #risk postcode
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000345
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    SalesChannel: Direct web
+                    Affinity: RMDW
+                    CoverType: Comprehensive
+                    MarketValue: 4870
+                    AdditionalDriverStatus: false
+                    Title: Reverend
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)PD
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: Pine Oak Avenue
+                    CorrespondencePostcode: PA10 2AB
+                    RiskPostcode: TR18 3JD
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-19700|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-5371|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-6990|dd/MM/yyyy
+                    Scheme: Standard
+                    PreviousNCDApplied: false
+                    ClaimYears: 8
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: CE12BWO
+                    PaymentType: Annually
+                    AnnualMileage: 3122
+                    BusinessMileage: 2700
+                    Usage: SDP including commuting
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 14353
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06-TC016
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000345
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    SalesChannel: Direct web
+                    Affinity: AMDW
+                    CoverType: Comprehensive
+                    MarketValue: 4590
+                    AdditionalDriverStatus: false
+                    Title: Mr
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)PE
+                    MaritalStatus: Divorced
+                    Gender: NotSpecified
+                    CorrespondenceHouseIdentifier: Bridge
+                    CorrespondencePostcode: PO33 4JX
+                    RiskPostcode: PO33 4JX
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12700|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11371|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-3500|dd/MM/yyyy
+                    Scheme: Standard
+                    PreviousNCDApplied: false
+                    ClaimYears: 10
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: DG61LXE
+                    PaymentType: Annually
+                    AnnualMileage: 2022
+                    BusinessMileage: 1700
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+                - Identities:
+                    - TestID|MTA06-TC017
+                  InstanceValues:
+                    #ClientNumberValue: IC0000000345
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    SalesChannel: Direct web
+                    Affinity: RMDW
+                    CoverType: Comprehensive
+                    MarketValue: 3600
+                    AdditionalDriverStatus: false
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)PF
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: Bridge
+                    CorrespondencePostcode: PO33 4JX
+                    RiskPostcode: PA10 2AB
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-20700|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-11371|dd/MM/yyyy
+                    ~Gen(CarPurchaseDate): DateRelToTodayAsStr|-1365|dd/MM/yyyy
+                    ~Gen(LicenceValidSince): DateRelToTodayAsStr|-11100|dd/MM/yyyy
+                    Scheme: Standard
+                    PreviousNCDApplied: false
+                    ClaimYears: 7
+                    DrivingRestrictions: Insured Only
+                    PreviousInsuranceStatus: true
+                    VehicleRegistrationNumber: CE12BWO
+                    PaymentType: Annually
+                    AnnualMileage: 2981
+                    BusinessMileage: 1890
+                    Usage: SDP including commuting
+                    PaymentMethod: CreditCard
+                    ClaimHistoryAvailable: false
+                    ConvictionHistoryAvailable: false
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateClientOnEis
+                  ~Role: Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: ~(CustomerBrand)
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: SearchMotorForAGivenVRN
+                  ~Role: >
+                    Search Vehicle details for a given VRN on EIS UI
+                  ~Type: Act
+                  ~Action: SearchMotorForAGivenVRN
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      ProductType: Motor
+                      RegistrationNumber: ~(VehicleRegistrationNumber)
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new quote on EIS UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    #                    SearchCriteria: *SelectCustomerByClientNumber
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      QuotesDetails:
+                        Enquiry: Direct
+                        SalesChannel: ~(SalesChannel)
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Motor
+                      InsuranceDetails:
+                        Product: Private car
+                        LineOfBusiness: Personal Lines
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|7|dd/MM/yyyy
+                        Scheme: ~(Scheme)
+                        CoverType: ~(CoverType)
+                        DrivingRestrictions: ~(DrivingRestrictions)
+                        NCDFlag: false
+                        ConcernFlag: false
+                        InsuranceHistory:
+                          PreviousInsuranceDetails:
+                            PreviousInsurance: ~(PreviousInsuranceStatus)
+                            DrivingExperienceInProposerName: true
+                            PreviousExperienceDetails:
+                              ClaimFreeYears: ~(ClaimYears)
+                              ExperienceType: Company car with SPD
+                            NCDDetails:
+                              NCDAppliedToAnyOtherVehicle: ~(PreviousNCDApplied)
+                              ~Gen(PreviousPolicyExpiryDate): DateRelToTodayAsStr|-1|dd/MM/yyyy
+                              InsuranceType: Private car
+                              NCDClaimYears: ~(ClaimYears)
+                              ProtectNCD: true
+                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                      Vehicle:
+                        RegistrationNumber: ~(VehicleRegistrationNumber)
+                        VehicleDetails: ~(//002/SearchMotorForAGivenVRN.EisVehicleDetails)
+                        MarketValue: ~(MarketValue)
+                        NumberOfSeats: 5
+                        NumberOfDoors: 5
+                        VehicleFeatures:
+                          Alarm: Factory Fitted
+                          Immobiliser: Unknown Electromechanical or Electronic Immobiliser
+                          Tracker: Tracker
+                          Dashcam: Front
+                          LeftHandDrive: false
+                          VehicleImported: false
+                          CarModificationDetails:
+                            modification: false
+                            modificationDetails: Adapted For Disability, Air Filter
+                        VehicleUse:
+                          MainUsage: ~(Usage)
+                          AnnualMileage: ~(AnnualMileage)
+                          BusinessMileage: ~(BusinessMileage)
+                          CarPurchaseDate: ~(CarPurchaseDate)
+                        ParkingDetails:
+                          ParkingDuringDay: Office/Factory car park
+                          ParkingDuringNight: Roadside
+                          OvernightLocation: Shed
+                          Postcode: ~(RiskPostcode)
+                      Licence:
+                        Type: Full UK Car Licence
+                        LicenceValidSince: ~(LicenceValidSince)
+                        Number: HIETT708127PJ8LA
+                      RegisteredOwner:
+                        Owner: Proposer/Policyholder
+                        RegisteredOwnerDetails:
+                          ProposerRegisteredKeeper: true
+                          RegisteredKeeper: Parent
+                      ProposerPersonalDetails:
+                        UkResidentSince: ~(UkResidentSince)
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employed
+                          Type: Accountant
+                          Industry: Accountancy
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                          Category: Employed
+                          Type: Bakery Assistant
+                          Industry: Bakery
+                      DynamicUnderwriterQuestions:
+                        IamMember: false
+                        AdditionalCars: 1
+                        VehicleUseByProposer: Main
+                        PaymentType: ~(PaymentType)
+                        HomeOwner: true
+                        AffordabilityThresholdReached: false
+                        UWOnlyPremiumFinance: false
+                        AccessToOtherVehicles: Named driver on a car not owned by the driver
+                        PreviousInsuranceRefused: false
+                        nonRTAConvictions: false
+                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      ConvictionHistoryAvailable: ~(ConvictionHistoryAvailable)
+                      ~Ref(ConvictionHistory): InstanceConvictionHistory
+                      AdditionalDriverDetails: ~(AdditionalDriverStatus)
+                      AdditionalDriver:
+                        - *AdditionalDriver01
+                      Excess:
+                        VoluntaryExcess: 100
+                      #                       AccidentalDamage: 100
+                      ConsentToRenew: true
+                      ~Ref(OptionalExtras): InstanceOptionalExtras
+                  ~Judgements:
+                    - EisClientDetails.Declines=TRUE|HardRunFault("Quote was declined, cannot create policy")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: AddCCForExistingClient
+                  ~Role: >
+                    Adding Credit Card for existing customer
+                  ~Type: Act
+                  ~Action: AddCCForExistingClient
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    PaymentData:
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a policy with given payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                    QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

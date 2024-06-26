@@ -1,0 +1,52 @@
+~Templates:
+
+  CredentialsSets:
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(StandardPortalUserName)
+      Password: ~(StandardPortalPassword)
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalUserName
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-00001
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: Initiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-CP-00001
+              InstanceValues:
+                PolicyNumber: GDCCA07045266
+
+
+      ~Stages:
+        - ~Stage: # Check MTA that we want to do are enabled on the policy that is being targeted
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetCarPolicyDetailsPortal
+                  ~Role: >
+                    Capture the policy details from Portal before the MTA
+                  ~Type: Act
+                  ~Action: GetCarPolicyDetailsPortal
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: GDCCA07045266@ageas.co.uk
+                      Password: ~(StandardPortalPassword)
+                    SearchCriteria: &SearchCriteria
+                      PolicyNumber: ~(PolicyNumber)
+                  ~Judgements:
+                  ~Unconditionals:

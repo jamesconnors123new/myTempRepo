@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AgeasMotorQuoteCreationEchelon" type="Application" factoryName="Application" folderName="OperationTests">
+    <envs>
+      <env name="AreaOfTesting" value="Por" />
+      <env name="ClientGroupId" value="AAN" />
+      <env name="EchelonLoginURL" value="https://injector-uat.ageas.co.uk/strata/ageas/motor/login" />
+      <env name="LogicalPattern" value="Mta" />
+      <env name="PortalLoginURL" value="https://portaltest.ageascloud.co.uk/login" />
+      <env name="StandardEchelonUserName" value="a50_robot01_uat" />
+      <env name="StandardEchelonUserPassword" value="Password@123" />
+      <env name="StandardPortalPassword" value="Password123" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/OpertationTests/AgeasMotorQuoteCreationEchelon.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

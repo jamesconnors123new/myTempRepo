@@ -1,0 +1,101 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+  - ~Setting:
+      ~Src: Local
+      ~Id: localPostcode
+      ~Val: BH242FD
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-002
+      ~Headline: Register Policy - Already Registered
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-002
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckPolicyExists
+                  ~Role: >
+                    Prior to checking policy has not been digitally claimed, search policy exists and the returned customer details match Control Data
+                  ~Type: Act
+                  ~Action: GetPolicyInformation
+                  ~ControlData:
+                    CustomerCredentials: &creds
+                      CustomerIdentifier: "7100855"
+                      PolicyIdentifier: GDCCA06498363
+                      Email: bstofportalreg46@ageas.co.uk
+                      Postcode: NN4 8TQ
+                      Dob: 1948/06/07
+                      Password: ~(DefaultPassword)
+                      Address:
+                        3, FIVE ACRES FOLD,
+                        NORTHAMPTON
+                  ~Judgements:
+                    - strEq(PolicyAdmin.Customer.Postcode,"~(_ControlData.CustomerCredentials.Postcode)")=FALSE|HardRunFault("Postcode returned ~(PolicyAdmin.Customer.Postcode) but expected ~(_ControlData.CustomerCredentials.Postcode)")
+                    - strEq(PolicyAdmin.Customer.Dob,"~(_ControlData.CustomerCredentials.Dob)")=FALSE|HardRunFault("Dob returned ~(PolicyAdmin.Customer.Dob) but expected ~(_ControlData.CustomerCredentials.Dob)")
+                    - strEq(PolicyAdmin.Customer.CustomerIdentifier,"~(_ControlData.CustomerCredentials.CustomerIdentifier)")=FALSE|HardRunFault("CustomerIdentifier returned ~(PolicyAdmin.Customer.CustomerIdentifier) but expected ~(_ControlData.CustomerCredentials.CustomerIdentifier)")
+                    - strEq(PolicyAdmin.Customer.Address,"~(_ControlData.CustomerCredentials.Address)")=FALSE|HardRunFault("Address returned ~(PolicyAdmin.Customer.Address) but expected ~(_ControlData.CustomerCredentials.Address)")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: CheckAlreadyRegistered
+                  ~Role: >
+                    Prior to enacting registration attempt, check this customer already registered
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData:
+                    CustomerCredentials: *creds
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|Fail(CRMRecordNotMatched,"Customer record did not match the CRM")
+                    - strEq(CRM.Customer.Email,"~(_ControlData.CustomerCredentials.Email)")=FALSE|Fail(CRMEmailNoMatch,"CRM Email returned ~(CRM.Customer.Email) but expected '~(_ControlData.CustomerCredentials.Email)")
+                    - strEq(CRM.Customer.Dob,"~(_ControlData.CustomerCredentials.Dob)")=FALSE|Fail(CRMDobNoMatch,"CRM DOB returned ~(CRM.Customer.Dob) but expected '~(_ControlData.CustomerCredentials.Dob)")
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal
+                  ~Type: Act
+                  ~Action: PortalRegisterPolicy
+                  ~ControlData:
+                    CustomerCredentials: *creds
+                  ~Judgements:
+                    - UI.PortalRegistration.Registered=TRUE|Fail(SuccessIndicatorMissing,"Registration Successful indicator found on the UI")
+                    - UI.PortalRegistration.AlreadyRegistered=FALSE|Fail(AlreadyRegisteredIndicatorFound,"Already registered indicator NOT found on the UI")
+                    - UI.PortalRegistration.InvalidPolicyRecord=TRUE|Fail(InvalidPolicyIndicatorFound,"Invalid Policy Ref indicator found on the UI")
+                    - UI.PortalRegistration.InvalidDob=TRUE|Fail(InvalidDobIndicatorFound,"Invalid Dob indicator found on the UI")
+                    - UI.PortalRegistration.InvalidPostcode=TRUE|Fail(InvalidPostcodeIndicatorFound,"Invalid Postcode indicator found on the UI")
+                  ~Unconditionals:

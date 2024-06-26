@@ -1,0 +1,122 @@
+~Templates:
+  CustomerSelectionCriteria:
+    ByPolicyNumber: &SelectCustomerByPolicyNumber
+      PolicyNumber: ~(PolicyNumber)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonPassword)
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(StandardPortalUserName)
+      Password: ~(StandardPortalPassword)
+
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+~CommonInitActivities:
+
+
+~CommonFinalActivities:
+
+  # For each Test Case (so each Data Pattern) export
+  # the consolidated data from all activities
+
+  - ~Activity:
+      ~Label: ExportConsolidatedData
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+#          Filename: RunId(~(RunIdNew))_~(Team)_EisUi_Home_ConsolidatedData_AHCC_01
+          Filename: ConsolidatedData_01
+        Exports:
+          - TestCases:
+              - EXCP0009
+#              - DataBuild_EisUi_Home_ExistingClient_QuoteThenIssue_AHCC_01
+            DataItems:
+              - //001/GetCustomerDetailsSourceBeforeMTA
+
+~TestCases:
+  - ~TestCase:
+#      ~CaseId: &caseId EX_CP_0009
+      ~CaseId: &caseId EXCP0009
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Instances:
+#                - Identities:
+#                    - TestID|GetPolicyDetailsEchelonUI01
+#                  InstanceValues:
+#                    PolicyNumber: HE22757069924
+                - Identities:
+                    - TestID|GetPolicyDetailsEchelonUI02
+                  InstanceValues:
+                    PolicyNumber: HE22757084245   # James 17/06/2024 Complex
+#                    PolicyNumber: HE22757081767
+#                    PolicyNumber: HE22757084225   # James 14/06/2024 Standard
+#                    PolicyNumber: HE22757084228   # James 14/06/2024 Complex
+
+      ~Stages:
+        - ~Stage: # Check MTA that we want to do are enabled on the policy that is being targeted
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetCustomerDetailsSourceBeforeMTA
+                  ~Role: >
+                    Capture the policy details from Echelon before the MTA
+                  ~Type: Act
+                  ~Action: GetPolicyDetailsEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria: *SelectCustomerByPolicyNumber
+                  ~Judgements:
+                  ~Unconditionals:
+#        - ~Stage: # Check MTA that we want to do are enabled on the policy that is being targeted
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: GetCustomerDetailsPortalBeforeMTA
+#                  ~Role: >
+#                    Capture the policy details from Echelon before the MTA
+#                  ~Type: Act
+#                  ~Action: GetPolicyInformationPortal
+#                  ~ControlData:
+#                    CustomerCredentials:
+#                      Email: ~(PolicyNumber)@ageas.co.uk
+#                      Password: ~(StandardPortalPassword)
+#                    SearchCriteria:
+#                      PolicyNumber: ~(PolicyNumber)
+#                  ~Judgements:
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: ComparePolicyInfoOfPortalAndSourceSystem
+#                  ~Role: >
+#                    Comparing the policy details fetch from Portal and Source(Echelon/EIS)
+#                  ~Type: Act
+#                  ~Action: CompareData
+#                  ~ControlData:
+#                    InputA: //002/GetCustomerDetailsPortalBeforeMTA.CustomerPolicyDetailOnPortal.NormalizedData.HomeInsurance[0].UniversalView #Sending Map to compare
+#                    InputB: //001/GetCustomerDetailsSourceBeforeMTA.CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView #Sending Map to compare
+#                  ~Judgements:
+#                    - //002/ComparePolicyInfoOfPortalAndSourceSystem.NumDiffs!=0|Fail(UnexpectedPolicyDifference, "Before MTA - Difference in Customer data reported by Echleon and Portal")
+#                  ~Unconditionals:

@@ -1,0 +1,496 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: EIS-HOME-CANRIN09-Policies-Data
+        Exports:
+          - TestCases:
+              - EIS_HOME_POLICIES_CANRIN09
+            DataItems:
+              - //002/QuoteCreationInEis.EisClientDetails
+              - //002/PolicyCreationOnEis.PolicyDetails
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EIS_HOME_POLICIES_CANRIN09
+      ~Headline: Add Ageas customer home quotes and policies with Direct Debit payment for MTA General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                LastnameVal: Testzxz
+              Instances:
+                - Identities:
+                    - TestID|CANRIN09_TC001
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)IJ
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 4
+                    CorrespondencePostcode: WS5 3AT
+                    RiskAddressHouseIdentifier: 4
+                    RiskPostcode: WS5 3AT
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-12225|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-12225|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: OwnedOutright
+                    BuildingType: House
+                    StructureType: Detached House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                    PaymentType: Annual
+                - Identities:
+                    - TestID|CANRIN09_013
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)IK
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 34
+                    CorrespondencePostcode: IG1 2AA
+                    RiskAddressHouseIdentifier: 34
+                    RiskPostcode: IG1 2AA
+                    BuildingsCover: true
+                    ContentsCover: true
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15480|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-9973|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Park Home
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: DirectDebit
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                      AccountNumber: 24782346
+                      SortCode: 774814
+                      PreferredPaymentDate: 16
+                    PaymentType: Monthly
+                    InstanceOptionalExtras: HOMPROT
+                - Identities:
+                    - TestID|CANRIN09_TC003
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    Title: Miss
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)IL
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 18
+                    CorrespondencePostcode: B74 2RE
+                    RiskAddressHouseIdentifier: 18
+                    RiskPostcode: B74 2RE
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14276|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-9700|dd/MM/yyyy
+                    JointPolicyHolderStatus: false
+                    PropertyOwned: Council
+                    BuildingType: House
+                    StructureType: End Terraced House
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: true
+                    InstanceSpecifiedItems:
+                      InHome:
+                         - Item: Valuables
+                           Description: Phone and Watches
+                           Value: 3000
+                         - Item: Items At University/College
+                           Description: Books
+                           Value: 150
+                         - Item: Pictures
+                           Description: Portraits
+                           Value: 1000
+                         - Item: Precious Metals
+                           Description: Gold Bar
+                           Value: 2000
+                         - Item: Specified Contents
+                           Description: PC and other electronics
+                           Value: 5000
+                      AwayHome:
+                        - Item: Camcorders
+                          Description: Camcorders
+                          Value: 300
+                        - Item: Car Audio Equipment
+                          Description: Car Audio Equipment
+                          Value: 200
+                        - Item: Computer Equipment
+                          Description: Computer Equipment
+                          Value: 1200
+                        - Item: Contact Lenses
+                          Description: Contact Lenses
+                          Value: 250
+                        - Item: Electrical Goods
+                          Description: Electrical Goods
+                          Value: 1300
+                        - Item: Furs
+                          Description: Furs
+                          Value: 300
+                        - Item: Golfing Equipment
+                          Description: Golf Stick
+                          Value: 2100
+                        - Item: Guns
+                          Description: Guns
+                          Value: 3000
+                        - Item: Hifi / TV and Video Equipment
+                          Description: Netflix
+                          Value: 350
+                        - Item: High Risk Sports Equipment
+                          Description: High Ball
+                          Value: 600
+                        - Item: Jewellery/Watches
+                          Description: Jewellery/Watches
+                          Value: 500
+                        - Item: Miscellaneous Valuables
+                          Description: Miscellaneous Valuables
+                          Value: 300
+                        - Item: Mobile Phone(s)
+                          Description: Mobile Phone(s)
+                          Value: 2300
+                        - Item: Money and Credit Cards
+                          Description: Money and CreditCards
+                          Value: 3000
+                        - Item: Musical Instruments (for Amateur use)
+                          Description: Musical Saxaphone
+                          Value: 390
+                        - Item: Pedal Cycles
+                          Description: Kids Cycles
+                          Value: 300
+                        - Item: Porcelain
+                          Description: Furs
+                          Value: 300
+                        - Item: Portable Medical Equipment
+                          Description: Portable Medical Equipment
+                          Value: 200
+                        - Item: Precious Metals
+                          Description: Precious Metals
+                          Value: 400
+                        - Item: Bicycle
+                          Description: Mount Bicycle
+                          Value: 2300
+                    PaymentMethod: Cheque
+                    InstancePaymentData:
+                      ChequeNumber: 38225
+                    PaymentType: Annual
+                    InstanceOptionalExtras: AHHLEGAL, ADHXSPS
+                - Identities:
+                    - TestID|CANRIN09_014
+                  InstanceValues:
+                    CustomerBrand: Rias
+                    PolicyBrand: Rias
+                    Affinity: RHCC
+                    Title: Ms
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)IM
+                    MaritalStatus: Divorced
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 4
+                    CorrespondencePostcode: IV24 3AH
+                    RiskAddressHouseIdentifier: 76
+                    RiskPostcode: IV24 3AH
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-15480|dd/MM/yyyy
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-9973|dd/MM/yyyy
+                    JointPolicyHolderStatus: true
+                    PropertyOwned: Owned
+                    BuildingType: Self contained flat
+                    StructureType: NotRequired
+                    ClaimHistoryAvailable: true
+                    InstanceClaimHistory:
+                      - IncidentSource: Customer
+                        IncidentDate: 08/11/2023
+                        Status: Open
+                        ClaimType: Buildings & Contents
+                        Cause: Flood
+                        Cost: 679
+                        ClaimNumber: 123
+                    SpecifiedItemsAvailable: false
+                    PaymentMethod: CreditCard
+                    PaymentType: Annual
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateClientOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: ~(CustomerBrand)
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationInEis
+                  ~Role: >
+                    Create a new home quote for Ageas on EIS
+                  ~Type: Act
+                  ~Action: QuoteCreationInEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateClientOnEis.EisClientDetails.ClientNumber)
+                    SalesDetails:
+                      QuotesDetails:
+                        Affinity: ~(Affinity)
+                        Brand: ~(PolicyBrand)
+                        ProductType: Home
+                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+                      ~Ref(ClaimHistory): InstanceClaimHistory
+                      InsuranceDetails:
+                        TypeOfHouseHoldCover:
+                          Buildings: ~(BuildingsCover)
+                          Contents: ~(ContentsCover)
+                          BuildingAccidentalDamage: false
+                          ContentAccidentalDamage: false
+                          ~Ref(OptionalExtras): InstanceOptionalExtras
+                        InsuredAmount:
+                          BuildingVoluntaryExcess: 100
+                          ContentVoluntaryExcess: 100
+                          RebuildingCost: 100000
+                          ContentSum: 70000
+                        InsuranceHistory:
+                          ContentClaimFreeYears: 0
+                          BuildingClaimFreeYears: 0
+                          InsurancePreviouslyRefused: false
+                          PreviousInsurance: false
+                        ContentDetails:
+                          Safe: true
+                          SpecifiedItemsAvailable: ~(SpecifiedItemsAvailable)
+                          ~Ref(SpecifiedItems): InstanceSpecifiedItems
+                          UnspecifiedItems:
+                            CoverStatus: true
+                            ItemAmount: 3333
+                        BuildingDetails:
+                          BuildingType: ~(BuildingType)
+                          StructureType: ~(StructureType)
+                          ConstructionType: Standard
+                          YearBuilt: 2010
+                          NumberOfBedrooms: 2
+                          BuildingAddress:
+                            HouseIdentifier: ~(RiskAddressHouseIdentifier)
+                            Postcode: ~(RiskPostcode)
+                          AdditionalInformation:
+                            ListingStatus: false
+                            BuildingWorkStatus: false
+                            GoodRepairStatus: true
+                            GeologicalThreats: false
+                            FreeFromFloodingThreats: true
+                        Usage:
+                          NonFamilyLodger: false
+                          LetWithSublet: false
+                          BusinessUsage:
+                            BusinessUse: false
+                            ClericalUse: false
+                            PropertyUse: meetings
+                          HolidayHomeStatus: false
+                          Occupancy: Occupied
+                        Security:
+                          Locks: true
+                          Alarms: Basic DIY Alarm
+                          NeighbourhoodWatch: true
+                        ProposerRelationshipToRisk:
+                          LegalRelationship: Owned
+                          FirstTimeBuyers: false
+                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+                      ProposerPersonalDetails:
+                        CorrespondenceAddress: *ProposerContactDetails1
+                        PrimaryEmploymentStatus:
+                          Employed: true
+                          Category: Employee
+                          Type: Bakery Assistant
+                          Industry: Fast Food
+                        SecondaryEmploymentStatus:
+                          Employed: false
+                      OtherDetails:
+                        SufferedLossNotResultedInClaim: false
+                      DynamicUnderwriterQuestions:
+                        WallConstructionType: Brick
+                        RoofConstructionType: Concrete
+                        NumberOfDaysPropertyLeftUnoccupied: 0
+                        PercentageOfFlatRoof: 35
+                        PaymentType: ~(PaymentType)
+                        UnsatisfiedCountyCourtJudgements: false
+                        ResidentDeclaredBankrupt: false
+                        ExtendedHouse: false
+                        NumberOfBathroom: 1
+                        UnspentCriminalConviction: false
+                        NumberOfPeopleLive:
+                          Children: 2
+                          Adult: 2
+                          Pet:
+                            Cat: false
+                            Dog: true
+                            Other: false
+                        PropertyOwned: ~(PropertyOwned)
+                      JointPolicyHolderStatus: ~(JointPolicyHolderStatus)
+                      JointPolicyHolderDetails: *JphPerson01
+                      ConsentToRenew: true
+                      ~Ref(Endorsement): InstanceEndorsement
+                  ~Judgements:
+                    - EisClientDetails.Declines=TRUE|HardRunFault("Quote was declined, cannot create policy")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: AddCCForExistingClient
+                  ~Role: >
+                    Adding Credit Card for existing customer
+                  ~Type: Act
+                  ~Action: AddCCForExistingClient
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    PaymentData:
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+              - ~Activity:
+                  ~Label: PolicyCreationOnEis
+                  ~Role: >
+                    Create a policy with given payment method for the quote created in EIS
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    CoreAppUserCredentials: *CoreUserCredentialsSet
+                    PaymentMethod: ~(PaymentMethod)
+                    ~Ref(PaymentData): InstancePaymentData
+                    Declines: ~(//002/QuoteCreationInEis.EisClientDetails.Declines)
+                    Referrals: ~(//002/QuoteCreationInEis.EisClientDetails.Referrals)
+                    SearchCriteria:
+                      QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                    QuoteReference: ~(//002/QuoteCreationInEis.EisClientDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:

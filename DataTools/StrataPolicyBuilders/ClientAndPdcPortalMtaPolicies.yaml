@@ -1,0 +1,1096 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+    SelectCustomerByClientNumber: &SelectCustomerByClientNumber
+      ClientNumber: ~(ClientNumberValue)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonUserPassword)
+  People:
+    Person01: &Person01
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: (None)
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+
+  # Has Buildings And Contents Accidental Damge
+  # Has a Joint PolicyHolder
+  # Has Personal Belongings Away From Home
+  ComplexPolicyDetails: &ComplexPolicyDetails
+    QuotesDetails:
+      Affinity: AHDW #ShortForm
+      Brand: Ageas
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: true
+        ContentAccidentalDamage: true
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 100000
+        ContentSum: 80000
+        PersonalBelonginAwayFromHome: 300
+      InsuranceHistory:
+        ContentClaimFreeYears: 0
+        BuildingClaimFreeYears: 0
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+      PersBelongingsSpecifiedItemsAvailable: true
+      PersonalBelongingsAwayCost: 300
+      BuildingDetails:
+        BuildingType: Bungalow  #
+        StructureType: Detached
+        ConstructionType: Standard  #Creation of code for options
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress:
+          HouseIdentifier: 1
+          Postcode: NG173AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+#        NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+        NonFamilyLodger: "No" #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+    PreferredDeliveryMethod: Email
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        HouseIdentifier: 1
+        Postcode: ~(Postcode)
+      MainTelephoneNumber: "07345345345"
+      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: 1
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+      PropertyOwned: Owned
+    JointPolicyHolderDetails: true
+    JointPolicyHolder: *Person01
+    Index: ~(Index)
+
+  StandardPolicyDetails: &StandardPolicyDetails
+    QuotesDetails:
+      Affinity: AHDW #ShortForm
+      Brand: Ageas
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: false
+        ContentAccidentalDamage: false
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 100000
+        ContentSum: 80000
+      InsuranceHistory:
+        ContentClaimFreeYears: 0
+        BuildingClaimFreeYears: 0
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+      BuildingDetails:
+        BuildingType: Bungalow  #
+        StructureType: Detached
+        ConstructionType: Standard  #Creation of code for options
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        RiskAddress:
+          HouseIdentifier: 1
+          Postcode: NG173AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+        NonFamilyLodger: "No" #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+    PreferredDeliveryMethod: Email
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      CorrespondenceAddress:
+        HouseIdentifier: 1
+        Postcode: ~(Postcode)
+      MainTelephoneNumber: "07345345345"
+      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: 1
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      PaymentType: Annual
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+      PropertyOwned: Owned
+    JointPolicyHolderDetails: false
+    Index: ~(Index)
+
+#  ClientDetails: &ClientDetails
+  Define: &DerivedName  ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index) ~(LastnameVal)
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+
+~CommonInitActivities:
+
+
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardData
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Portal_Home_Policies_Standard_Data
+        Exports:
+          - TestCases:
+              - PORTAL_POLICIES_HOME_STANDARD
+            DataItems:
+              - //003/RegisterNewUser._ControlData.NewRegistrationDetails
+
+  - ~Activity:
+      ~Label: ExportComplexData
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Portal_Home_Policies_Complex_Data
+        Exports:
+          - TestCases:
+              - PORTAL_POLICIES_HOME_COMPLEX
+            DataItems:
+              - //003/RegisterNewUser._ControlData.NewRegistrationDetails
+
+
+~TestCases:
+
+#  - ~TestCase:
+#      ~CaseId: &caseId PORTAL_POLICIES_HOME_STANDARD
+#      ~Headline: Create a New Policy on Echelon
+#      ~InitiationActivities:
+#        - ~Activity:
+#            ~Role: >
+#              Initiate cases
+#            ~Type: Act
+#            ~Action: InitiateList
+#            ~ControlData:
+#              Common:
+#                Team: T3
+#                LogicalPattern: Mta
+#                AreaOfTesting: Por
+#                AreaOfBusiness: Bau
+#                TestingType: f
+#                TestingTeam: Auto
+#                EmailSequenceNumber: "000"
+#                ClientGroupId: ~(ClientGroupId)
+#                DomainName: n0ie34cm.mailosaur.net
+#                Password: ~(StandardPortalPassword)
+#                LastnameVal: Testzxz
+#                ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+#                Postcode: NG17 3AS
+#                JointPolicyHolderDetails: false
+#              Instances:
+#                - Identities:
+#                    - TestID|-01
+#                  InstanceValues:
+#                    Index: A
+#                - Identities:
+#                    - TestID|-02
+#                  InstanceValues:
+#                    Index: B
+#                - Identities:
+#                    - TestID|-03
+#                  InstanceValues:
+#                    Index: C
+##                - Identities:
+##                    - TestID|-04
+##                  InstanceValues:
+##                    Index: D
+##                - Identities:
+##                    - TestID|-05
+##                  InstanceValues:
+##                    Index: E
+##                - Identities:
+##                    - TestID|-06
+##                  InstanceValues:
+##                    Index: F
+##                - Identities:
+##                    - TestID|-07
+##                  InstanceValues:
+##                    Index: G
+##                - Identities:
+##                    - TestID|-08
+##                  InstanceValues:
+##                    Index: H
+##                - Identities:
+##                    - TestID|-09
+##                  InstanceValues:
+##                    Index: I
+##                - Identities:
+##                    - TestID|-10
+##                  InstanceValues:
+##                    Index: J
+##                - Identities:
+##                    - TestID|-11
+##                  InstanceValues:
+##                    Index: K
+##                - Identities:
+##                    - TestID|-12
+##                  InstanceValues:
+##                    Index: L
+##                - Identities:
+##                    - TestID|-13
+##                  InstanceValues:
+##                    Index: M
+##                - Identities:
+##                    - TestID|-14
+##                  InstanceValues:
+##                    Index: N
+##                - Identities:
+##                    - TestID|-15
+##                  InstanceValues:
+##                    Index: O
+##                - Identities:
+##                    - TestID|-16
+##                  InstanceValues:
+##                    Index: P
+##                - Identities:
+##                    - TestID|-17
+##                  InstanceValues:
+##                    Index: Q
+##                - Identities:
+##                    - TestID|-18
+##                  InstanceValues:
+##                    Index: R
+##                - Identities:
+##                    - TestID|-19
+##                  InstanceValues:
+##                    Index: S
+##                - Identities:
+##                    - TestID|-20
+##                  InstanceValues:
+##                    Index: T
+####                - Identities:
+####                    - TestID|-21
+####                  InstanceValues:
+####                    Index: U
+####                - Identities:
+####                    - TestID|-22
+####                  InstanceValues:
+####                    Index: V
+####                - Identities:
+####                    - TestID|-23
+####                  InstanceValues:
+####                    Index: W
+####                - Identities:
+####                    - TestID|-24
+####                  InstanceValues:
+####                    Index: X
+####                - Identities:
+####                    - TestID|-25
+####                  InstanceValues:
+####                    Index: Y
+####                - Identities:
+####                    - TestID|-26
+####                  InstanceValues:
+####                    Index: Z
+#      ~Stages:
+#        - ~Stage: #1 Create Quote on Echelon
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: CreateNewQuoteOnEchelon
+#                  ~Role: >
+#                    Create a new quote on Echelon UI
+#                  ~Type: Act
+#                  ~Action: QuoteCreationInEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: 000
+#                    SalesDetails: *StandardPolicyDetails
+#                  ~Unconditionals:
+#        - ~Stage: #2 Wrap up generate policy number
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: WrapupOnEchelon
+#                  ~Role: >
+#                    Creates the policy on Echelon by wrapping up without payment
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)
+#                    QuoteDetails:
+#                      QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+#                    PaymentDetails:
+#                      PaymentMethod: NoPayment
+#                  ~Judgements:
+#                  ~Unconditionals:
+#        - ~Stage: #3 register new user and pay on Portal
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: RegisterNewUser
+#                  ~Role: >
+#                    Validate new policy can be registered on the portal
+#                  ~Type: Act
+#                  ~Action: RegisterNewUser
+#                  ~ControlData:
+#                    NewRegistrationDetails:
+#                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+#                      Password: ~(StandardPortalPassword)
+#                      PolicyNumber: ~(//002/WrapupOnEchelon.PolicyDetails.PolicyNumber)
+#                      DateOfBirth: ~(DateOfBirth)
+#                      Postcode: ~(Postcode)
+#                      Name: *DerivedName
+#                  ~Judgements:
+#                    - RegistrationStatus==false|HardRunFault("Home policy is not registered")
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: PaymentOnPortal
+#                  ~Role: >
+#                    Completing the payment on portal of policy brought
+#                  ~Type: Act
+#                  ~Action: PaymentOnPortal
+#                  ~ControlData:
+#                    CustomerCredentials: # *StandardPortalUserCredentialsSet
+#                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+#                      Password: ~(StandardPortalPassword) #~(StandardPortalPassword)
+#                    QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.WebReference)
+#                    InsuranceType: Home
+#                    CardDetails: #Need to discuss As of now there is no option to add card detals
+#                      CardHolderName: Test
+#                      CardNumber: 4444333322221111
+#                      ExpiryDate: 03/2028
+#                      CVV: 555
+#                    TransType: New
+#                  ~Judgements:
+#                  ~Unconditionals:
+
+  - ~TestCase:
+      ~CaseId: &caseId PORTAL_POLICIES_HOME_COMPLEX
+      ~Headline: Create a New Policy on Echelon
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                ClientGroupId: ~(ClientGroupId)
+                DomainName: n0ie34cm.mailosaur.net
+                Password: ~(StandardPortalPassword)
+                LastnameVal: Testzxz
+                ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+                Postcode: NG17 3AS
+              Instances:
+                - Identities:
+                    - TestID|-01
+                  InstanceValues:
+                    Index: A
+#                - Identities:
+#                    - TestID|-02
+#                  InstanceValues:
+#                    Index: B
+#                - Identities:
+#                    - TestID|-03
+#                  InstanceValues:
+#                    Index: C
+#                - Identities:
+#                    - TestID|-04
+#                  InstanceValues:
+#                    Index: D
+#                - Identities:
+#                    - TestID|-05
+#                  InstanceValues:
+#                    Index: E
+#                - Identities:
+#                    - TestID|-06
+#                  InstanceValues:
+#                    Index: F
+
+
+#                - Identities:
+#                    - TestID|-07
+#                  InstanceValues:
+#                    Index: G
+#                    ~Ref(ClientNumber): //000/LoadClientData.MtaClients[27].Data.ClientNumber
+#                - Identities:
+#                    - TestID|-08
+#                  InstanceValues:
+#                    Index: H
+#                    ~Ref(ClientNumber): //000/LoadClientData.MtaClients[33].Data.ClientNumber
+#                    JointPolicyHolderDetails: true
+#                - Identities:
+#                    - TestID|-09
+#                  InstanceValues:
+#                    Index: I
+#                    ~Ref(ClientNumber): //000/LoadClientData.MtaClients[34].Data.ClientNumber
+#                - Identities:
+#                    - TestID|-10
+#                  InstanceValues:
+#                    Index: J
+#                    ~Ref(ClientNumber): //000/LoadClientData.MtaClients[35].Data.ClientNumber
+      ~Stages:
+        - ~Stage: #1 Create Quote on Echelon
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateNewQuoteOnEchelon
+                  ~Role: >
+                    Create a new quote on Echelon UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: "000"
+                    SalesDetails: *ComplexPolicyDetails
+                  ~Unconditionals:
+        - ~Stage: #2 Pay for the quote and generate policy number
+            ~Activities:
+              - ~Activity:
+                  ~Label: WrapupOnEchelon
+                  ~Role: >
+                    Creates the policy on Echelon by wrapping up without payment
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)
+                    QuoteDetails:
+                      QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+                    PaymentDetails:
+                      PaymentMethod: NoPayment
+                  ~Judgements:
+                  ~Unconditionals:
+        - ~Stage: #3 register new user and pay on Portal
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterNewUser
+                  ~Role: >
+                    Validate new policy can be registered on the portal
+                  ~Type: Act
+                  ~Action: RegisterNewUser
+                  ~ControlData:
+                    NewRegistrationDetails:
+                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+                      Password: ~(StandardPortalPassword)
+                      PolicyNumber: ~(//002/WrapupOnEchelon.PolicyDetails.PolicyNumber)
+                      DateOfBirth:  ~(DateOfBirth)
+                      Postcode: ~(Postcode)
+                      Name: *DerivedName
+                  ~Judgements:
+                    - RegistrationStatus==false|HardRunFault("Home policy is not registered")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: PaymentOnPortal
+                  ~Role: >
+                    Completing the payment on portal of policy brought
+                  ~Type: Act
+                  ~Action: PaymentOnPortal
+                  ~ControlData:
+                    CustomerCredentials: # *StandardPortalUserCredentialsSet
+                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+                      Password: ~(StandardPortalPassword) #~(StandardPortalPassword)
+                    QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.WebReference)
+                    InsuranceType: Home
+                    CardDetails: #Need to discuss As of now there is no option to add card detals
+                      CardHolderName: Test
+                      CardNumber: 4444333322221111
+                      ExpiryDate: 03/2028
+                      CVV: 555
+                    TransType: New
+                  ~Judgements:
+                  ~Unconditionals:
+
+#  - ~TestCase:
+#      ~CaseId: &caseId PORTAL-POLICIES-HOME-BUILDINGS-ONLY
+#      ~Headline: Create a New Policy on Echelon
+#      ~InitiationActivities:
+#        - ~Activity:
+#            ~Role: >
+#              Initiate cases
+#            ~Type: Act
+#            ~Action: InitiateList
+#            ~ControlData:
+#              Common:
+#                Team: T3
+#                LogicalPattern: Mta
+#                AreaOfTesting: Por
+#                AreaOfBusiness: Bau
+#                TestingType: f
+#                TestingTeam: Auto
+#                EmailSequenceNumber: "000"
+#                ClientGroupId: ~(ClientGroupId)
+#                DomainName: n0ie34cm.mailosaur.net
+#                Password: ~(StandardPortalPassword)
+#                LastnameVal: Testzxz
+#                ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+#                Postcode: NG17 3AS
+#              Instances:
+#                - Identities:
+#                    - TestID|-01
+#                  InstanceValues:
+#                    Index: A
+#                    ~Ref(ClientNumber):  //000/LoadClientData.MtaClients[1].Data.ClientNumber
+#      ~Stages:
+#        - ~Stage: #1 Create Quote on Echelon
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: CreateNewQuoteOnEchelon
+#                  ~Role: >
+#                    Create a new quote on Echelon UI
+#                  ~Type: Act
+#                  ~Action: QuoteCreationInEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: ~(ClientNumber)
+#                    SalesDetails:
+#                      QuotesDetails:
+#                        Affinity: AHDW #ShortForm
+#                        Brand: Ageas
+#                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+#                      InsuranceDetails:
+#                        TypeOfHouseHoldCover:
+#                          Buildings: true
+#                          Contents: false
+#                          BuildingAccidentalDamage: false
+#                          ContentAccidentalDamage: false
+#                        InsuredAmount: #Rebuilding Cost
+#                          BuildingVoluntaryExcess: 100
+#                          #ContentVoluntaryExcess: 100
+#                          RebuildingCost: 100000
+#                          #ContentSum: 70000
+#                        InsuranceHistory:
+#                          ContentClaimFreeYears: 0
+#                          BuildingClaimFreeYears: 0
+#                          InsurancePreviouslyRefused: false
+#                          PreviousInsurance: false
+#                        #ContentDetails:
+#                          #Safe: true
+#                        BuildingDetails:
+#                          BuildingType: Detached  #
+#                          ConstructionType: Standard  #Creation of code for options
+#                          YearBuilt: 2010
+#                          NumberOfBedrooms: 2
+#                          RiskAddress:
+#                            HouseIdentifier: 1
+#                            Postcode: NG173AS
+#                          AdditionalInformation:
+#                            ListingStatus: false
+#                            BuildingWorkStatus: false
+#                            GoodRepairStatus: true
+#                            GeologicalThreats: false
+#                            FreeFromFloodingThreats: true
+#                        Usage:
+#                          NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+#                          LetWithSublet: false
+#                          BusinessUse: false
+#                          HolidayHomeStatus: false #Boolean for now
+#                          Occupancy: Occupied
+#                        Security:
+#                          Locks: true
+#                          Alarms: Basic DIY Alarm
+#                          NeighbourhoodWatch: true
+#                        ProposerRelationshipToRisk:
+#                          LegalRelationship: Owned #Leased/Rented/Owned
+#                          FirstTimeBuyers: false
+#                      PreferredDeliveryMethod: Email
+#                      ProposerPersonalDetails:
+#                        Title: Mr
+#                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+#                        LastName: Testzxz
+#                        MaritalStatus: Single
+#                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+#                        Gender: Male
+#                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+#                        PrimaryEmploymentStatus:
+#                          Employed: true
+#                          Category: Employee
+#                          Type: BakeryAssistant
+#                          Industry: FastFood
+#                        SecondaryEmploymentStatus:
+#                          Employed: false
+#                      ProposerContactDetails:
+#                        CorrespondenceAddress:
+#                          HouseIdentifier: 1
+#                          Postcode: ~(Postcode)
+#                        MainTelephoneNumber: "07345345345"
+#                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+#                      MarketingChoice:
+#                        Postal: true
+#                        Email: false
+#                        Telephone: true
+#                        SMS: false
+#                      OtherDetails: #Policy User Fields
+#                        SufferedLossNotResultedInClaim: false
+#                      DynamicUnderwriterQuestions:
+#                        NumberOfBathroom: 1
+#                        WallConstructionType: Brick
+#                        RoofConstructionType: Concrete
+#                        NumberOfDaysPropertyLeftUnoccupied: 0
+#                        PercentageOfFlatRoof: 35
+#                        PaymentType: Annual
+#                        UnsatisfiedCountyCourtJudgements: false
+#                        ResidentDeclaredBankrupt: false
+#                        ExtendedHouse: false
+#                        NumberOfPeopleLive:
+#                          Children: 2
+#                          Adult: 2
+#                          Pet:
+#                            Cat: false
+#                            Dog: false
+#                            Other: false #if first two options are true thne other should not be true. condition
+#                        PropertyOwned: Owned
+#                      JointPolicyHolder:
+#                        Title: Mr
+#                        FirstName: JPHFirstName
+#                        LastName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+#                        MaritalStatus: Single
+#                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+#                        Gender: Male
+#                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+#                        RelationshipWithPolicyholder: (None)
+#                  ~Unconditionals:
+#        - ~Stage: #2 Pay for the quote and generate policy number
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: WrapupOnEchelon
+#                  ~Role: >
+#                    Creates the policy on Echelon by wrapping up without payment
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: ~(ClientNumber)
+#                    QuoteDetails:
+#                      QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+#                  ~Judgements:
+#                  ~Unconditionals:
+##        - ~Stage: #3 Register  the new policy on logon to the portal
+##            ~Activities:
+##                  #Get whether this client is already registered in the CRM
+##                  #Judgement , if registered Halt the stage
+##              - ~Activity:
+##                  ~Label: RetrieveForgottenUsername
+##                  ~Role: >
+##                    Submit email address to Forgotten Username service and check returned Username matches
+##                  ~Type: Act
+##                  ~Action: ForgotUsername
+##                  ~ControlData:
+##                    CustomerCredentials:
+##                      Email: dummy@test.com
+##                  ~Judgements:
+##                    - strEq(UI.Email, "~(_ControlData.CustomerCredentials.Email)")=TRUE|StageCompleted("Halt stage portal registration is already done")))
+##                  ~Unconditionals:
+##
+#              - ~Activity:
+#                  ~Label: RegisterNewUser
+#                  ~Role: >
+#                    Validate new policy can be registered on the portal
+#                  ~Type: Act
+#                  ~Action: RegisterNewUser
+#                  ~ControlData:
+#                    NewRegistrationDetails:
+#                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+#                      Password: ~(StandardPortalPassword)
+#                      PolicyNumber: ~(//002/WrapupOnEchelon.PolicyNumber)
+#                      DateOfBirth:  ~(DateOfBirth)
+#                      Postcode: ~(Postcode)
+#                  ~Judgements:
+#                    - RegistrationStatus==false|HardRunFault("Home policy is not registered")
+#                  ~Unconditionals:
+#        - ~Stage: #3 Complete payment on the portal for the policy
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: PaymentOnPortal
+#                  ~Role: >
+#                    Completing the payment on portal of policy brought
+#                  ~Type: Act
+#                  ~Action: PaymentOnPortal
+#                  ~ControlData:
+#                    CustomerCredentials: # *StandardPortalUserCredentialsSet
+#                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+#                      Password: ~(StandardPortalPassword) #~(StandardPortalPassword)
+#                    QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.WebReference)
+#                    InsuranceType: Home
+#                    CardDetails: #Need to discuss As of now there is no option to add card detals
+#                      CardHolderName: Test
+#                      CardNumber: 4444333322221111
+#                      ExpiryDate: 03/2028
+#                      CVV: 555
+#                  ~Judgements:
+#                  ~Unconditionals:
+#  - ~TestCase:
+#      ~CaseId: &caseId PORTAL-POLICIES-HOME-CONTENTS-ONLY
+#      ~Headline: Create a New Policy on Echelon
+#      ~InitiationActivities:
+#        - ~Activity:
+#            ~Role: >
+#              Initiate cases
+#            ~Type: Act
+#            ~Action: InitiateList
+#            ~ControlData:
+#              Common:
+#                Team: T3
+#                LogicalPattern: Mta
+#                AreaOfTesting: Por
+#                AreaOfBusiness: Bau
+#                TestingType: f
+#                TestingTeam: Auto
+#                EmailSequenceNumber: "000"
+#                ClientGroupId: ~(ClientGroupId)
+#                DomainName: n0ie34cm.mailosaur.net
+#                Password: ~(StandardPortalPassword)
+#                LastnameVal: Testzxz
+#                ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+#                Postcode: NG17 3AS
+#              Instances:
+#                - Identities:
+#                    - TestID|-01
+#                  InstanceValues:
+#                    Index: A
+#                    ~Ref(ClientNumber): //000/LoadClientData.MtaClients[2].Data.ClientNumber
+#      ~Stages:
+#        - ~Stage: #1 Create Quote on Echelon
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: CreateNewQuoteOnEchelon
+#                  ~Role: >
+#                    Create a new quote on Echelon UI
+#                  ~Type: Act
+#                  ~Action: QuoteCreationInEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: ~(ClientNumber)
+#                    SalesDetails:
+#                      QuotesDetails:
+#                        Affinity: AHDW #ShortForm
+#                        Brand: Ageas
+#                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+#                      InsuranceDetails:
+#                        TypeOfHouseHoldCover:
+#                          Buildings: false
+#                          Contents: true
+#                          BuildingAccidentalDamage: false
+#                          ContentAccidentalDamage: false
+#                        InsuredAmount: #Rebuilding Cost
+#                          #BuildingVoluntaryExcess: 100
+#                          ContentVoluntaryExcess: 100
+#                          #RebuildingCost: 100000
+#                          ContentSum: 70000
+#                        InsuranceHistory:
+#                          ContentClaimFreeYears: 0
+#                          BuildingClaimFreeYears: 0
+#                          InsurancePreviouslyRefused: false
+#                          PreviousInsurance: false
+#                        ContentDetails:
+#                          Safe: true
+#                        BuildingDetails:
+#                          BuildingType: Detached  #
+#                          ConstructionType: Standard  #Creation of code for options
+#                          YearBuilt: 2010
+#                          NumberOfBedrooms: 2
+#                          RiskAddress:
+#                            HouseIdentifier: 1
+#                            Postcode: NG173AS
+#                          AdditionalInformation:
+#                            ListingStatus: false
+#                            BuildingWorkStatus: false
+#                            GoodRepairStatus: true
+#                            GeologicalThreats: false
+#                            FreeFromFloodingThreats: true
+#                        Usage:
+#                          NonFamilyLodger: false #Need to update for - how many students lodger or non student lodger.
+#                          LetWithSublet: false
+#                          BusinessUse: false
+#                          HolidayHomeStatus: false #Boolean for now
+#                          Occupancy: Occupied
+#                        Security:
+#                          Locks: true
+#                          Alarms: Basic DIY Alarm
+#                          NeighbourhoodWatch: true
+#                        ProposerRelationshipToRisk:
+#                          LegalRelationship: Owned #Leased/Rented/Owned
+#                          FirstTimeBuyers: false
+#                      PreferredDeliveryMethod: Email
+#                      ProposerPersonalDetails:
+#                        Title: Mr
+#                        FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+#                        LastName: Testzxz
+#                        MaritalStatus: Single
+#                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+#                        Gender: Male
+#                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+#                        PrimaryEmploymentStatus:
+#                          Employed: true
+#                          Category: Employee
+#                          Type: BakeryAssistant
+#                          Industry: FastFood
+#                        SecondaryEmploymentStatus:
+#                          Employed: false
+#                      ProposerContactDetails:
+#                        CorrespondenceAddress:
+#                          HouseIdentifier: 1
+#                          Postcode: ~(Postcode)
+#                        MainTelephoneNumber: "07345345345"
+#                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+#                      MarketingChoice:
+#                        Postal: true
+#                        Email: false
+#                        Telephone: true
+#                        SMS: false
+#                      OtherDetails: #Policy User Fields
+#                        SufferedLossNotResultedInClaim: false
+#                      DynamicUnderwriterQuestions:
+#                        NumberOfBathroom: 1
+#                        WallConstructionType: Brick
+#                        RoofConstructionType: Concrete
+#                        NumberOfDaysPropertyLeftUnoccupied: 0
+#                        PercentageOfFlatRoof: 35
+#                        PaymentType: Annual
+#                        UnsatisfiedCountyCourtJudgements: false
+#                        ResidentDeclaredBankrupt: false
+#                        ExtendedHouse: false
+#                        NumberOfPeopleLive:
+#                          Children: 2
+#                          Adult: 2
+#                          Pet:
+#                            Cat: false
+#                            Dog: false
+#                            Other: false #if first two options are true thne other should not be true. condition
+#                        PropertyOwned: Owned
+#                      JointPolicyHolder:
+#                        Title: Mr
+#                        FirstName: JPHFirstName
+#                        LastName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+#                        MaritalStatus: Single
+#                        ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+#                        Gender: Male
+#                        ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+#                        RelationshipWithPolicyholder: (None)
+#                  ~Unconditionals:
+#        - ~Stage: #2 Pay for the quote and generate policy number
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: WrapupOnEchelon
+#                  ~Role: >
+#                    Creates the policy on Echelon by wrapping up without payment
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: ~(ClientNumber)
+#                    QuoteDetails:
+#                      QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+#                  ~Judgements:
+#                  ~Unconditionals:
+#              #        - ~Stage: #3 Register  the new policy on logon to the portal
+#              #            ~Activities:
+#              #                  #Get whether this client is already registered in the CRM
+#              #                  #Judgement , if registered Halt the stage
+#              #              - ~Activity:
+#              #                  ~Label: RetrieveForgottenUsername
+#              #                  ~Role: >
+#              #                    Submit email address to Forgotten Username service and check returned Username matches
+#              #                  ~Type: Act
+#              #                  ~Action: ForgotUsername
+#              #                  ~ControlData:
+#              #                    CustomerCredentials:
+#              #                      Email: dummy@test.com
+#              #                  ~Judgements:
+#              #                    - strEq(UI.Email, "~(_ControlData.CustomerCredentials.Email)")=TRUE|StageCompleted("Halt stage portal registration is already done")))
+#              #                  ~Unconditionals:
+#              #
+#              - ~Activity:
+#                  ~Label: RegisterNewUser
+#                  ~Role: >
+#                    Validate new policy can be registered on the portal
+#                  ~Type: Act
+#                  ~Action: RegisterNewUser
+#                  ~ControlData:
+#                    NewRegistrationDetails:
+#                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+#                      Password: ~(StandardPortalPassword)
+#                      PolicyNumber: ~(//002/WrapupOnEchelon.PolicyNumber)
+#                      DateOfBirth: ~(DateOfBirth)
+#                      Postcode: ~(Postcode)
+#                  ~Judgements:
+#                    - RegistrationStatus==false|HardRunFault("Home policy is not registered")
+#                  ~Unconditionals:
+#        - ~Stage: #3 Complete payment on the portal for the policy
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: PaymentOnPortal
+#                  ~Role: >
+#                    Completing the payment on portal of policy brought
+#                  ~Type: Act
+#                  ~Action: PaymentOnPortal
+#                  ~ControlData:
+#                    CustomerCredentials: # *StandardPortalUserCredentialsSet
+#                      Email: X~(//001/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)@ageas.co.uk
+#                      Password: ~(StandardPortalPassword) #~(StandardPortalPassword)
+#                    QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.WebReference)
+#                    InsuranceType: Home
+#                    CardDetails: #Need to discuss As of now there is no option to add card detals
+#                      CardHolderName: Test
+#                      CardNumber: 4444333322221111
+#                      ExpiryDate: 03/2028
+#                      CVV: 555
+#                  ~Judgements:
+#                  ~Unconditionals:

@@ -1,0 +1,920 @@
+~Templates:
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Relationship: None
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonPassword)
+    CustomerPortalCredentials: &CustomerPortalCredentials
+      Email: ~(PortalUserNameVal)
+      Password: ~(StandardPortalPassword)
+  PolicySelectionCriteria:
+    ByPolicyNumber: &SelectPolicyByPolicyNumber
+      ~Ref(PolicyNumber): PolicyNumberVal
+
+  StandardPolicyDetails: &StandardPolicyDetails
+    QuotesDetails:
+      Affinity: AHDW #ShortForm
+      Brand: Ageas
+      ProductType: Home
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: false
+        ContentAccidentalDamage: false
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 1000000
+        ContentSum: 80000
+      InsuranceHistory:
+        ContentClaimFreeYears: 0
+        BuildingClaimFreeYears: 0
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+        ValuablesOver2000£SpecifiedItemsAvailable: false
+        ValuableInHomeSpecifiedItems:
+        #Ask Amos why we need this when the above is false
+          InHome:
+            - Item: Jewellery / Watches / Precious stones
+              Description: Jewellery and Watches
+              Value: 3000
+        IndBelongingsSpecifiedItemsAvailable: false
+        #Ask Amos why we need this when the above is false
+        IndAwayHomeSpecifiedItems:
+          AwayHome:
+            - Item: Jewellery / Watches
+              Description: Jewellery
+              Value: 300
+        PersBelongingsSpecifiedItemsAvailable: false
+        #PersonalBelongingsAwayCost: 300
+      BuildingDetails:
+        BuildingType: House        #
+        StructureType: Detached
+        ConstructionType: Standard  #Creation of code for options
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        #Required for QnB until BuildingAddress and RiakAddress aligned
+        BuildingAddress:
+          HouseIdentifier: 1
+          Postcode: NG17 3AS
+        RiskAddress:
+          HouseIdentifier: 1
+          Postcode: NG17 3AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+        #Need type of Lodgers for Quote And BUy
+        NonFamilyLodger: "No" #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+    PreferredDeliveryMethod: Email
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      #Repeated here as QnB requires Primary Employment Details to be in ProposerContactDetails
+      CorrespondenceAddress:
+        HouseIdentifier: 1
+        Postcode: NG17 3AS
+      MainTelephoneNumber: "07345345345"
+      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+      #why is this inder marketing choice in Qnb
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        #Spaces on QnB no spaces on Echelon
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: 1
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      #Is annual for echelon and Annually for QnB
+      PaymentType: Annual # Does not align to QnB ui
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+      #Needs to be Owned Outright for QnB
+      PropertyOwned: Owned Outright
+      #NonFamilyLodgers in Echelon as Boolean
+      #TypeOfLodgers: No Guest
+    #Needed to Support Quote and Buy current implementation of JointPoicyHolder
+    JointPolicyHolderStatus: false
+    JointPolicyHolderDetails:
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStFatus: Single
+      Gender: Male
+      Relationship: Offspring
+      PrimaryEmploymentStatus: { Employed: true, Category: Employee, Type: Bakery Assistant,
+                                 Industry: Fast Food }
+      SecondaryEmploymentStatus: { Employed: false }
+      InsuranceHistory: { InsurancePreviouslyRefused: false }
+      NonRtaConvictions: false
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+    ClaimHistoryAvailable: false
+    ConsentToRenew: false
+    OptionalExtras:
+      ExcessProtection: false
+      HomeEmergency: false
+      LegalExpenses: false
+    #Index: ~(Index)
+
+
+  #Includes:
+  #1. Accidental Damage for Buildings and COntents
+  #2. valuables > 2000
+  #3. Individual Items
+  #4. Personal Belongings
+  #5. Joint PolicyHolder
+  #6. A correspondence address
+  #7. Secondary employment
+  ComplexPolicyDetails: &ComplexPolicyDetails
+    QuotesDetails:
+      Affinity: AHDW #ShortForm
+      Brand: Ageas
+      ProductType: Home
+      ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+    InsuranceDetails:
+      TypeOfHouseHoldCover:
+        Buildings: true
+        Contents: true
+        BuildingAccidentalDamage: true
+        ContentAccidentalDamage: true
+      InsuredAmount: #Rebuilding Cost
+        BuildingVoluntaryExcess: 100
+        ContentVoluntaryExcess: 100
+        RebuildingCost: 1000000
+        ContentSum: 80000
+      InsuranceHistory:
+        ContentClaimFreeYears: 0
+        BuildingClaimFreeYears: 0
+        InsurancePreviouslyRefused: false
+        PreviousInsurance: false
+      ContentDetails:
+        Safe: true
+        ValuablesOver2000£SpecifiedItemsAvailable: true
+        ValuableInHomeSpecifiedItems:
+          #Ask Amos why we need this when the above is false
+          InHome:
+            - Item: Jewellery / Watches / Precious stones
+              Description: Jewellery and Watches
+              Value: 3000
+        IndBelongingsSpecifiedItemsAvailable: true
+        #Ask Amos why we need this when the above is false
+        IndAwayHomeSpecifiedItems:
+          AwayHome:
+            - Item: Jewellery / Watches
+              Description: Jewellery
+              Value: 300
+            - Item: Jewellery / Watches
+              Description: Jewellery
+              Value: 300
+            - Item: Jewellery / Watches
+              Description: Jewellery
+              Value: 300
+        PersBelongingsSpecifiedItemsAvailable: true
+        PersonalBelongingsAwayCost: 500
+      BuildingDetails:
+        BuildingType: House        #
+        StructureType: Detached
+        ConstructionType: Standard  #Creation of code for options
+        YearBuilt: 2010
+        NumberOfBedrooms: 2
+        #Required for QnB until BuildingAddress and RiakAddress aligned
+        BuildingAddress:
+          HouseIdentifier: 1
+          Postcode: NG17 3AS
+        RiskAddress:
+          HouseIdentifier: 1
+          Postcode: NG17 3AS
+        AdditionalInformation:
+          ListingStatus: false
+          BuildingWorkStatus: false
+          GoodRepairStatus: true
+          GeologicalThreats: false
+          FreeFromFloodingThreats: true
+      Usage:
+        #Need type of Lodgers for Quote And BUy
+        NonFamilyLodger: "No" #Need to update for - how many students lodger or non student lodger.
+        LetWithSublet: false
+        BusinessUse: false
+        HolidayHomeStatus: false #Boolean for now
+        Occupancy: Occupied
+      Security:
+        Locks: true
+        Alarms: Basic DIY Alarm
+        NeighbourhoodWatch: true
+      ProposerRelationshipToRisk:
+        LegalRelationship: Owned #Leased/Rented/Owned
+        FirstTimeBuyers: false
+    PreferredDeliveryMethod: Email
+    ProposerPersonalDetails:
+      Title: Mr
+      FirstName: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)~(Index)
+      LastName: Testzxz
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy #39 years Old
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+    ProposerContactDetails:
+      #Repeated here as QnB requires Primary Employment Details to be in ProposerContactDetails
+      CorrespondenceAddress:
+        HouseIdentifier: 2
+        Postcode: DE138DU
+      MainTelephoneNumber: "07345345345"
+      EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+    MarketingChoice:
+      Postal: true
+      Email: false
+      Telephone: true
+      SMS: false
+      #why is this inder marketing choice in Qnb
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        #Spaces on QnB no spaces on Echelon
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        #Spaces on QnB no spaces on Echelon
+        Type: Bakery Assistant
+        Industry: Fast Food
+    OtherDetails: #Policy User Fields
+      SufferedLossNotResultedInClaim: false
+    DynamicUnderwriterQuestions:
+      NumberOfBathroom: 1
+      WallConstructionType: Brick
+      RoofConstructionType: Concrete
+      NumberOfDaysPropertyLeftUnoccupied: 0
+      PercentageOfFlatRoof: 35
+      #Is annual for echelon and Annually for QnB
+      PaymentType: Annual # Does not align to QnB ui
+      UnsatisfiedCountyCourtJudgements: false
+      ResidentDeclaredBankrupt: false
+      ExtendedHouse: false
+      NumberOfPeopleLive:
+        Children: 2
+        Adult: 2
+        Pet:
+          Cat: false
+          Dog: false
+          Other: false #if first two options are true thne other should not be true. condition
+      #Needs to be OwnedOutright for QnB
+      PropertyOwned: Owned Outright
+      #NonFamilyLodgers in Echelon as Boolean
+      #TypeOfLodgers: No Guest
+    #Needed to Support Quote and Buy current implementation of JointPoicyHolder
+    JointPolicyHolderStatus: true
+    JointPolicyHolderDetails:
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      Gender: Male
+      Relationship: Offspring
+      PrimaryEmploymentStatus: { Employed: true, Category: Employee, Type: Bakery Assistant,
+                                 Industry: Fast Food }
+      SecondaryEmploymentStatus: { Employed: false }
+      InsuranceHistory: { InsurancePreviouslyRefused: false }
+      NonRtaConvictions: false
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-14800|dd/MM/yyyy
+    ClaimHistoryAvailable: false
+    ConsentToRenew: false
+    OptionalExtras:
+      ExcessProtection: false
+      HomeEmergency: false
+      LegalExpenses: false
+    Index: ~(Index)
+    EmailSequenceNumber: "000"
+    DomainName: n0ie34cm.mailosaur.net
+
+~ConcretePatterns:
+  ~Stages:
+    - ~Stage: #001 Create the quote and policy on the Quote And Buy Site
+        ~Activities:
+          - ~Activity:
+              ~Label: QuoteCreationOnQnBuyPortal
+              ~Role: >
+                Create a new home quote for Ageas on Quote And Buy Portal
+              ~Type: Act
+              ~Action: QuoteCreationOnQnBuyPortal
+              ~ControlData:
+                ~Ref(SalesDetails): InstanceSalesDetails
+              ~Unconditionals:
+          - ~Activity:
+              ~Label: PolicyCreationOnQnBuyPortal
+              ~Role: >
+                Create a home policy with credit card payment method for the Q&B quote created on Portal
+              ~Type: Act
+              ~Action: PolicyCreationOnQnBuyPortal
+              ~ControlData:
+                QuoteDetails:
+                  ~Ref(DateOfBirth): //001/QuoteCreationOnQnBuyPortal._ControlData.SalesDetails.ProposerPersonalDetails.DateOfBirth
+                  ~Ref(Postcode): //001/QuoteCreationOnQnBuyPortal._ControlData.SalesDetails.InsuranceDetails.BuildingDetails.RiskAddress.Postcode
+                  QuoteReference: ~(//001/QuoteCreationOnQnBuyPortal.QuoteDetails.QuoteReference)
+                PaymentData:
+                  ProposerIsCardHolder: true
+                  CardPermission: true
+                  Type: Visa
+                  CardHolderName: Test
+                  ExpirationDate: 03/2024
+                  CreditCardNumber: 4444333322221111
+                  CVV: 555
+                PaymentMethod: ~(PaymentMethod)
+                #QuoteReference: ~(//001/QuoteCreationOnQnBuyPortal.QuoteDetails.QuoteReference)
+              ~Judgements:
+              ~Unconditionals:
+
+          - ~Stage: #002 Create Policy on Echelon
+              ~Activities:
+                - ~Activity:
+                    ~Label: CreateNewQuoteOnEchelon
+                    ~Role: >
+                      Create a new quote on Echelon UI
+                    ~Type: Act
+                    ~Action: QuoteCreationInEchelonUI
+                    ~ControlData:
+                      UserCredentials: *StandardEchelonUserCredentialsSet
+                      SearchCriteria:
+                        ClientNumber: 000
+                      ~ControlData:
+                        ~Ref(SalesDetails): InstanceSalesDetails
+                    ~Unconditionals:
+                - ~Activity:
+                    ~Label: WrapupOnEchelon
+                    ~Role: >
+                      Creates the policy on Echelon by wrapping up without payment
+                    ~Type: Act
+                    ~Action: PolicyCreationOnEchelonUI
+                    ~ControlData:
+                      UserCredentials: *StandardEchelonUserCredentialsSet
+                      SearchCriteria:
+                        ClientNumber: ~(ClientNumber)
+                      QuoteDetails:
+                        QuoteReference: ~(//002/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+                      PaymentDetails:
+                        PaymentMethod: NoPayment
+                    ~Judgements:
+                    ~Unconditionals:
+
+          - ~Stage: # 008 Get policy details from the policy admin system and validate state.
+              ~Activities:
+                - ~Activity: # Get the policy state at the latest MTA date associated with the policy
+                    ~Label: GetPolicyDetailsForFurthestOutMtaFromSourceAfterMTA
+                    ~Role: >
+                      Capture the policy details from the PAS at the point of the latest dated taken up MTA
+                      Allows validation of whether a 'today' mta is possible
+                      Allows selection of a date for a future dated mta
+                    ~Type: Act
+                    ~Action: GetPolicyDetailsEchelonUI
+                    ~ControlData:
+                      UserCredentials: *StandardEchelonUserCredentialsSet
+                      SearchCriteria:
+                        PolicyNumber: ~(//001/PolicyCreationOnQnBuyPortal.PolicyNumber)
+                      ~Gen(AsOfDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                    ~Judgements:
+
+  #                 - ~Activity: # Get the policy state at the latest MTA date associated with the policy
+    #                  ~Label: GetPolicyDetailsForFurthestOutMtaFromSourceAfterMTA
+    #                  ~Role: >
+    #                    Capture the policy details from the PAS at the point of the latest dated taken up MTA
+    #                    Allows validation of whether a 'today' mta is possible
+    #                    Allows selection of a date for a future dated mta
+    #                  ~Type: Act
+    #                  ~Action: GetPolicyDetailsEchelonUI
+    #                  ~ControlData:
+    #                    UserCredentials: *StandardEchelonUserCredentialsSet
+    #                    SearchCriteria:
+    #                      PolicyNumber: ~(//002/WrapupOnEchelon.PolicyNumber)
+    #                    ~Gen(AsOfDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+    #                  ~Judgements:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Login Url
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Index
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EmailSequenceNumber
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: DomainName
+~CommonInitActivities:
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportQuoteDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: QNB-HOME-QUOTE-Data
+        Exports:
+          - TestCases:
+              - A001_Standard_Policy_Data
+            DataItems:
+              - //001/PolicyCreationOnQnBuyPortal._ControlData.QuoteDetails
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId A001_Standard_Policy_Data
+      ~Headline: Add Ageas customer home quotes and policies with Credit Card payment for Quote And Buy General flow package
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                InstanceSalesDetails:
+                  <<: *ComplexPolicyDetails
+              Instances:
+                - Identities:
+                    - TestID|QANDB01_TC001_BuildingType_House
+                  InstanceValues:
+                    Index: A
+                    PaymentMethod: CreditCard
+                    PaymentType: Annually
+                    InsuranceDetails:
+                      BuildingType: Bungalow
+                    ProposerContactDetails:
+                      Title: Ms
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: QuoteCreationOnQnBuyPortal
+                  ~Role: >
+                    Create a new home quote for Ageas on Quote And Buy Portal
+                  ~Type: Act
+                  ~Action: QuoteCreationOnQnBuyPortal
+                  ~ControlData:
+                    ~Ref(SalesDetails): InstanceSalesDetails
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: PolicyCreationOnQnBuyPortal
+                  ~Role: >
+                    Create a home policy with credit card payment method for the Q&B quote created on Portal
+                  ~Type: Act
+                  ~Action: PolicyCreationOnQnBuyPortal
+                  ~ControlData:
+                    QuoteDetails:
+                       ~Ref(DateOfBirth): //001/QuoteCreationOnQnBuyPortal._ControlData.SalesDetails.ProposerPersonalDetails.DateOfBirth
+                       ~Ref(Postcode): //001/QuoteCreationOnQnBuyPortal._ControlData.SalesDetails.InsuranceDetails.BuildingDetails.RiskAddress.Postcode
+                       QuoteReference: ~(//001/QuoteCreationOnQnBuyPortal.QuoteDetails.QuoteReference)
+                    PaymentData:
+                      ProposerIsCardHolder: true
+                      CardPermission: true
+                      Type: Visa
+                      CardHolderName: Test
+                      ExpirationDate: 03/2024
+                      CreditCardNumber: 4444333322221111
+                      CVV: 555
+                    PaymentMethod: ~(PaymentMethod)
+                    #QuoteReference: ~(//001/QuoteCreationOnQnBuyPortal.QuoteDetails.QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:
+
+        - ~Stage: #1 Create Policy on Echelon
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateNewQuoteOnEchelon
+                  ~Role: >
+                    Create a new quote on Echelon UI
+                  ~Type: Act
+                  ~Action: QuoteCreationInEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: 000
+                    ~Ref(SalesDetails): InstanceSalesDetails
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: WrapupOnEchelon
+                  ~Role: >
+                    Creates the policy on Echelon by wrapping up without payment
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber:  ~(//002/CreateNewQuoteOnEchelon.QuoteDetails.ClientNumber)
+                    QuoteDetails:
+                      QuoteReference: ~(//002/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+                    PaymentDetails:
+                      PaymentMethod: NoPayment
+                  ~Judgements:
+                  ~Unconditionals:
+
+        - ~Stage: # 003 Get policy details from the policy admin system for Quote And Buy Policy
+            ~Activities:
+              - ~Activity: # Get the policy state at the latest MTA date associated with the policy
+                  ~Label: GetPolicyDetailsForQuoteAndBuyPolicy
+                  ~Role: >
+                    Capture the policy details from the PAS at the point of the latest dated taken up MTA
+                    Allows validation of whether a 'today' mta is possible
+                    Allows selection of a date for a future dated mta
+                  ~Type: Act
+                  ~Action: GetPolicyDetailsEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      PolicyNumber: ~(//001/PolicyCreationOnQnBuyPortal.PolicyNumber)
+                    ~Gen(AsOfDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                  ~Judgements:
+
+        - ~Stage: # 004 Get policy details for Echelon policy from the policy admin system
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetPolicyDetailsForEchelonPolicyFromThePolicyAdminSystem
+                  ~Role: >
+                    Capture the policy details from the PAS at the point of the latest dated taken up MTA
+                    Allows validation of whether a 'today' mta is possible
+                    Allows selection of a date for a future dated mta
+                  ~Type: Act
+                  ~Action: GetPolicyDetailsEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      PolicyNumber: ~(//002/WrapupOnEchelon.PolicyDetails.PolicyNumber)
+                    ~Gen(AsOfDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+                  ~Judgements:
+
+        - ~Stage: #005 compare Policy Details For Q n B created quote to Echelon created quote
+            ~Activities:
+              - ~Activity:
+                  ~Label: ComparePolicyInfoOfQnbToEchelon
+                  ~Role: >
+                    Comparing the policy details (UniversalView) of a Q n b created policy to Echelon created poicy 
+                    They should be identical
+                  ~Type: Act
+                  ~Action: CompareDataInputs
+                  ~ControlData:
+                    ~Ref(InputA): //003/GetPolicyDetailsForQuoteAndBuyPolicy.CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView
+                    ~Ref(InputB): //004/GetPolicyDetailsForEchelonPolicyFromThePolicyAdminSystem.CustomerPolicyDetailOnEchelon.NormalizedData.HomeInsurance[0].UniversalView
+                  ~Judgements:
+                   - //005/ComparePolicyInfoOfQnbToEchelon.NumDiffs!=0|Fail(UnexpectedPolicyDifference, "Quote and Buy Policy Details Do not Match Echelon")
+
+
+#  - ~TestCase:
+#      ~CaseId: &caseId A002_Complex_Policy
+#      ~Headline: Add Ageas customer home quotes and policies with Credit Card payment for Quote And Buy General flow package
+#      ~InitiationActivities:
+#        - ~Activity:
+#            ~Role: >
+#              Initiate cases
+#            ~Type: Act
+#            ~Action: InitiateList
+#            ~ControlData:
+#              Common:
+#                InstanceSalesDetails:
+#                  <<: *ComplexPolicyDetails
+#              Instances:
+#                - Identities:
+#                    - TestID|QANDB01_TC001_BuildingType_House
+#                  InstanceValues:
+#                    Index: A
+#                    DateOfBirth: 07/05/1989
+#                    CorrespondencePostcode: NG17 3AS
+#                    PaymentMethod: CreditCard
+#                    PaymentType: Annually
+#                    #This overwrites the standard policy details that
+#                    InstanceSalesDetails:
+#                      InsuranceDetails:
+#                        BuildingDetails:
+#                          BuildingType: Bungalow        #
+#
+#      ~Stages:
+#        - ~Stage:
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: QuoteCreationOnQnBuyPortal
+#                  ~Role: >
+#                    Create a new home quote for Ageas on Quote And Buy Portal
+#                  ~Type: Act
+#                  ~Action: QuoteCreationOnQnBuyPortal
+#                  ~ControlData:
+#                    ~Ref(SalesDetails): InstanceSalesDetails
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: PolicyCreationOnQnBuyPortal
+#                  ~Role: >
+#                    Create a home policy with credit card payment method for the Q&B quote created on Portal
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnQnBuyPortal
+#                  ~ControlData:
+#                    QuoteDetails:
+#                      DateOfBirth: ~(DateOfBirth)
+#                      Postcode: ~(CorrespondencePostcode)
+#                    PaymentData:
+#                      ProposerIsCardHolder: true
+#                      CardPermission: true
+#                      Type: Visa
+#                      CardHolderName: Test
+#                      ExpirationDate: 03/2024
+#                      CreditCardNumber: 4444333322221111
+#                      CVV: 555
+#                    PaymentMethod: ~(PaymentMethod)
+#                    #~Ref(PaymentData): InstancePaymentData
+#                    QuoteReference: ~(//001/QuoteCreationOnQnBuyPortal.QuoteDetails.QuoteReference)
+#                  ~Judgements:
+#                  ~Unconditionals:
+#
+#        - ~Stage: #1 Create Policy on Echelon
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: CreateNewQuoteOnEchelon
+#                  ~Role: >
+#                    Create a new quote on Echelon UI
+#                  ~Type: Act
+#                  ~Action: QuoteCreationInEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: 000
+#                    SalesDetails: *StandardPolicyDetails
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: WrapupOnEchelon
+#                  ~Role: >
+#                    Creates the policy on Echelon by wrapping up without payment
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: ~(ClientNumber)
+#                    QuoteDetails:
+#                      QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+#                    PaymentDetails:
+#                      PaymentMethod: NoPayment
+#                  ~Judgements:
+#                  ~Unconditionals:
+
+#        - ~Stage: # 008 Get policy details from the policy admin system and validate state.
+#            ~Activities:
+#              - ~Activity: # Get the policy state at the latest MTA date associated with the policy
+#                  ~Label: GetPolicyDetailsForFurthestOutMtaFromSourceAfterMTA
+#                  ~Role: >
+#                    Capture the policy details from the PAS at the point of the latest dated taken up MTA
+#                    Allows validation of whether a 'today' mta is possible
+#                    Allows selection of a date for a future dated mta
+#                  ~Type: Act
+#                  ~Action: GetPolicyDetailsEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      PolicyNumber: ~(//001/PolicyCreationOnQnBuyPortal.PolicyNumber)
+#                    ~Gen(AsOfDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+#                  ~Judgements:
+
+#  - ~TestCase:
+#      ~CaseId: &caseId A001_Standard_Policy_Data_Variations
+#      ~Headline: Add Ageas customer home quotes and policies with Credit Card payment for Quote And Buy General flow package
+#      ~InitiationActivities:
+#        - ~Activity:
+#            ~Role: >
+#              Initiate cases
+#            ~Type: Act
+#            ~Action: InitiateList
+#            ~ControlData:
+#              Common:
+#                #EmailSequenceNumber: "000"
+#                #DomainName: n0ie34cm.mailosaur.net
+#                InstanceSalesDetails:
+#                  <<: *StandardPolicyDetails
+#              Instances:
+#                - Identities:
+#                    - TestID|QANDB01_TC001_PropertyType_Detached_Bungalow
+#                  InstanceValues:
+#                    Index: A
+#                    DateOfBirth: 07/05/1989
+#                    CorrespondencePostcode: NG17 3AS
+#                    PaymentMethod: CreditCard
+#                    PaymentType: Annually
+#                    #This overwrites the standard policy details that
+#                    InstanceSalesDetails:
+#                      InsuranceDetails:
+#                        BuildingDetails:
+#                          BuildingType: Bungalow
+#                          StructureType: Detached
+#                - Identities:
+#                    - TestID|QANDB01_TC001_ProprtyType_Semi_Detached_Bungalow
+#                  InstanceValues:
+#                    Index: A
+#                    DateOfBirth: 07/05/1989
+#                    CorrespondencePostcode: NG17 3AS
+#                    PaymentMethod: CreditCard
+#                    PaymentType: Annually
+#                    #This overwrites the standard policy details
+#                    InstanceSalesDetails:
+#                      InsuranceDetails:
+#                        BuildingDetails:
+#                          BuildingType: Bungalow
+#                          StructureType: Semi-Detached
+#
+#      ~Stages:
+#        - ~Stage:
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: QuoteCreationOnQnBuyPortal
+#                  ~Role: >
+#                    Create a new home quote for Ageas on Quote And Buy Portal
+#                  ~Type: Act
+#                  ~Action: QuoteCreationOnQnBuyPortal
+#                  ~ControlData:
+#                    ~Ref(SalesDetails): InstanceSalesDetails
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: PolicyCreationOnQnBuyPortal
+#                  ~Role: >
+#                    Create a home policy with credit card payment method for the Q&B quote created on Portal
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnQnBuyPortal
+#                  ~ControlData:
+#                    QuoteDetails:
+#                      DateOfBirth: ~(DateOfBirth)
+#                      Postcode: ~(CorrespondencePostcode)
+#                    PaymentData:
+#                      ProposerIsCardHolder: true
+#                      CardPermission: true
+#                      Type: Visa
+#                      CardHolderName: Test
+#                      ExpirationDate: 03/2024
+#                      CreditCardNumber: 4444333322221111
+#                      CVV: 555
+#                    PaymentMethod: ~(PaymentMethod)
+#                    #~Ref(PaymentData): InstancePaymentData
+#                    QuoteReference: ~(//001/QuoteCreationOnQnBuyPortal.QuoteDetails.QuoteReference)
+#                  ~Judgements:
+#                  ~Unconditionals:
+#
+#        - ~Stage: #1 Create Policy on Echelon
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: CreateNewQuoteOnEchelon
+#                  ~Role: >
+#                    Create a new quote on Echelon UI
+#                  ~Type: Act
+#                  ~Action: QuoteCreationInEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: 000
+#                    SalesDetails: *StandardPolicyDetails
+#                  ~Unconditionals:
+#              - ~Activity:
+#                  ~Label: WrapupOnEchelon
+#                  ~Role: >
+#                    Creates the policy on Echelon by wrapping up without payment
+#                  ~Type: Act
+#                  ~Action: PolicyCreationOnEchelonUI
+#                  ~ControlData:
+#                    UserCredentials: *StandardEchelonUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: ~(ClientNumber)
+#                    QuoteDetails:
+#                      QuoteReference: ~(//001/CreateNewQuoteOnEchelon.QuoteDetails.QuoteReference)
+#                    PaymentDetails:
+#                      PaymentMethod: NoPayment
+#                  ~Judgements:
+#                  ~Unconditionals:
+
+  #        - ~Stage: # 008 Get policy details from the policy admin system and validate state.
+  #            ~Activities:
+  #              - ~Activity: # Get the policy state at the latest MTA date associated with the policy
+  #                  ~Label: GetPolicyDetailsForFurthestOutMtaFromSourceAfterMTA
+  #                  ~Role: >
+  #                    Capture the policy details from the PAS at the point of the latest dated taken up MTA
+  #                    Allows validation of whether a 'today' mta is possible
+  #                    Allows selection of a date for a future dated mta
+  #                  ~Type: Act
+  #                  ~Action: GetPolicyDetailsEchelonUI
+  #                  ~ControlData:
+  #                    UserCredentials: *StandardEchelonUserCredentialsSet
+  #                    SearchCriteria:
+  #                      PolicyNumber: ~(//001/PolicyCreationOnQnBuyPortal.PolicyNumber)
+  #                    ~Gen(AsOfDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+  #                  ~Judgements:
+

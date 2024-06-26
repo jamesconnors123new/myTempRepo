@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GetPolicyInformationPortal(x10)" type="Application" factoryName="Application" folderName="OperationTests">
+    <envs>
+      <env name="PortalLoginURL" value="https://portaltest.ageascloud.co.uk/login" />
+      <env name="StandardPortalUserName" value="HE22757069586@ageas.co.uk" />
+      <env name="StandardPortalPassword" value="Password123" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/OpertationTests/GetPolicyDetailsPortalUIx10.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

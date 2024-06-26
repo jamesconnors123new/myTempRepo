@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PerformRateableMtaOnHomePolicy(x10)" type="Application" factoryName="Application" folderName="OperationTests">
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/OpertationTests/PerformRatableMTAOnHomePolicyx10.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,8 @@
+- Data: {QuoteReference: 8891445/001, WebReference: 10184-01317-30386, ClientNumber: '8891445',
+    QuoteValue: 550.77}
+  Id: ECHELON_CLIENTS_0001-2fe453c6-0e3a-4e93-bbf4-d95eebbf0591
+  IdTags: {TestID: '-02'}
+- Data: {QuoteReference: 8891444/001, WebReference: 64108-13190-81317, ClientNumber: '8891444',
+    QuoteValue: 550.77}
+  Id: ECHELON_CLIENTS_0001-d7d2aa16-e965-40a6-987f-68e4a627f9e6
+  IdTags: {TestID: '-01'}

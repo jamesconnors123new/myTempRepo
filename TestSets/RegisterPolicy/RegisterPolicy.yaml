@@ -1,0 +1,303 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-001
+      ~Headline: Register Policy - Registered
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-001
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckPolicyNumberExists
+                  ~Role: >
+                    Prior to checking policy has not been digitally claimed, validate Policy Number exists
+                  ~Type: Act
+                  ~Action: ValidationChecks
+                  ~ControlData:
+                    PolNum: GDCCA06498354
+                  ~Judgements:
+                    - validPolicyNumber!=TRUE|HardRunFault("Policy Number is not valid")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: CheckNoRegistration
+                  ~Role: >
+                    Prior to enacting registration check this customer has no policies registered
+                  ~Type: Act
+                  ~Action: ActiveWebUserCheck
+                  ~ControlData:
+                    Email: bstofportalreg37@ageas.co.uk
+                  ~Judgements:
+                    - activeWebUserFound=TRUE|HardRunFault("Active Web User found prior to registration")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal
+                  ~Type: Act
+                  ~Action: RegisterPolicy
+                  ~ControlData:
+                    PolNum: ~(//001/CheckPolicyNumberExists.stageData.policyNumber)
+                    Username: ~(//001/CheckNoRegistration.stageData.email)
+                    Password: ~(DefaultPassword)
+                    Postcode: ~(//001/CheckPolicyNumberExists.responseData.postcode)
+                    Dob: ~(//001/CheckPolicyNumberExists.responseData.dob)
+                  ~Judgements:
+                    - registered!=TRUE|Fail(SuccessIndicatorMissing,"Registration Successful indicator NOT found on UI")
+                    - alreadyRegistered=TRUE|Fail(AlreadyRegisteredIndicatorFound,"Already registered indicator found on UI")
+                    - invalidPolicyRecord=TRUE|Fail(ErrorContentIndicatorFound,"Invalid Policy Ref indicator found on UI")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: PostRegistrationPolicyMatch
+                  ~Role: >
+                    Post registration check customer has portal account and associated policy matches
+                  ~Type: Act
+                  ~Action: WebUserPolicyMatcher
+                  ~ControlData:
+                    Email: ~(//001/CheckNoRegistration.stageData.email)
+                    PolNum: ~(//001/CheckPolicyNumberExists.stageData.policyNumber)
+                  ~Judgements:
+                    - policyRecordMatch!=TRUE|Fail(PolicyRecordNotMatched,"Policy Record NOT matched with Web User")
+                    - policyCount<1|Fail(NoPoliciesFound,"No policies found for Web User")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-002
+      ~Headline: Register Policy - Already Registered
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-002
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckPolicyNumberExists
+                  ~Role: >
+                    Prior to checking policy has been digitally claimed, validate Policy Number exists
+                  ~Type: Act
+                  ~Action: ValidationChecks
+                  ~ControlData:
+                    PolNum: ~(DefaultClaimedPolicyNumber)
+                  ~Judgements:
+                    - validPolicyNumber!=TRUE|HardRunFault("Policy Number is not valid")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: CheckAlreadyRegistered
+                  ~Role: >
+                    Prior to enacting registration check this customer already registered
+                  ~Type: Act
+                  ~Action: ActiveWebUserCheck
+                  ~ControlData:
+                    Email: ~(DefaultRegisteredEmail)
+                  ~Judgements:
+                    - activeWebUserFound!=TRUE|HardRunFault("Active Web User NOT found prior to registration")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal
+                  ~Type: Act
+                  ~Action: RegisterPolicy
+                  ~ControlData:
+                    PolNum: ~(//001/CheckPolicyNumberExists.stageData.policyNumber)
+                    Username: ~(//001/CheckAlreadyRegistered.stageData.email)
+                    Password: ~(DefaultPassword)
+                    Postcode: ~(//001/CheckPolicyNumberExists.responseData.postcode)
+                    Dob: ~(//001/CheckPolicyNumberExists.responseData.dob)
+                  ~Judgements:
+                    - registered=TRUE|Fail(SuccessIndicatorFound,"Registration Successful indicator found")
+                    - alreadyRegistered!=TRUE|Fail(AlreadyRegisteredIndicatorMissing,"Already registered indicator not found")
+                    - invalidPolicyRecord=TRUE|Fail(ErrorContentIndicatorFound,"Invalid Policy Ref indicator found")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-003
+      ~Headline: Register Policy - Invalid Customer Record - Policy Number
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-003
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckPolicyNumberDoesNotExists
+                  ~Role: >
+                    Prior to attempting to register policy, check Policy Number does NOT exist
+                  ~Type: Act
+                  ~Action: ValidationChecks
+                  ~ControlData:
+                    PolNum: DDCCA06499167
+                  ~Judgements:
+                    - validPolicyNumber=TRUE|HardRunFault("Policy Number should NOT be valid but is")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal using an invalid Policy Number
+                  ~Type: Act
+                  ~Action: RegisterPolicy
+                  ~ControlData:
+                    PolNum: ~(//001/CheckPolicyNumberDoesNotExists.stageData.policyNumber)
+                    Username: ~(DefaultUnregisteredEmail)
+                    Password: ~(DefaultPassword)
+                    Postcode: NN48TQ
+                    Dob: 1965/01/01
+                  ~Judgements:
+                    - registered=TRUE|Fail(SuccessIndicatorFound,"Registration Successful indicator found")
+                    - alreadyRegistered=TRUE|Fail(AlreadyRegisteredIndicatorFound,"Already registered indicator found")
+                    - invalidPolicyRecord!=TRUE|Fail(ErrorContentIndicatorMissing,"Invalid Policy Ref indicator not found")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-004
+      ~Headline: Register Policy - Invalid Customer Record - Postcode
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-004,
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckPostcodeIsNotValid
+                  ~Role: >
+                    Prior to attempting to register policy, check postcode does NOT match policy record
+                  ~Type: Act
+                  ~Action: GetPolicyInformation
+                  ~ControlData:
+                    PolNum: GDCCA06499172
+                   # Postcode: NE48TQ
+                  ~Judgements:
+                    - postcode=~(postcode)|HardRunFault("Postcode should NOT match policy record but does")
+                    - dob!=1950-01-01|
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal using a postcode that does NOT match customer record
+                  ~Type: Act
+                  ~Action: RegisterPolicy
+                  ~ControlData:
+                    PolNum: ~(//001/CheckPostcodeIsNotValid.stageData.policyNumber)
+                    Username: ~(DefaultUnregisteredEmail)
+                    Password: ~(DefaultPassword)
+                    Postcode: ~(//001/CheckPostcodeIsNotValid.stageData.postcode)
+                    Dob: ~(//001/CheckPostcodeIsNotValid.responseData.dob)
+                  ~Judgements:
+                    - registered=TRUE|Fail(SuccessIndicatorFound,"Registration Successful indicator found")
+                    - alreadyRegistered=TRUE|Fail(AlreadyRegisteredIndicatorFound,"Already registered indicator found")
+                    - invalidPostcode!=TRUE|Fail(ErrorContentIndicatorMissing,"Invalid Postcode indicator not found")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-005
+      ~Headline: Register Policy - Invalid Customer Record - DOB
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-005
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CheckDateOfBirthIsNotValid
+                  ~Role: >
+                    Prior to attempting to register policy, check date of birth does NOT match policy record
+                  ~Type: Act
+                  ~Action: ValidationChecks
+                  ~ControlData:
+                    PolNum: GDCCA06499172
+                    Dob: 1965/01/02
+                  ~Judgements:
+                    - dobMatch=TRUE|HardRunFault("DOB should NOT match policy record but does")
+                    - internalServerError=TRUE|HardRunFault("Server error calling API")
+                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: RegisterPolicy
+                  ~Role: >
+                    Register policy on customer Portal using date of birth that does NOT match customer record
+                  ~Type: Act
+                  ~Action: RegisterPolicy
+                  ~ControlData:
+                    PolNum: ~(//001/CheckDateOfBirthIsNotValid.stageData.policyNumber)
+                    Username: ~(DefaultUnregisteredEmail)
+                    Password: ~(DefaultPassword)
+                    Postcode: ~(//001/CheckDateOfBirthIsNotValid.responseData.postcode)
+                    Dob: ~(//001/CheckDateOfBirthIsNotValid.stageData.dob)
+                  ~Judgements:
+                    - registered=TRUE|Fail(SuccessIndicatorFound,"Registration Successful indicator found")
+                    - alreadyRegistered=TRUE|Fail(AlreadyRegisteredIndicatorFound,"Already registered indicator found")
+                    - invalidDob!=TRUE|Fail(ErrorContentIndicatorMissing,"Invalid DOB indicator not found")
+                  ~Unconditionals:

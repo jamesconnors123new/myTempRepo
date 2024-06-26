@@ -1,0 +1,255 @@
+~Templates:
+  CredentialsSets:
+    StandardPortalUserCredentialsSet: &StandardPortalUserCredentialsSet
+      Email: ~(PolicyNumber)@ageas.co.uk
+      Password: ~(StandardPortalPassword)
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+              Instances:
+                - Identities:
+                    - TestID|EX-CP-0001
+                  InstanceValues:
+                    PolicyNumber: HE22757069915
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: add
+                          BuildingVoluntaryExcess: ++51
+                        ContentsCover:
+                          ContentVoluntaryExcess: --50
+                          AccidentalCover: add
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 3
+                          ContentCoverAmount: 85000
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: 5000
+                - Identities:
+                    - TestID|EX-CP-0002
+                  InstanceValues:
+                    PolicyNumber: HE22757069916
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: remove
+                          BuildingVoluntaryExcess: $$
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 4
+                          ContentCoverAmount: $$
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: $$
+                          ContentVoluntaryExcess: $$
+                          AccidentalCover: add
+                - Identities:
+                    - TestID|EX-CP-0003
+                  InstanceValues:
+                    PolicyNumber: HE22757069917
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: remove
+                          BuildingVoluntaryExcess: $+
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 9
+                          ContentCoverAmount: $+
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: $+
+                          ContentVoluntaryExcess: $+
+                          AccidentalCover: add
+                - Identities:
+                    - TestID|EX-CP-0004
+                  InstanceValues:
+                    PolicyNumber: HE22757069918
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: remove
+                          BuildingVoluntaryExcess: $+
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 8
+                          ContentCoverAmount: $+
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: $+
+                          ContentVoluntaryExcess: 400
+                          AccidentalCover: add
+                - Identities:
+                    - TestID|EX-CP-0005
+                  InstanceValues:
+                    PolicyNumber: HE22757069919
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: remove
+                          BuildingVoluntaryExcess: ++250
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 6
+                          ContentCoverAmount: ++6000
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: ++500
+                          ContentVoluntaryExcess: ++56
+                          AccidentalCover: remove
+                - Identities:
+                    - TestID|EX-CP-0006
+                  InstanceValues:
+                    PolicyNumber: HE22757069920
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: remove
+                          BuildingVoluntaryExcess: ++50
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 9
+                          ContentCoverAmount: ++5000
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: ++500
+                          ContentVoluntaryExcess: $$
+                          AccidentalCover: add
+                - Identities:
+                    - TestID|EX-CP-0007
+                  InstanceValues:
+                    PolicyNumber: HE22757069921
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: add
+                          BuildingVoluntaryExcess: ++50
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 4
+                          ContentCoverAmount: $+
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: $+
+                          ContentVoluntaryExcess: $+
+                          AccidentalCover: add
+                - Identities:
+                    - TestID|EX-CP-0008
+                  InstanceValues:
+                    PolicyNumber: HE22757069922
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: remove
+                          BuildingVoluntaryExcess: 800
+                        ContentsCover:
+                          ContentVoluntaryExcess: 800
+                          AccidentalCover: remove
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 3
+                          ContentCoverAmount: 85000
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: 5000
+                - Identities:
+                    - TestID|EX-CP-0009
+                  InstanceValues:
+                    PolicyNumber: HE22757069923
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: add
+                          BuildingVoluntaryExcess: $$
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 2
+                          ContentCoverAmount: $$
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: $$
+                          ContentVoluntaryExcess: $$
+                          AccidentalCover: add
+                - Identities:
+                    - TestID|EX-CP-0010
+                  InstanceValues:
+                    PolicyNumber: HE22757069924
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|1|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: HomeCover
+                      HomePolicyCover:
+                        BuildingCover:
+                          AccidentalCover: add
+                          BuildingVoluntaryExcess: ++67
+                        ContentsCover:
+                          ContentCoverWithin2Years: yes
+                          ClaimFreeYears: 1
+                          ContentCoverAmount: ++5000
+                          PersBelongAwayFromHomCoverChange: yes
+                          PersBelongingCoverAmount: ++500
+                          ContentVoluntaryExcess: 900
+                          AccidentalCover: add
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: PerformRatableMTAOnHomePolicy
+                  ~Role: >
+                    Perform MTA on a policy
+                  ~Type: Act
+                  ~Action: PerformMTAOnPolicy
+                  ~ControlData:
+                    CustomerCredentials: *StandardPortalUserCredentialsSet
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                    MTAEffectiveDate: ~(MtaEffectiveDate)
+                    ~Ref(MTASpec): InstanceMTASpec
+                  ~Judgements:
+                  ~Unconditionals:
+              - ~Activity:
+                  ~Label: PaymentForRatableHomeInsuranceOnPortal
+                  ~Role: >
+                    portal.
+                  ~Type: Check
+                  ~Action: PaymentOnPortal
+                  ~ControlData:
+                    CustomerCredentials: *StandardPortalUserCredentialsSet
+                    InsuranceType: Home
+                    CardDetails:
+                      PaymentInsuranceType: Home
+                      CardNumber: 4444333322221111
+                      CardHolderName: George Byrd
+                      CVVNumber: 555
+                  ~Judgements:
+
+                  ~Unconditionals:

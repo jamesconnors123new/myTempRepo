@@ -1,0 +1,154 @@
+~GlobalSettings:
+  #RunId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: RunId
+  #Default Password
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultPassword
+      ~Val: Mypwd123!
+  #Unregistered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultUnregisteredEmail
+      ~Val: constunregistered1@ageas.co.uk
+  #Registered Email(Username)
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultRegisteredEmail
+      ~Val: bstofportalreg4@ageas.co.uk
+  #Digitally Claimed Policy Number
+  #associated with 'Registered Email'
+  - ~Setting:
+      ~Src: Local
+      ~Id: DefaultClaimedPolicyNumber
+      ~Val: GDCCA06498321
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-001
+      ~Headline: GetMarketingPermissions - House - All No
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-001
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetMarketingPermissions
+                  ~Role: >
+                    Retrieve Marketing Permissions form the CRM for a House customer who opted all No
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: allprefno@ageas.co.uk
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Email address did not match a valid user in the CRM")
+                    - strEq(CRM.Customer.MarketingEmail,"No")=FALSE|Fail(MarketingEmail,"Email marketing permission returned ~(CRM.Customer.MarketingEmail) but expected No")
+                    - strEq(CRM.Customer.MarketingPost,"No")=FALSE|Fail(MarketingPost,"Postal marketing permission returned ~(CRM.Customer.MarketingPost) but expected No")
+                    - strEq(CRM.Customer.MarketingSMS,"No")=FALSE|Fail(MarketingSMS,"SMS marketing permission returned ~(CRM.Customer.MarketingSMS) but expected No")
+                    - strEq(CRM.Customer.MarketingCall,"No")=FALSE|Fail(MarketingCall,"Telephone marketing permission returned ~(CRM.Customer.MarketingCall) but expected No")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-002
+      ~Headline: GetMarketingPermissions - House - All Yes
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-002
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetMarketingPermissions
+                  ~Role: >
+                    Retrieve Marketing Permissions form the CRM for a House customer who opted all Yes
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: prefyes@ageas.co.uk
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Email address did not match a valid user in the CRM")
+                    - strEq(CRM.Customer.MarketingEmail,"Yes")=FALSE|Fail(MarketingEmail,"Email marketing permission returned ~(CRM.Customer.MarketingEmail) but expected Yes")
+                    - strEq(CRM.Customer.MarketingPost,"Yes")=FALSE|Fail(MarketingPost,"Postal marketing permission returned ~(CRM.Customer.MarketingPost) but expected Yes")
+                    - strEq(CRM.Customer.MarketingSMS,"Yes")=FALSE|Fail(MarketingSMS,"SMS marketing permission returned ~(CRM.Customer.MarketingSMS) but expected Yes")
+                    - strEq(CRM.Customer.MarketingCall,"Yes")=FALSE|Fail(MarketingCall,"Telephone marketing permission returned ~(CRM.Customer.MarketingCall) but expected Yes")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-003
+      ~Headline: GetMarketingPermissions - Van - All Yes
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-003
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetMarketingPermissions
+                  ~Role: >
+                    Retrieve Marketing Permissions form the CRM for a Van customer who opted all Yes
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: vanallyes1@ageas.co.uk
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Email address did not match a valid user in the CRM")
+                    - strEq(CRM.Customer.MarketingEmail,"Yes")=FALSE|Fail(MarketingEmail,"Email marketing permission returned ~(CRM.Customer.MarketingEmail) but expected Yes")
+                    - strEq(CRM.Customer.MarketingPost,"Yes")=FALSE|Fail(MarketingPost,"Postal marketing permission returned ~(CRM.Customer.MarketingPost) but expected Yes")
+                    - strEq(CRM.Customer.MarketingSMS,"Yes")=FALSE|Fail(MarketingSMS,"SMS marketing permission returned ~(CRM.Customer.MarketingSMS) but expected Yes")
+                    - strEq(CRM.Customer.MarketingCall,"Yes")=FALSE|Fail(MarketingCall,"Telephone marketing permission returned ~(CRM.Customer.MarketingCall) but expected Yes")
+                  ~Unconditionals:
+  - ~TestCase:
+      ~CaseId: &caseId EX-A01-004
+      ~Headline: GetMarketingPermissions - Van - All No
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: SimpleInitiate
+            ~ControlData:
+              Identities:
+                - TestID|EX-A01-004
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetMarketingPermissions
+                  ~Role: >
+                    Retrieve Marketing Permissions form the CRM for a Van customer who opted all No
+                  ~Type: Act
+                  ~Action: CheckCRM
+                  ~ControlData:
+                    CustomerCredentials:
+                      Email: vanallno2@ageas.co.uk
+                  ~Judgements:
+                    - CRM.Customer.Match=FALSE|HardRunFault("Email address did not match a valid user in the CRM")
+                    - strEq(CRM.Customer.MarketingEmail,"No")=FALSE|Fail(MarketingEmail,"Email marketing permission returned ~(CRM.Customer.MarketingEmail) but expected No")
+                    - strEq(CRM.Customer.MarketingPost,"No")=FALSE|Fail(MarketingPost,"Postal marketing permission returned ~(CRM.Customer.MarketingPost) but expected No")
+                    - strEq(CRM.Customer.MarketingSMS,"No")=FALSE|Fail(MarketingSMS,"SMS marketing permission returned ~(CRM.Customer.MarketingSMS) but expected No")
+                    - strEq(CRM.Customer.MarketingCall,"No")=FALSE|Fail(MarketingCall,"Telephone marketing permission returned ~(CRM.Customer.MarketingCall) but expected No")
+                  ~Unconditionals:

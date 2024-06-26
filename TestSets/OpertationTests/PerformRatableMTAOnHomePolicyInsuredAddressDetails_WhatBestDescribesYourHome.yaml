@@ -1,0 +1,57 @@
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: Local
+      ~Id: EchelonLoginURL
+      ~Val: https://injector-uat.ageas.co.uk/strata/ageas/household/login
+  - ~Setting: #Portal Login
+      ~Src: Local
+      ~Id: PortalLoginURL
+      ~Val: https://portaltest.ageascloud.co.uk/login
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0001
+      ~Headline: Perform MTA
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                PortalLoginURL: ~(PortalLoginURL)
+              Instances:
+                - Identities:
+                  - TestID|EX-CP-0009
+                  InstanceValues:
+                    PolicyNumber: HE22757070134
+                    ~Gen(MtaEffectiveDate): DateRelToTodayAsStr|0|dd/MM/yyy
+                    InstanceMTASpec:
+                      MTAType: InsuredAddressDetails
+                      PropertyDetails:
+                        InsuredAddressDetails:
+                          WhatBestDescribesYourHome: SemiDetached
+
+
+
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: PerformRatableMTAOnHomePolicy
+                  ~Role: >
+                    Perform MTA on a policy
+                  ~Type: Act
+                  ~Action: PerformMTAOnPolicy
+                  ~ControlData:
+                    CustomerCredentials: &CustomerCred #tag credentials for use later in the test
+                      Email: ~(PolicyNumber)@ageas.co.uk
+                      Password: Password123
+                    SearchCriteria:
+                      PolicyNumber: ~(PolicyNumber)
+                    MTAEffectiveDate: ~(MtaEffectiveDate)
+                    ~Ref(MTASpec): InstanceMTASpec
+                  ~Judgements:
+                  ~Unconditionals:

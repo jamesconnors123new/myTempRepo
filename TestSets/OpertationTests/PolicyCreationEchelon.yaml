@@ -1,0 +1,117 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEchelonUserCredentialsSet: &StandardEchelonUserCredentialsSet
+      Email: ~(StandardEchelonUserName)
+      Password: ~(StandardEchelonPassword)
+
+  People:
+    Person01: &Person01
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: (None)
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employee
+        Type: BakeryAssistant
+        Industry: FastFood
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsurancePreviouslyRefused: false
+
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EchelonLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEchelonPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardPortalPassword
+  - ~Setting: #Portal Login
+      ~Src: EnvVar
+      ~Id: PortalLoginURL
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-CP-0009
+      ~Headline: Create a New Policy on Echelon
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+                Team: T3
+                LogicalPattern: Mta
+                AreaOfTesting: Por
+                AreaOfBusiness: Bau
+                TestingType: f
+                TestingTeam: Auto
+                EmailSequenceNumber: "000"
+                ClientGroupId: ~(ClientGroupId)
+                DomainName: n0ie34cm.mailosaur.net
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    ClientNumber: 8186481
+                    QuoteReference: 8186481/009
+                - Identities:
+                    - TestID|EX-DB-0001-02
+                  InstanceValues:
+                    ClientNumber: 8186504
+                    QuoteReference: 8186504/008
+                - Identities:
+                    - TestID|EX-DB-0001-03
+                  InstanceValues:
+                    ClientNumber: 8186545
+                    QuoteReference: 8186545/012
+                - Identities:
+                    - TestID|EX-DB-0001-04
+                  InstanceValues:
+                    ClientNumber: 8238486
+                    QuoteReference: 8238486/008
+                - Identities:
+                    - TestID|EX-DB-0001-05
+                  InstanceValues:
+                    ClientNumber: 8239085
+                    QuoteReference: 8239085/030
+      ~Stages:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateNewPolicyOnEchelon
+                  ~Role: >
+                    Capture policy details from portal before MTA
+                  ~Type: Act
+                  ~Action: PolicyCreationOnEchelonUI
+                  ~ControlData:
+                    UserCredentials: *StandardEchelonUserCredentialsSet
+                    SearchCriteria:
+                      ClientNumber: ~(ClientNumber)
+                    QuoteDetails:
+                      QuoteReference: ~(QuoteReference)
+                  ~Judgements:
+                  ~Unconditionals:
+

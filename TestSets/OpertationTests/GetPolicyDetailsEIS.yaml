@@ -1,0 +1,462 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientNumber: &SelectCustomerByPolicyNumber
+      PolicyNumber: ~(PolicyNumber)
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+    EisCoreUserCredentialsSet: &CoreUserCredentialsSet
+      Email: ~(CoreEisUserName)
+      Password: ~(CoreEisPassword)
+  People:
+    Person01: &JphPerson01
+      Title: Mr
+      FirstName: JPHFirstName
+      LastName: JPHLastName
+      MaritalStatus: Single
+      ~Gen(DateOfBirth): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      Gender: Male
+      ~Gen(UkResidentSince): DateRelToTodayAsStr|-12800|dd/MM/yyyy #39 years Old
+      RelationshipWithPolicyholder: NotApplicable
+      PrimaryEmploymentStatus:
+        Employed: true
+        Category: Employed
+        Type: Bakery Assistant
+        Industry: Fast Food
+      SecondaryEmploymentStatus:
+        Employed: false
+      InsuranceHistory:
+        InsurancePreviouslyRefused: false
+      NonRtaConvictions: false
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting: #Echelon Home
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: CoreEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+
+~CommonInitActivities:
+
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EX-DB-0001
+      ~Headline: Retrieve Policy details
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    CustomerBrand: Ageas
+                    PolicyBrand: Ageas
+                    Affinity: AHCC
+                    JointPolicyHolderStatus: false
+                    Title: Lady
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)BA
+                    MaritalStatus: Single
+                    Gender: Female
+                    CorrespondenceHouseIdentifier: 18, Allerton Road
+                    CorrespondencePostcode: L25 7SF
+                    RiskAddressHouseIdentifier: 14
+                    RiskPostcode: WD24 4RG
+                    BuildingsCover: true
+                    ContentsCover: false
+                    DocumentDeliveryMethod: Print
+                    PaymentType: Monthly
+                    PaymentMethod: CreditCard
+                    ~Gen(DateOfBirth): DateRelToTodayAsStr|-14910|dd/MM/yyyy #29 years Old
+                    ~Gen(UkResidentSince): DateRelToTodayAsStr|-2900|dd/MM/yyyy #9 years Old
+                    PropertyOwned: OwnedOnMortgage # Owned Outright
+                    BuildingType: Bungalow
+                    StructureType: End Terraced Bungalow
+                    ClaimHistoryAvailable: false
+                    SpecifiedItemsAvailable: false
+                    PolicyNumber: HH0000000003711 #HH0000000003433 #HH0000000005859 # HH0000000003537  #HH0000000003534  #HH0000000003411 #HH0000000003472 # #HH0000000003439 #HH0000000003433 #HH0000000003427 # HH0000000003433 #HH0000000003401 #CV0000000001967 #HH0000000000613
+      #                - Identities:
+      #                    - TestID|EX-DB-0001-02
+      #                  InstanceValues:
+      #                    PolicyNumber: HH0000000003534 #CV0000000002812 #CV0000000002093 #CV0000000000557
+      #                - Identities:
+      #                    - TestID|EX-DB-0001-03
+      #                  InstanceValues:
+      #                    PolicyNumber: HH0000000003411 #CV0000000002812 #CV0000000001846 # Van
+      #                - Identities:
+      #                    - TestID|EX-DB-0001-04
+      #                  InstanceValues:
+      #                    PolicyNumber: HH0000000003472 #CV0000000001967  # Motor
+      #                - Identities: #UAT
+      #                    - TestID|EX-DB-0001-05
+      #                  InstanceValues:
+      #                    PolicyNumber: HH0000000003439  # IC0000001972
+
+
+      ~Stages:
+#        - ~Stage:
+#            ~Activities:
+#              - ~Activity:
+#                  ~Label: QuoteCreationInEis
+#                  ~Role: >
+#                    Create a new home quote for Ageas on EIS
+#                  ~Type: Act
+#                  ~Action: QuoteCreationInEis
+#                  ~ControlData:
+#                    UserCredentials: *StandardEisUserCredentialsSet
+#                    CoreAppUserCredentials: *CoreUserCredentialsSet
+#                    SearchCriteria:
+#                      ClientNumber: IC0000002604
+#                    SalesDetails:
+#                      QuotesDetails:
+#                        Affinity: ~(Affinity)
+#                        Brand: ~(PolicyBrand)
+#                        ProductType: Home
+#                        ~Gen(InceptionDate): DateRelToTodayAsStr|0|dd/MM/yyyy
+#                      ClaimHistoryAvailable: ~(ClaimHistoryAvailable)
+#                      ~Ref(ClaimHistory): InstanceClaimHistory
+#                      InsuranceDetails:
+#                        TypeOfHouseHoldCover:
+#                          Buildings: ~(BuildingsCover)
+#                          Contents: ~(ContentsCover)
+#                          BuildingAccidentalDamage: false
+#                          ContentAccidentalDamage: false
+#                          ~Ref(OptionalExtras): InstanceOptionalExtras
+#                        InsuredAmount:
+#                          BuildingVoluntaryExcess: 100
+#                          ContentVoluntaryExcess: 100
+#                          RebuildingCost: 100000
+#                          ContentSum: 70000
+#                        InsuranceHistory:
+#                          ContentClaimFreeYears: 0
+#                          BuildingClaimFreeYears: 0
+#                          InsurancePreviouslyRefused: false
+#                          PreviousInsurance: false
+#                        ContentDetails:
+#                          Safe: true
+#                          SpecifiedItemsAvailable: ~(SpecifiedItemsAvailable)
+#                          ~Ref(SpecifiedItems): InstanceSpecifiedItems
+#                          UnspecifiedItems:
+#                            CoverStatus: true
+#                            ItemAmount: 3333
+#                        BuildingDetails:
+#                          BuildingType: ~(BuildingType)
+#                          StructureType: ~(StructureType)
+#                          ConstructionType: Standard
+#                          YearBuilt: 2010
+#                          NumberOfBedrooms: 2
+#                          BuildingAddress:
+#                            HouseIdentifier: ~(RiskAddressHouseIdentifier)
+#                            Postcode: ~(RiskPostcode)
+#                          AdditionalInformation:
+#                            ListingStatus: false
+#                            BuildingWorkStatus: false
+#                            GoodRepairStatus: true
+#                            GeologicalThreats: false
+#                            FreeFromFloodingThreats: true
+#                        Usage:
+#                          NonFamilyLodger: false
+#                          LetWithSublet: false
+#                          BusinessUsage:
+#                            BusinessUse: false
+#                            ClericalUse: false
+#                            PropertyUse: meetings
+#                          HolidayHomeStatus: false
+#                          Occupancy: Occupied
+#                        Security:
+#                          Locks: true
+#                          Alarms: Basic DIY Alarm
+#                          NeighbourhoodWatch: true
+#                        ProposerRelationshipToRisk:
+#                          LegalRelationship: Owned
+#                          FirstTimeBuyers: false
+#                      PreferredDeliveryMethod: ~(DocumentDeliveryMethod)
+#                      ProposerPersonalDetails:
+#                        CorrespondenceAddress: &ProposerContactDetails1
+#                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+#                          Postcode: ~(CorrespondencePostcode)
+#                        PrimaryEmploymentStatus:
+#                          Employed: true
+#                          Category: Employee
+#                          Type: Bakery Assistant
+#                          Industry: Fast Food
+#                        SecondaryEmploymentStatus:
+#                          Employed: false
+#                      OtherDetails:
+#                        SufferedLossNotResultedInClaim: false
+#                      DynamicUnderwriterQuestions:
+#                        WallConstructionType: Brick
+#                        RoofConstructionType: Concrete
+#                        NumberOfDaysPropertyLeftUnoccupied: 0
+#                        PercentageOfFlatRoof: 35
+#                        PaymentType: ~(PaymentType)
+#                        UnsatisfiedCountyCourtJudgements: false
+#                        ResidentDeclaredBankrupt: false
+#                        ExtendedHouse: false
+#                        NumberOfBathroom: 1
+#                        UnspentCriminalConviction: false
+#                        NumberOfPeopleLive:
+#                          Children: 2
+#                          Adult: 2
+#                          Pet:
+#                            Cat: false
+#                            Dog: true
+#                            Other: false
+#                        PropertyOwned: ~(PropertyOwned)
+#                      JointPolicyHolderStatus: ~(JointPolicyHolderStatus)
+#                      JointPolicyHolderDetails: *JphPerson01
+#                      ConsentToRenew: true
+#                      ~Ref(Endorsement): InstanceEndorsement
+#                  ~Unconditionals:
+        - ~Stage:
+            ~Activities:
+              - ~Activity:
+                  ~Label: GetPolicyDetailsEis
+                  ~Role: >
+                    Capture the policy details from EIS
+                  ~Type: Act
+                  ~Action: GetPolicyDetailsEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SearchCriteria: *SelectCustomerByPolicyNumber
+                  ~Judgements:
+                  ~Unconditionals:
+
+#ReturnYaml:
+#      PolicyDetails:
+#        SourceOfBusiness:
+#          Enquiry:
+#          Affinity:
+#          SalesChannel:
+#        PolicyDetails: ##
+#          Brand:
+#          ProductType:
+#          InceptionDate:
+#          PolicyEndDate: # PolicyEndDate
+#          PolicyStartDate: # PolicyStartDate
+#          PolicyPeriod:
+#        FinancialStatus:
+#          AffordabilityThresholdReached:
+#          UWOnlyPremiumFinance:
+#        QuoteDetail:
+#          OriginalQuoteDate: # OriginalQuoteDate
+#        ClaimHistory:
+#          - DriverName: # Drivename or Driver Number ?
+#            IncidentDate:
+#            Status:
+#            ClaimType:
+#            Cause:
+#            OwnDamageCosts:
+#            ThirdPartyDamageCosts:
+#            NCDAffected:
+#            PersonalInjury:
+#        ConvictionHistory:
+#          - DriverName: # Drivename or Driver Number ?
+#            ConvictionType:
+#            OffenceDate:
+#            ConvictionDate:
+#            Points:
+#            MonthSuspended:
+#            Fine:
+#            Disqualified:
+#        PolicyHolderPersonalDetails:
+#          Title:
+#          FirstName:
+#          LastName:
+#          MaritalStatus:
+#          DateOfBirth:
+#          Gender:
+#          UkResidentSince:
+#          PrimaryEmploymentStatus:
+#            Employed:
+#            Category:
+#            Type:
+#            Industry:
+#          SecondaryEmploymentStatus:
+#            Employed:
+#            Category:
+#            Type:
+#            Industry:
+#        PolicyHolderMotorSpecificDetails: #PolicyHolderHomeSpecificDetails:
+#          IamMember:
+#          HomeOwner:
+#          Licence:
+#            Type:  # Licence Type
+#            LicenceNumber: #DriverLicenceNumber
+#            LicenceHeldYears:  #How long have you held your driving Licence?
+#            LicenceObtainDate: #On what date did you get your Licence? (ObtainLicense)
+#            DependentsOrChildUnder16:
+#        InsuranceDetails:
+#          InsuranceType: #  Type of Insurance #Goods vehicle #Private car
+#          Scheme: #  Scheme
+#          CoverType: #Cover Type
+#          DrivingRestrictions: #  Driving restrictions
+#          NCDFlag:
+#          ConcernFlag:
+#          TypeCover: ##
+#          InsuredAmount:
+#          InsuranceHistory:
+#            PreviousInsuranceDetails:
+#              PreviousInsuranceAvailable: #  Previous Insurance
+#              InsurancePreviouslyRefused: # Insurance previously refused?
+#            PreviousExperienceDetails:
+#              ClaimFreeYears:
+#              ExperienceType:
+#            NCDDetails:
+#              NCDAppliedToAnyOtherVehicle: # NCD Applied to Any Other Vehicle
+#              PreviousPolicyExpiryDate: # Previous Policy Expiry Date
+#              NCDClaimYears: # NCD claimed
+#              ProtectNCD: # Would you like to protect your No Claims Discount?
+#          ExcessDetails:
+#            VoluntaryExcess:
+#            CoverageCode:   ##Check with Strata and Eis...?
+#          OptionalExtras:
+#          Endorsement:
+#        PreferredDeliveryMethod:
+#        ProposerContactDetails:
+#          CorrespondenceAddress:
+#            HouseIdentifier:
+#            Postcode:
+#          MainTelephoneNumber:
+#          EmailAddress:
+#        AccessToOtherVehicles: # Access to other vehicles # Do you have access to any other vehicles?
+#        Vehicle:
+#          FCAClass:
+#          VehicleUse:
+#            VehicleUseByProposer:
+#            MainUsage:   #  What do you use your car for?
+#            AnnualMileage:  # Annual Mileage
+#            BusinessMileage:  # Business Mileage
+#            CarPurchaseDate: # When did you buy your car?
+#          ParkingDetails:
+#            ParkingDuringDay:     #  Where is the vehicle kept during the day?
+#            ParkingDuringNight: #  Where is the vehicle kept during the night?
+#            OvernightLocation: #  Overnight Location
+#            Postcode: # Where Kept Postcode
+#          VehicleCharacterists:
+#            Model:
+#            Make:
+#            FuelType:
+#            BodyStyle:
+#            NumberOfSeats:
+#            NumberOfDoors:
+#            AbiCode:
+#            VehicleRegistrationNumber:
+#            YearOfManufacture:
+#            EngineCC:
+#            MarketValue:
+#            VehicleFeatures:
+#              Alarm:
+#              ImmobiliserAvailable: # Does your vehicle have an immobiliser fitted?
+#              Immobiliser:
+#              TrackerAvailable:  #  Does your vehicle have a tracker fitted?
+#              Tracker:
+#              Dashcam:
+#              LeftHandDrive:
+#              VehicleImported:
+#              CarModificationDetails:
+#                modification: #  Has the car been modified from the manufacturer's standard specification?
+#                modificationDetails:
+#          WhoIsRegisteredOwner:
+#          IsProposerRegisteredKeeper: #  ProposerRegisteredKeeper
+#        ConcernFlag: #  Concern flag ## Get details?
+#        Cover:
+#          CoverSections: #Find more details?
+#          RenewalCount:
+#        AdditionalDrivers:
+#          - Driver1:
+#              TemporaryDriver:
+#                - PersonalDetails:
+#                    Title:
+#                    FirstName: #            DriverFirstName
+#                    LastName: #            DriverLastName
+#                    MaritalStatus:
+#                    DateOfBirth:
+#                    Gender:
+#                    PrimaryEmploymentStatus:
+#                      Employed:
+#                      Category:
+#                      Type:
+#                      Industry:
+#                    SecondaryEmploymentStatus:
+#                      Employed:
+#                      Category:
+#                      Type:
+#                      Industry:
+#                  PolicyHolderMotorSpecificDetails: #PolicyHolderHomeSpecificDetails:
+#                    Licence:
+#                      Type:  # Licence Type
+#                      LicenceValidSince:  #How long have you held your driving Licence?
+#                      LicenceNumber: #DriverLicenceNumber
+#                      LicenceObtainDate: #On what date did you get your Licence? (ObtainLicense)
+#                    Vehicle:
+#                      AccessToOtherVehicles: # Access to other vehicles
+#                  Relationship: #            RelationshipToProposer
+#              PermanentDriver:
+#                - PersonalDetails:
+#                    Title:
+#                    FirstName: #            DriverFirstName
+#                    LastName: #            DriverLastName
+#                    MaritalStatus:
+#                    DateOfBirth:
+#                    Gender:
+#                    PrimaryEmploymentStatus:
+#                      Employed:
+#                      Category:
+#                      Type:
+#                      Industry:
+#                    SecondaryEmploymentStatus:
+#                      Employed:
+#                      Category:
+#                      Type:
+#                      Industry:
+#                  PolicyHolderMotorSpecificDetails: #PolicyHolderHomeSpecificDetails:
+#                    Licence:
+#                      Type:  # Licence Type
+#                      LicenceValidSince:  #How long have you held your driving Licence?
+#                      LicenceNumber: #DriverLicenceNumber
+#                      LicenceObtainDate: #On what date did you get your Licence? (ObtainLicense)
+#                    Vehicle:
+#                      AccessToOtherVehicles: # Access to other vehicles
+#                  Relationship: # RelationshipToProposer

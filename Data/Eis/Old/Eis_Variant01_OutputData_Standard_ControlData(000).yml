@@ -1,0 +1,152 @@
+- Data:
+    SalesDetails:
+      QuotesDetails: {Affinity: AHCC, Brand: Ageas, ProductType: Home, InceptionDate: 07/05/2024}
+      InsuranceDetails:
+        TypeOfHouseHoldCover: {Buildings: true, Contents: true, BuildingAccidentalDamage: false,
+          ContentAccidentalDamage: false, OptionalExtras: null}
+        InsuredAmount: {BuildingVoluntaryExcess: 100, ContentVoluntaryExcess: 100,
+          RebuildingCost: 100000, ContentSum: 70000}
+        InsuranceHistory: {ContentClaimFreeYears: 0, BuildingClaimFreeYears: 0, InsurancePreviouslyRefused: false,
+          PreviousInsurance: false}
+        ContentDetails:
+          Safe: true
+          SpecifiedItemsAvailable: false
+          UnspecifiedItems: {CoverStatus: false, ItemAmount: 3333}
+          SpecifiedItems: null
+        BuildingDetails:
+          BuildingType: House
+          StructureType: Detached House
+          ConstructionType: Standard
+          YearBuilt: 2010
+          NumberOfBedrooms: 2
+          RiskAddress: {HouseIdentifier: '1', Postcode: NG173AS}
+          AdditionalInformation: {ListingStatus: false, BuildingWorkStatus: false,
+            GoodRepairStatus: true, GeologicalThreats: false, FreeFromFloodingThreats: true}
+        Usage:
+          NonFamilyLodger: false
+          LetWithSublet: false
+          BusinessUse: false
+          BusinessUsage: {BusinessUse: false, ClericalUse: false, PropertyUse: meetings}
+          HolidayHomeStatus: false
+          Occupancy: Occupied
+        Security: {Locks: true, Alarms: Basic DIY Alarm, NeighbourhoodWatch: true}
+        ProposerRelationshipToRisk: {LegalRelationship: Owned, FirstTimeBuyers: false}
+      PreferredDeliveryMethod: Print
+      ProposerPersonalDetails:
+        Title: Mr
+        FirstName: ConGMtaSITSETAZA
+        LastName: Testzxz
+        MaritalStatus: Single
+        Gender: Male
+        PrimaryEmploymentStatus: {Employed: true, Category: Employee, Type: BakeryAssistant,
+          Industry: FastFood}
+        SecondaryEmploymentStatus: {Employed: false}
+        DateOfBirth: 30/10/1983
+        UkResidentSince: 30/10/1983
+      ProposerContactDetails:
+        CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+        MainTelephoneNumber: '07345345345'
+        EmailAddress: A_Auto_000_T3_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+      MarketingChoice: {SMS: false, Email: false, Postal: true, Telephone: true}
+      OtherDetails: {SufferedLossNotResultedInClaim: false}
+      DynamicUnderwriterQuestions:
+        NumberOfBathroom: '1'
+        WallConstructionType: Brick
+        RoofConstructionType: Concrete
+        NumberOfDaysPropertyLeftUnoccupied: 0
+        PercentageOfFlatRoof: 35
+        PaymentType: Annual
+        UnsatisfiedCountyCourtJudgements: false
+        ResidentDeclaredBankrupt: false
+        ExtendedHouse: false
+        UnspentCriminalConviction: false
+        NumberOfPeopleLive:
+          Children: 2
+          Adult: 2
+          Pet: {Cat: false, Dog: false, Other: false}
+        PropertyOwned: OwnedOutright
+      JointPolicyHolderDetails: false
+      JointPolicyHolderStatus: false
+      ConsentToRenew: false
+      Index: A
+    UserCredentials: {Email: qa, Password: qa}
+    CoreAppUserCredentials: {Email: qa, Password: qa}
+    SearchCriteria: {ClientNumber: IC0000008766}
+  Id: EIS_QUOTE_BUILDER_HOME_STANDARD-6dd6fe82-4b2f-42f5-8d88-822920e21fa0
+  IdTags: {TestID: EIS-AGEAS-HOME-001-01}
+- Data:
+    SalesDetails:
+      QuotesDetails: {Affinity: AHCC, Brand: Ageas, ProductType: Home, InceptionDate: 07/05/2024}
+      InsuranceDetails:
+        TypeOfHouseHoldCover: {Buildings: true, Contents: true, BuildingAccidentalDamage: false,
+          ContentAccidentalDamage: false, OptionalExtras: null}
+        InsuredAmount: {BuildingVoluntaryExcess: 100, ContentVoluntaryExcess: 100,
+          RebuildingCost: 100000, ContentSum: 70000}
+        InsuranceHistory: {ContentClaimFreeYears: 0, BuildingClaimFreeYears: 0, InsurancePreviouslyRefused: false,
+          PreviousInsurance: false}
+        ContentDetails:
+          Safe: true
+          SpecifiedItemsAvailable: false
+          UnspecifiedItems: {CoverStatus: false, ItemAmount: 3333}
+          SpecifiedItems: null
+        BuildingDetails:
+          BuildingType: House
+          StructureType: Detached House
+          ConstructionType: Standard
+          YearBuilt: 2010
+          NumberOfBedrooms: 2
+          RiskAddress: {HouseIdentifier: '1', Postcode: NG173AS}
+          AdditionalInformation: {ListingStatus: false, BuildingWorkStatus: false,
+            GoodRepairStatus: true, GeologicalThreats: false, FreeFromFloodingThreats: true}
+        Usage:
+          NonFamilyLodger: false
+          LetWithSublet: false
+          BusinessUse: false
+          BusinessUsage: {BusinessUse: false, ClericalUse: false, PropertyUse: meetings}
+          HolidayHomeStatus: false
+          Occupancy: Occupied
+        Security: {Locks: true, Alarms: Basic DIY Alarm, NeighbourhoodWatch: true}
+        ProposerRelationshipToRisk: {LegalRelationship: Owned, FirstTimeBuyers: false}
+      PreferredDeliveryMethod: Print
+      ProposerPersonalDetails:
+        Title: Mr
+        FirstName: ConGMtaSITSETAZB
+        LastName: Testzxz
+        MaritalStatus: Single
+        Gender: Male
+        PrimaryEmploymentStatus: {Employed: true, Category: Employee, Type: BakeryAssistant,
+          Industry: FastFood}
+        SecondaryEmploymentStatus: {Employed: false}
+        DateOfBirth: 30/10/1983
+        UkResidentSince: 30/10/1983
+      ProposerContactDetails:
+        CorrespondenceAddress: {HouseIdentifier: '1', Postcode: NG17 3AS}
+        MainTelephoneNumber: '07345345345'
+        EmailAddress: B_Auto_000_T3_Mta_ConG_JamG_f@n0ie34cm.mailosaur.net
+      MarketingChoice: {SMS: false, Email: false, Postal: true, Telephone: true}
+      OtherDetails: {SufferedLossNotResultedInClaim: false}
+      DynamicUnderwriterQuestions:
+        NumberOfBathroom: '1'
+        WallConstructionType: Brick
+        RoofConstructionType: Concrete
+        NumberOfDaysPropertyLeftUnoccupied: 0
+        PercentageOfFlatRoof: 35
+        PaymentType: Annual
+        UnsatisfiedCountyCourtJudgements: false
+        ResidentDeclaredBankrupt: false
+        ExtendedHouse: false
+        UnspentCriminalConviction: false
+        NumberOfPeopleLive:
+          Children: 2
+          Adult: 2
+          Pet: {Cat: false, Dog: false, Other: false}
+        PropertyOwned: OwnedOutright
+      JointPolicyHolderDetails: false
+      JointPolicyHolderStatus: false
+      ConsentToRenew: false
+      Index: B
+    UserCredentials: {Email: qa, Password: qa}
+    CoreAppUserCredentials: {Email: qa, Password: qa}
+    SearchCriteria: {ClientNumber: IC0000008767}
+  Id: EIS_QUOTE_BUILDER_HOME_STANDARD-bc46da23-0a4e-406b-b5b5-4dfcae16ec74
+  IdTags: {TestID: EIS-AGEAS-HOME-001-02}

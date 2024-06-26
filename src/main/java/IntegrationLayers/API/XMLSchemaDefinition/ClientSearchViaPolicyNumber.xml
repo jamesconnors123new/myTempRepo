@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v45="http://cdl.co.uk/service/party/v45">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <v45:clientSearch limitSearchResults="200">
+            <policyNumber>default</policyNumber>
+            <context>
+                <branchCode>AUTO</branchCode>
+                <operatorLoginName>agl_webint</operatorLoginName>
+            </context>
+        </v45:clientSearch>
+    </soapenv:Body>
+</soapenv:Envelope>

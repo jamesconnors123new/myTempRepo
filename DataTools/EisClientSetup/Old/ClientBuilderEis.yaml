@@ -1,0 +1,248 @@
+~Templates:
+  CustomerSelectionCriteria:
+    SelectCustomerByClientName:
+      Forename: ~(ForenameVal)
+      Lastname: ~(LastnameVal)
+  CredentialsSets:
+    StandardEisUserCredentialsSet: &StandardEisUserCredentialsSet
+      Email: ~(StandardEisUserName)
+      Password: ~(StandardEisPassword)
+
+~ConcretePatterns:
+
+~GlobalSettings:
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: EISLoginURL
+  - ~Setting: #Client Group Id
+      ~Src: EnvVar
+      ~Id: ClientGroupId
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisUserName
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: StandardEisPassword
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingType
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfBusiness
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: AreaOfTesting
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: LogicalPattern
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: Team
+  - ~Setting:
+      ~Src: EnvVar
+      ~Id: TestingTeam
+~CommonInitActivities:
+
+~CommonFinalActivities:
+  - ~Activity:
+      ~Label: ExportStandardDataToFile
+      ~Role:
+      ~Type: Act
+      ~Action: DataExporter
+      ~ControlData:
+        ExportDestination:
+          Filename: Data/EisClientsVariant01Data(000).yml
+        Exports:
+          - TestCases:
+              - EISUI_CLIENT-BUILDER-RIAS
+            DataItems:
+              - //001/CreateClientOnEis.EisClientDetails.ClientNumber
+              - //001/CreateClientOnEis._ControlData.SalesDetails
+~TestCases:
+  - ~TestCase:
+      ~CaseId: &caseId EISUI_CLIENT-BUILDER-RIAS
+      ~Headline: CreatingCustomersInEIS
+      ~InitiationActivities:
+        - ~Activity:
+            ~Role: >
+              Initiate cases
+            ~Type: Act
+            ~Action: InitiateList
+            ~ControlData:
+              Common:
+#                Team: T3
+#                LogicalPattern: Mta
+#                AreaOfTesting: Por
+#                AreaOfBusiness: Bau
+#                TestingType: f
+#                TestingTeam: Auto
+                LastnameVal: Testzxz
+                EmailSequenceNumber: "000"
+                DomainName: n0ie34cm.mailosaur.net
+                CustomerBrand: Rias
+              Instances:
+                - Identities:
+                    - TestID|EX-DB-0001-01
+                  InstanceValues:
+                    Index: A
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)A
+                - Identities:
+                    - TestID|EX-DB-0001-02
+                  InstanceValues:
+                    Index: B
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)B
+                - Identities:
+                    - TestID|EX-DB-0001-03
+                  InstanceValues:
+                    Index: C
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)C
+                - Identities:
+                    - TestID|EX-DB-0001-04
+                  InstanceValues:
+                    Index: D
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)D
+                - Identities:
+                    - TestID|EX-DB-0001-05
+                  InstanceValues:
+                    Index: E
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)E
+                - Identities:
+                    - TestID|EX-DB-0001-06
+                  InstanceValues:
+                    Index: F
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)F
+                - Identities:
+                    - TestID|EX-DB-0001-07
+                  InstanceValues:
+                    Index: G
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)G
+                - Identities:
+                    - TestID|EX-DB-0001-08
+                  InstanceValues:
+                    Index: H
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)H
+                - Identities:
+                    - TestID|EX-DB-0001-09
+                  InstanceValues:
+                    Index: I
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)I
+                - Identities:
+                    - TestID|EX-DB-0001-10
+                  InstanceValues:
+                    Index: J
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)J
+                - Identities:
+                    - TestID|EX-DB-0001-11
+                  InstanceValues:
+                    Index: K
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)K
+                - Identities:
+                    - TestID|EX-DB-0001-12
+                  InstanceValues:
+                    Index: L
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)L
+                - Identities:
+                    - TestID|EX-DB-0001-13
+                  InstanceValues:
+                    Index: M
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)M
+                - Identities:
+                    - TestID|EX-DB-0001-14
+                  InstanceValues:
+                    Index: N
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)N
+                - Identities:
+                    - TestID|EX-DB-0001-15
+                  InstanceValues:
+                    Index: O
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)O
+                - Identities:
+                    - TestID|EX-DB-0001-16
+                  InstanceValues:
+                    Index: P
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)P
+                - Identities:
+                    - TestID|EX-DB-0001-17
+                  InstanceValues:
+                    Index: Q
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)Q
+                - Identities:
+                    - TestID|EX-DB-0001-18
+                  InstanceValues:
+                    Index: R
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)R
+                - Identities:
+                    - TestID|EX-DB-0001-19
+                  InstanceValues:
+                    Index: S
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)S
+                - Identities:
+                    - TestID|EX-DB-0001-20
+                  InstanceValues:
+                    Index: T
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)T
+                - Identities:
+                    - TestID|EX-DB-0001-21
+                  InstanceValues:
+                    Index: U
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)U
+                - Identities:
+                    - TestID|EX-DB-0001-22
+                  InstanceValues:
+                    Index: V
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)V
+                - Identities:
+                    - TestID|EX-DB-0001-23
+                  InstanceValues:
+                    Index: W
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)W
+                - Identities:
+                    - TestID|EX-DB-0001-24
+                  InstanceValues:
+                    Index: X
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)X
+                - Identities:
+                    - TestID|EX-DB-0001-25
+                  InstanceValues:
+                    Index: Y
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)Y
+                - Identities:
+                    - TestID|EX-DB-0001-26
+                  InstanceValues:
+                    Index: Z
+                    ForenameVal: ~(AreaOfTesting)~(LogicalPattern)~(ClientGroupId)Z
+
+      ~Stages:
+        - ~Stage: #1 Create a new Client in EIS
+            ~Activities:
+              - ~Activity:
+                  ~Label: CreateClientOnEis
+                  ~Role: >
+                    Create a customer on EIS
+                  ~Type: Act
+                  ~Action: CreateClientOnEis
+                  ~ControlData:
+                    UserCredentials: *StandardEisUserCredentialsSet
+                    SalesDetails:
+                      QuotesDetails:
+                        Brand: ~(CustomerBrand)
+                      ProposerPersonalDetails:
+                        Title: ~(Title)
+                        FirstName: ~(ForenameVal)
+                        LastName: ~(LastnameVal)
+                        MaritalStatus: ~(MaritalStatus)
+                        DateOfBirth: ~(DateOfBirth)
+                        Gender: ~(Gender)
+                        UkResidentSince: ~(UkResidentSince)
+                      ProposerContactDetails:
+                        CorrespondenceAddress: &ProposerContactDetails1
+                          HouseIdentifier: ~(CorrespondenceHouseIdentifier)
+                          Postcode: ~(CorrespondencePostcode)
+                        MainTelephoneNumber: "07445345345"
+                        EmailAddress: ~(TestingTeam)_~(EmailSequenceNumber)_~(Team)_~(LogicalPattern)_~(AreaOfTesting)_~(AreaOfBusiness)_~(TestingType)@~(DomainName)
+                      MarketingChoice:
+                        Postal: false
+                        Email: true
+                        Telephone: false
+                        SMS: true
+                  ~Unconditionals:

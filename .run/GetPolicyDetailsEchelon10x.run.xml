@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GetPolicyDetailsEchelon10x" type="Application" factoryName="Application" folderName="OperationTests">
+    <envs>
+      <env name="ClientGroupId" value="ZZF" />
+      <env name="EchelonLoginURL" value="https://injector-uat.ageas.co.uk/strata/ageas/household/login" />
+      <env name="StandardEchelonUserName" value="a50_robot01_uat" />
+      <env name="StandardEchelonUserPassword" value="Password@03" />
+      <env name="StandardPortalPassword" value="Password123" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="activityRunner.TestRunner" />
+    <module name="ageas-tier3-automation" />
+    <option name="PROGRAM_PARAMETERS" value="./TestSets/OpertationTests/QuoteCreationEchelonx10Times.yaml" />
+    <method v="2" />
+  </configuration>
+</component>

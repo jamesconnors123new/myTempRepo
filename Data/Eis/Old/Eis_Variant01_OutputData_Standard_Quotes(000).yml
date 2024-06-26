@@ -1,0 +1,8 @@
+- Data: {QuoteReference: HH0000000008103, CustomerNumber: IC0000008766, Declines: 'false',
+    Referrals: 'false', QuoteValue: '371.38', EffectiveDate: '07/05/2024 17:08'}
+  Id: EIS_QUOTE_BUILDER_HOME_STANDARD-6dd6fe82-4b2f-42f5-8d88-822920e21fa0
+  IdTags: {TestID: EIS-AGEAS-HOME-001-01}
+- Data: {QuoteReference: HH0000000008101, CustomerNumber: IC0000008767, Declines: 'false',
+    Referrals: 'false', QuoteValue: '371.38', EffectiveDate: '07/05/2024 17:06'}
+  Id: EIS_QUOTE_BUILDER_HOME_STANDARD-bc46da23-0a4e-406b-b5b5-4dfcae16ec74
+  IdTags: {TestID: EIS-AGEAS-HOME-001-02}
